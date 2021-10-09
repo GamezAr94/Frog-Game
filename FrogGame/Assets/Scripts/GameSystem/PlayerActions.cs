@@ -1,5 +1,9 @@
 using UnityEngine;
 
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+
 public class PlayerActions : MonoBehaviour
 {
 
@@ -22,6 +26,7 @@ public class PlayerActions : MonoBehaviour
     [Range(0f, 1.5f)]
     float minDistanceBetweenTouches;
 
+
     private void Awake()
     {
         lineRendererObject = this.GetComponent<LineScreenDraw>();
@@ -30,11 +35,12 @@ public class PlayerActions : MonoBehaviour
         tongRingidBody = tongObject.GetComponent<Rigidbody2D>();
 
         mainCamera = Camera.main;
+
     }
 
     private void Update()
     {
-        PositionTouch();
+        //PositionTouch();
     }
 
     private void PositionTouch()
@@ -42,9 +48,15 @@ public class PlayerActions : MonoBehaviour
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began)
+            {
+                transform.right = lineRendererObject.StartLocalTouchPosition - transform.position;
+            }
             if (touch.phase == TouchPhase.Ended)
             {
-                resetTong(touch.position, tongObjecBehaviour);
+                Debug.Log(lineRendererObject.StartLocalTouchPosition + " Target");
+                tongRingidBody.AddForce(transform.right * lineRendererObject.Distance * velocityAttack);
+                //resetTong(touch.position, tongObjecBehaviour);
             }
         }
     }
@@ -69,13 +81,11 @@ public class PlayerActions : MonoBehaviour
     {
         if (tongBehaviour.tongInMouth )
         {
-            transform.right = lineRendererObject.StartLocalTouchPosition - transform.position;
+            
             
             if (lineRendererObject.Distance > minDistanceBetweenTouches)
             {
-                tongRingidBody.AddForce(new Vector3(0,1,0) * lineRendererObject.Distance * velocityAttack);
-                Debug.Log(tongRingidBody.transform.forward);
-                Debug.Log(tongRingidBody.transform.forward*velocityAttack);
+                //tongRingidBody.AddForce(new Vector3(0,1,0) * lineRendererObject.Distance * velocityAttack);
                 //tongRingidBody.velocity = lineRendererObject.StartLocalTouchPosition * velocityAttack;
             }
             //startedTouchPosition = new Vector3(0, 0, 0);
