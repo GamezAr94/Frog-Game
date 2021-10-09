@@ -2,20 +2,17 @@ using UnityEngine;
 
 public class PlayerActions : MonoBehaviour
 {
-    Vector3 startedTouchPosition, endingTouchPosition;
 
     [SerializeField]
     GameObject tongObject;
+    
     TongBehaviour tongObjecBehaviour;
     Rigidbody2D tongRingidBody;
     Vector3 touchPosition;
     Camera mainCamera;
 
-    [SerializeField]
-    [Range(0, 1)]
-    float velocityAttack = .7f;
+    float velocityAttack = 20.0f;
 
-    [SerializeField]
     LineScreenDraw lineRendererObject;
 
     [SerializeField]
@@ -27,8 +24,11 @@ public class PlayerActions : MonoBehaviour
 
     private void Awake()
     {
+        lineRendererObject = this.GetComponent<LineScreenDraw>();
+
         tongObjecBehaviour = tongObject.GetComponent<TongBehaviour>();
         tongRingidBody = tongObject.GetComponent<Rigidbody2D>();
+
         mainCamera = Camera.main;
     }
 
@@ -42,21 +42,9 @@ public class PlayerActions : MonoBehaviour
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
-            {
-                Vector3 startLocalTouchPosition = mainCamera.ScreenToWorldPoint(touch.position);
-                lineRendererObject.setDrawPosition(2, startLocalTouchPosition.x, startLocalTouchPosition.y);
-                releaseTong(touch.position, tongObjecBehaviour);
-            }
-            else if (touch.phase == TouchPhase.Moved)
-            {
-                Vector3 trackLocalTouchPosition = mainCamera.ScreenToWorldPoint(touch.position);
-                lineRendererObject.setDrawPosition(1, trackLocalTouchPosition.x, trackLocalTouchPosition.y);
-            }
-            else if (touch.phase == TouchPhase.Ended)
+            if (touch.phase == TouchPhase.Ended)
             {
                 resetTong(touch.position, tongObjecBehaviour);
-                lineRendererObject.setDrawPosition();
             }
         }
     }
@@ -66,35 +54,32 @@ public class PlayerActions : MonoBehaviour
         touchPosition = mainCamera.ScreenToWorldPoint(position);
         if (tongBehaviour.tongInMouth && touchPosition.y > borderLimitToPointTheAttack)
         {
-            startedTouchPosition = DistanceBetween2Points2D(touchPosition, this.transform.position);
-            transform.right = startedTouchPosition;
+            //startedTouchPosition = DistanceBetween2Points2D(touchPosition, this.transform.position);
+            //transform.right = startedTouchPosition;
         }
         else if (!tongBehaviour.tongInMouth)
         {
             // store the touch starting point if the user start clicking before the tong cames bak to the frog
-            startedTouchPosition = DistanceBetween2Points2D(touchPosition, this.transform.position);
+            //startedTouchPosition = DistanceBetween2Points2D(touchPosition, this.transform.position);
         }
-    }
+    } 
+
+
     private void resetTong(Vector3 position, TongBehaviour tongBehaviour)
     {
-        if (tongBehaviour.tongInMouth && startedTouchPosition != new Vector3(0, 0, 0))
+        if (tongBehaviour.tongInMouth )
         {
-            transform.right = startedTouchPosition;
-
-            touchPosition = mainCamera.ScreenToWorldPoint(position);
-            endingTouchPosition = DistanceBetween2Points2D(touchPosition, this.transform.position);
-            float distanceBetweenPoints = (startedTouchPosition - endingTouchPosition).magnitude;
-            if (distanceBetweenPoints > minDistanceBetweenTouches)
+            transform.right = lineRendererObject.StartLocalTouchPosition - transform.position;
+            
+            if (lineRendererObject.Distance > minDistanceBetweenTouches)
             {
-                tongRingidBody.velocity = startedTouchPosition * distanceBetweenPoints * velocityAttack;
+                tongRingidBody.AddForce(new Vector3(0,1,0) * lineRendererObject.Distance * velocityAttack);
+                Debug.Log(tongRingidBody.transform.forward);
+                Debug.Log(tongRingidBody.transform.forward*velocityAttack);
+                //tongRingidBody.velocity = lineRendererObject.StartLocalTouchPosition * velocityAttack;
             }
-            startedTouchPosition = new Vector3(0, 0, 0);
+            //startedTouchPosition = new Vector3(0, 0, 0);
         }
     }
-    private Vector3 DistanceBetween2Points2D(Vector3 positionOne, Vector3 positionTwo)
-    {
-        Vector3 distance = positionOne - positionTwo;
-        distance.z = 0f;
-        return distance;
-    }
+
 }
