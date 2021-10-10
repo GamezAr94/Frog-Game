@@ -1717,13 +1717,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 741feafe553c30744bff4b7e654a23a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tongsGoesBack: 0
-  distancePivotAndTong: 0
-  tongInMouth: 1
+  tongsIsPaused: 0
+  tongMustGoBack: 0
+  _tongInMouth: 1
+  tongPivotObject: {fileID: 5798444415029534008}
+  velocityAttack: 0.2
+  rangeOfTong: 12
   dropsParticlesBehavior: {fileID: 6573808567958949107, guid: eaa87c6133f834147b5240ca2f05871a, type: 3}
   headBehaviour: {fileID: 2071865855100633939}
-  tongPivotObject: {fileID: 5798444415029534008}
-  isCatching: 1
 --- !u!4 &5798444414461427093
 Transform:
   m_ObjectHideFlags: 0
@@ -2992,8 +2993,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecf05bc5d2fb98649ad276f8d0c2a51c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tongBehaviour: {fileID: 5798444414461427092}
   minDistanceToSpawnTong: 2
+  tongBehaviour: {fileID: 5798444414461427092}
   startTargetPoint: {fileID: 2128216516}
   endTargetPoint: {fileID: 586802537}
 --- !u!120 &5798444415422599429
