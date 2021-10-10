@@ -22,6 +22,10 @@ public class TongBehaviour : MonoBehaviour
     [Tooltip("The pivot where the tong has to go back")]
     Transform tongPivotObject;
 
+    [SerializeField]
+    [Tooltip("The body of the tong")]
+    BodyTongBehaviour bodyTongBehaviour;
+
     [Tooltip("The greater the slower")]
     [SerializeField][Range (0.1f, 2f)]
     float velocityAttack = 0.1f;
@@ -83,6 +87,7 @@ public class TongBehaviour : MonoBehaviour
         {
             if(!tongsIsPaused){
                 transform.position = Vector3.Lerp(startingPos, finalPos, (elapsedTimeGo / velocityAttack ));
+                bodyTongBehaviour.NodesFollowing();
                 elapsedTimeGo += Time.deltaTime;
                 _tongInMouth = false;
             }
@@ -97,11 +102,15 @@ public class TongBehaviour : MonoBehaviour
             tongMustGoBack = true;
             if(!tongsIsPaused){
                 transform.position = Vector3.Lerp(currentPosition, tongPivotObject.position, (elapsedTimeBack / elapsedTimeGo));
+                bodyTongBehaviour.NodesFollowing();
                 elapsedTimeBack += Time.deltaTime;
             }
             yield return null;
         }
         transform.position = tongPivotObject.position;
+
+        bodyTongBehaviour.NodesFollowing();
+
         tongMustGoBack = false;
         _tongInMouth = true;
     }
