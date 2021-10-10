@@ -81,14 +81,16 @@ public class LineScreenDraw : MonoBehaviour
             }
             else if (touch.phase == TouchPhase.Moved)
             {
-                trackLocalTouchPosition = Camera.main.ScreenToWorldPoint(touch.position);
-                trackLocalTouchPosition.z = 0f;
-                
-                if(_startLocalTouchPosition.y >= trackLocalTouchPosition.y){
-                    setDrawPosition(0, _startLocalTouchPosition.x, _startLocalTouchPosition.y);
-                    setDrawPosition(1, trackLocalTouchPosition.x, trackLocalTouchPosition.y);
-                }else{
-                    setDrawPosition();
+                if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y){
+                    trackLocalTouchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+                    trackLocalTouchPosition.z = 0f;
+                    
+                    if(_startLocalTouchPosition.y >= trackLocalTouchPosition.y){
+                        setDrawPosition(0, _startLocalTouchPosition.x, _startLocalTouchPosition.y);
+                        setDrawPosition(1, trackLocalTouchPosition.x, trackLocalTouchPosition.y);
+                    }else{
+                        setDrawPosition();
+                    }
                 }
             }
             else if (touch.phase == TouchPhase.Ended && _startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y)

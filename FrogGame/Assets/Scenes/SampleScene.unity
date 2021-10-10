@@ -1721,8 +1721,8 @@ MonoBehaviour:
   tongMustGoBack: 0
   _tongInMouth: 1
   tongPivotObject: {fileID: 5798444415029534008}
-  velocityAttack: 0.2
-  rangeOfTong: 12
+  velocityAttack: 2
+  rangeOfTong: 5
   dropsParticlesBehavior: {fileID: 6573808567958949107, guid: eaa87c6133f834147b5240ca2f05871a, type: 3}
   headBehaviour: {fileID: 2071865855100633939}
 --- !u!4 &5798444414461427093
@@ -2923,7 +2923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55be98851da33a941aa860d17f321f7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tongObjecBehaviour: {fileID: 5798444414461427092}
+  tongBehaviour: {fileID: 5798444414461427092}
 --- !u!50 &5798444415422599425
 Rigidbody2D:
   serializedVersion: 4

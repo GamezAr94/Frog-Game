@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerActions : MonoBehaviour
 {
     [SerializeField]
-    TongBehaviour tongObjecBehaviour;
+    TongBehaviour tongBehaviour;
 
     LineScreenDraw lineRendererObject;
 
@@ -18,7 +18,9 @@ public class PlayerActions : MonoBehaviour
     }
 
     public void Update() {
+        if(!tongBehaviour.TongInMouth){
             transform.right = lineRendererObject.StartLocalTouchPosition - transform.position;
+        }
     }
 
     public void FrogReadyToSpawnTong(Touch touch)
@@ -35,7 +37,7 @@ public class PlayerActions : MonoBehaviour
         else if (touch.phase == TouchPhase.Ended)
         {
             Debug.Log("This is an event system test " + touch.phase);
-            spawnTong = tongObjecBehaviour.spawningTongCoroutine(lineRendererObject.Distance);
+            spawnTong = tongBehaviour.spawningTongCoroutine(lineRendererObject.Distance);
             StartCoroutine(spawnTong);
         }
     }
