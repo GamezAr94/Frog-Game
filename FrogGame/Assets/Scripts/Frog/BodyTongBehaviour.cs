@@ -14,12 +14,7 @@ public class BodyTongBehaviour : MonoBehaviour
         NumberOfNodes = bodyTongSprite.spline.GetPointCount();
     }
     private void Update() {
-        bodyTongSprite.splineDetail = 3;
-        bodyTongSprite.spline.SetPosition(3,tong.transform.localPosition);
-    }
-    
-    public void followingNode(int node, Vector2 positionToFollow)
-    {
-        bodyTongSprite.spline.SetPosition(node, positionToFollow);
+        bodyTongSprite.splineDetail = NumberOfNodes-1;
+        bodyTongSprite.spline.SetPosition(3,tong.transform.localPosition * 1.02f);
     }
 }
