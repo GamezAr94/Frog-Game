@@ -9,10 +9,10 @@ public class LineScreenDraw : MonoBehaviour
     float minDistanceToSpawnTong = 2.0f;
     
     [SerializeField]
-    const float borderLimitToPointTheAttack = -3f;
+    const float BORDER_LIMIT_TO_POINT_ATTACK = -3f;
 
-    private Vector3 _nonReachablePoint = new Vector3(-100,-100,-100);
-    public Vector3 NonReachablePoint { get => _nonReachablePoint; }
+    //private Vector3 _nonReachablePoint = new Vector3(-100,-100,-100);
+    //public Vector3 NonReachablePoint { get => _nonReachablePoint; }
 
     private Vector3 _startLocalTouchPosition;
     public Vector3 StartLocalTouchPosition { get => _startLocalTouchPosition; private set => _startLocalTouchPosition = value; }
@@ -37,9 +37,9 @@ public class LineScreenDraw : MonoBehaviour
         renderLine = this.GetComponent<LineRenderer>();
         renderLine.positionCount = 2;
 
-        _startLocalTouchPosition = NonReachablePoint;
-        _endingLocalTouchPosition = NonReachablePoint;
-        trackLocalTouchPosition = NonReachablePoint;
+        //_startLocalTouchPosition = NonReachablePoint;
+        //_endingLocalTouchPosition = NonReachablePoint;
+        //trackLocalTouchPosition = NonReachablePoint;
 
         startTargetPoint.transform.position = _startLocalTouchPosition;
         endTargetPoint.transform.position = _endingLocalTouchPosition;
@@ -47,7 +47,6 @@ public class LineScreenDraw : MonoBehaviour
         playerActions = this.GetComponent<PlayerActions>();
 
         EventSystem.current.onSwipeTouch += PositionUserTouch;
-
     }
 
     private void Update()
@@ -69,7 +68,7 @@ public class LineScreenDraw : MonoBehaviour
                 _startLocalTouchPosition = Camera.main.ScreenToWorldPoint(touch.position);
                 _startLocalTouchPosition.z = 0f;
                 
-                if(_startLocalTouchPosition.y >= borderLimitToPointTheAttack){
+                if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK){
                     debugingContactPoints(startTargetPoint, _startLocalTouchPosition);
 
                     setDrawPosition(2, _startLocalTouchPosition.x, _startLocalTouchPosition.y);
@@ -90,7 +89,7 @@ public class LineScreenDraw : MonoBehaviour
                     setDrawPosition();
                 }
             }
-            else if (touch.phase == TouchPhase.Ended && _startLocalTouchPosition.y >= borderLimitToPointTheAttack)
+            else if (touch.phase == TouchPhase.Ended && _startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK)
             {
                 _endingLocalTouchPosition = Camera.main.ScreenToWorldPoint(touch.position);
                 _endingLocalTouchPosition.z = 0;

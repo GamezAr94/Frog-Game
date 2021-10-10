@@ -10,11 +10,20 @@ public class PlayerActions : MonoBehaviour
 
     LineScreenDraw lineRendererObject;
 
+    public bool test = false;
+
+    IEnumerator spawnTong;
+
     private void Awake()
     {
         lineRendererObject = this.GetComponent<LineScreenDraw>();
     }
 
+    public void Update() {
+        if(spawnTong != null){
+            StartCoroutine(testCoroutine());
+        }
+    }
     public void FrogReadyToSpawnTong(Touch touch)
     {
         if (touch.phase == TouchPhase.Began)
@@ -29,8 +38,18 @@ public class PlayerActions : MonoBehaviour
         else if (touch.phase == TouchPhase.Ended)
         {
             Debug.Log("This is an event system test " + touch.phase);
-            StartCoroutine(tongObjecBehaviour.spawningTongCoroutine(lineRendererObject.Distance));
+            spawnTong = tongObjecBehaviour.spawningTongCoroutine(lineRendererObject.Distance);
+            StartCoroutine(spawnTong);
         }
+    }
+
+    public IEnumerator testCoroutine()
+    {
+        yield return new WaitUntil( () => test == true );
+        StopCoroutine(spawnTong);
+        yield return new WaitUntil( () => test == false );
+        StartCoroutine(spawnTong);
+        yield return null;
     }
 
 }

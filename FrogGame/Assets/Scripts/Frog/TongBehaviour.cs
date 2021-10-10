@@ -5,12 +5,12 @@ using System.Collections;
 
 public class TongBehaviour : MonoBehaviour
 {
-    public bool tongsGoesBack = false;
-    public float distancePivotAndTong;
+    public bool tongsIsPaused = false;
+    public bool tongMustGoBack = false;
 
     public bool tongInMouth = true;
 
-    float velocityAttack = 20.0f;
+    float velocityAttack = 2.0f;
 
     [SerializeField]
     DropsParticlesBehavior dropsParticlesBehavior;
@@ -34,12 +34,6 @@ public class TongBehaviour : MonoBehaviour
 
     private void Update()
     {
-        distancePivotAndTong = DistanceBetween2Points2D(tongPivotObject.position, this.transform.position);
-
-        if (!tongInMouth)
-        {
-            //     tongIsGoingBackuards();
-        }
     }
 
     private void tongIsGoingBackuards()
@@ -105,24 +99,31 @@ public class TongBehaviour : MonoBehaviour
 
     public IEnumerator spawningTongCoroutine(float distance)
     {
-        tongInMouth = false;
+        Vector3 startingPos = transform.position;
+        Vector3 finalPos = transform.position + (transform.up * distance);
+        
+        float elapsedTimeGo = 0;
 
-        Debug.Log("Tong spawned");
-        this.GetComponent<Rigidbody2D>().AddForce(transform.up * velocityAttack);
+        while (elapsedTimeGo < 1f && !tongMustGoBack)
+        {
+            if(!tongsIsPaused){
+                transform.position = Vector3.Lerp(startingPos, finalPos, (elapsedTimeGo / 1f));
+                elapsedTimeGo += Time.deltaTime;
+            }
+            yield return null;
+        }
 
-        yield return new WaitUntil( () => distancePivotAndTong >= distance );
-
-        this.GetComponent<Rigidbody2D>().AddForce(-transform.up * (velocityAttack*2));
-
-        yield return null;
-    }
-
-    //Function to return the distance between two points in float number
-    private float DistanceBetween2Points2D(Vector3 positionOne, Vector3 positionTwo)
-    {
-        Vector3 distanceCoordinates = positionOne - positionTwo;
-        distanceCoordinates.z = 0f;
-        float distanceFloat = (distanceCoordinates[0] * distanceCoordinates[0]) + (distanceCoordinates[1] * distanceCoordinates[1]);
-        return distanceFloat;
+        float elapsedTimeBack = 0;
+        Vector3 currentPosition = transform.position;
+         
+        while (elapsedTimeBack < elapsedTimeGo)
+        {
+            if(!tongsIsPaused){
+                transform.position = Vector3.Lerp(currentPosition, startingPos, (elapsedTimeBack / elapsedTimeGo));
+                elapsedTimeBack += Time.deltaTime;
+            }
+            yield return null;
+        }
+        transform.position = tongPivotObject.position;
     }
 }
