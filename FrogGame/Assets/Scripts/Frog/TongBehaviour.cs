@@ -100,14 +100,14 @@ public class TongBehaviour : MonoBehaviour
     public IEnumerator spawningTongCoroutine(float distance)
     {
         Vector3 startingPos = transform.position;
-        Vector3 finalPos = transform.position + (transform.up * distance);
-        
+        Vector3 finalPos = transform.position + (transform.up * (distance/2));
+
         float elapsedTimeGo = 0;
 
-        while (elapsedTimeGo < 1f && !tongMustGoBack)
+        while (elapsedTimeGo < velocityAttack && !tongMustGoBack)
         {
             if(!tongsIsPaused){
-                transform.position = Vector3.Lerp(startingPos, finalPos, (elapsedTimeGo / 1f));
+                transform.position = Vector3.Lerp(startingPos, finalPos, (elapsedTimeGo / velocityAttack));
                 elapsedTimeGo += Time.deltaTime;
             }
             yield return null;
@@ -119,7 +119,7 @@ public class TongBehaviour : MonoBehaviour
         while (elapsedTimeBack < elapsedTimeGo)
         {
             if(!tongsIsPaused){
-                transform.position = Vector3.Lerp(currentPosition, startingPos, (elapsedTimeBack / elapsedTimeGo));
+                transform.position = Vector3.Lerp(currentPosition, tongPivotObject.position, (elapsedTimeBack / elapsedTimeGo));
                 elapsedTimeBack += Time.deltaTime;
             }
             yield return null;

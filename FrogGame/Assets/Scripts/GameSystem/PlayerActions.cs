@@ -10,8 +10,6 @@ public class PlayerActions : MonoBehaviour
 
     LineScreenDraw lineRendererObject;
 
-    public bool test = false;
-
     IEnumerator spawnTong;
 
     private void Awake()
@@ -20,10 +18,9 @@ public class PlayerActions : MonoBehaviour
     }
 
     public void Update() {
-        if(spawnTong != null){
-            StartCoroutine(testCoroutine());
-        }
+            transform.right = lineRendererObject.StartLocalTouchPosition - transform.position;
     }
+
     public void FrogReadyToSpawnTong(Touch touch)
     {
         if (touch.phase == TouchPhase.Began)
@@ -41,15 +38,6 @@ public class PlayerActions : MonoBehaviour
             spawnTong = tongObjecBehaviour.spawningTongCoroutine(lineRendererObject.Distance);
             StartCoroutine(spawnTong);
         }
-    }
-
-    public IEnumerator testCoroutine()
-    {
-        yield return new WaitUntil( () => test == true );
-        StopCoroutine(spawnTong);
-        yield return new WaitUntil( () => test == false );
-        StartCoroutine(spawnTong);
-        yield return null;
     }
 
 }

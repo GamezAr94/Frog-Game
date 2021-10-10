@@ -107,7 +107,6 @@ public class LineScreenDraw : MonoBehaviour
                 //debugingContactPoints(endTargetPoint, _nonReachablePoint);
 
                 setDrawPosition();
-
             }
         }
     }
