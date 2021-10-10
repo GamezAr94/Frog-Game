@@ -5,76 +5,61 @@ using System.Collections;
 
 public class TongBehaviour : MonoBehaviour
 {
-    public bool tongsIsPaused = false;
-    public bool tongMustGoBack = false;
+    [Header("Tong Settings")]
 
-    public bool tongInMouth = true;
+    [SerializeField]
+    [Tooltip("Bool to pause the tong at the middle of its spawn")]
+    bool tongsIsPaused = false;
+    [SerializeField]
+    [Tooltip("Bool that indicates when the tong must go back to its mouth")]
+    bool tongMustGoBack = false;
+    [SerializeField]
+    [Tooltip("Bool to indicate whenever the tong is in its mouth")]
+    bool _tongInMouth = true;
+    public bool TongInMouth { get => _tongInMouth; private set => _tongInMouth = value; }
 
-    float velocityAttack = 2.0f;
+    [SerializeField]
+    [Tooltip("The pivot where the tong has to go back")]
+    Transform tongPivotObject;
 
+    [Tooltip("The greater the slower")]
+    [SerializeField][Range (0.1f, 2f)]
+    float velocityAttack = 0.1f;
+
+    [Tooltip("The greater the shorter")]
+    [SerializeField][Range (5f, 20f)]
+    float rangeOfTong = 12f;
+
+    [Header("Tong Animations")]
     [SerializeField]
     DropsParticlesBehavior dropsParticlesBehavior;
 
     [SerializeField]
-    HeadBehaviour headBehaviour;
-
-    Rigidbody2D thisObjectRigidBody;
-
-    [SerializeField]
-    Transform tongPivotObject;
-
-    public bool isCatching = true;
-
-    private void Awake()
-    {
-        GameObject parentObject = this.transform.parent.gameObject;
-        thisObjectRigidBody = gameObject.GetComponent<Rigidbody2D>();
-        resetingTong (tongPivotObject);
-    }
-
-    private void Update()
-    {
-    }
-
-    private void tongIsGoingBackuards()
-    {
-        Vector3 localVelocity =
-            transform.InverseTransformDirection(thisObjectRigidBody.velocity);
-        if (localVelocity.x < -.1)
-        {
-            isCatching = false;
-        }
-    }
+    HeadBehaviour headBehaviour; //Double check this code
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         switch (other.tag)
         {
             case "Body":
-                tongInMouth = true;
-                isCatching = true;
-                resetingTong (tongPivotObject);
-                Debug.Log("Body " + isCatching);
                 break;
             case "Collectibles":
-                // if (isCatching)
-                // {
-                catchigObjects (other);
-
-                // }
+                if (tongMustGoBack) // to catch objects only when tong is going forward
+                {
+                    catchigObjects (other);
+                }
                 break;
             default:
                 break;
         }
-        headBehaviour.playHeadAnimations (tongInMouth);
+        headBehaviour.playHeadAnimations (_tongInMouth); //Check this code
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Body"))
         {
-            tongInMouth = false;
-            headBehaviour.playHeadAnimations (tongInMouth);
+            headBehaviour.playHeadAnimations (_tongInMouth); // check this code
         }
     }
 
@@ -82,33 +67,24 @@ public class TongBehaviour : MonoBehaviour
     {
         if (catchedObject.transform.parent != this.transform)
         {
-            dropsParticlesBehavior
-                .DropParticles(catchedObject.transform.position);
+            dropsParticlesBehavior.DropParticles(catchedObject.transform.position);
             catchedObject.transform.parent = this.transform;
         }
     }
 
-    private void resetingTong(Transform pivotObject)
-    {
-        thisObjectRigidBody.velocity = Vector3.zero;
-        thisObjectRigidBody.angularVelocity = 0;
-        this.transform.localPosition = pivotObject.localPosition;
-        this.transform.rotation = pivotObject.rotation;
-    }
-
-
     public IEnumerator spawningTongCoroutine(float distance)
     {
         Vector3 startingPos = transform.position;
-        Vector3 finalPos = transform.position + (transform.up * (distance/2));
+        Vector3 finalPos = transform.position + (transform.up * (distance/rangeOfTong));
 
         float elapsedTimeGo = 0;
 
         while (elapsedTimeGo < velocityAttack && !tongMustGoBack)
         {
             if(!tongsIsPaused){
-                transform.position = Vector3.Lerp(startingPos, finalPos, (elapsedTimeGo / velocityAttack));
+                transform.position = Vector3.Lerp(startingPos, finalPos, (elapsedTimeGo / velocityAttack ));
                 elapsedTimeGo += Time.deltaTime;
+                _tongInMouth = false;
             }
             yield return null;
         }
@@ -118,6 +94,7 @@ public class TongBehaviour : MonoBehaviour
          
         while (elapsedTimeBack < elapsedTimeGo)
         {
+            tongMustGoBack = true;
             if(!tongsIsPaused){
                 transform.position = Vector3.Lerp(currentPosition, tongPivotObject.position, (elapsedTimeBack / elapsedTimeGo));
                 elapsedTimeBack += Time.deltaTime;
@@ -125,5 +102,7 @@ public class TongBehaviour : MonoBehaviour
             yield return null;
         }
         transform.position = tongPivotObject.position;
+        tongMustGoBack = false;
+        _tongInMouth = true;
     }
 }

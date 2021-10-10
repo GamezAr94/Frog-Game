@@ -2,17 +2,16 @@ using UnityEngine;
 
 public class LineScreenDraw : MonoBehaviour
 {
-    [SerializeField]
-    TongBehaviour tongBehaviour;
+    
+    [Header("Line Rendering Settings")]
 
     [SerializeField][Range (0f, 5f)]
+    [Tooltip("Float that indicates the minimum distance between the starting and ending user touch input")]
     float minDistanceToSpawnTong = 2.0f;
     
     [SerializeField]
-    const float BORDER_LIMIT_TO_POINT_ATTACK = -3f;
-
-    //private Vector3 _nonReachablePoint = new Vector3(-100,-100,-100);
-    //public Vector3 NonReachablePoint { get => _nonReachablePoint; }
+    [Tooltip("Float that indicates the limit where the user can enter the starting input in the Y axis")]
+    const float BORDER_LIMIT_TO_POINT_ATTACK_Y = -3f;
 
     private Vector3 _startLocalTouchPosition;
     public Vector3 StartLocalTouchPosition { get => _startLocalTouchPosition; private set => _startLocalTouchPosition = value; }
@@ -25,21 +24,24 @@ public class LineScreenDraw : MonoBehaviour
     private float _distance;
     public float Distance { get => _distance; private set => _distance = value; }
 
-    LineRenderer renderLine;
+    [SerializeField]
+    TongBehaviour tongBehaviour;
 
+    LineRenderer renderLine;
+    PlayerActions playerActions;
+
+    [Header("Debuger Tools")]
+
+    [Tooltip("Game object that helps to visualize the position of the users touch input")]
     public GameObject startTargetPoint;
+    [Tooltip("Game object that helps to visualize the position of the users touch exit")]
     public GameObject endTargetPoint;
 
-    PlayerActions playerActions;
 
     private void Awake()
     {
         renderLine = this.GetComponent<LineRenderer>();
         renderLine.positionCount = 2;
-
-        //_startLocalTouchPosition = NonReachablePoint;
-        //_endingLocalTouchPosition = NonReachablePoint;
-        //trackLocalTouchPosition = NonReachablePoint;
 
         startTargetPoint.transform.position = _startLocalTouchPosition;
         endTargetPoint.transform.position = _endingLocalTouchPosition;
@@ -51,7 +53,7 @@ public class LineScreenDraw : MonoBehaviour
 
     private void Update()
     {
-        if(tongBehaviour.tongInMouth){
+        if(tongBehaviour.TongInMouth){
             EventSystem.current.swipeTouch();
         }
     }
@@ -68,7 +70,7 @@ public class LineScreenDraw : MonoBehaviour
                 _startLocalTouchPosition = Camera.main.ScreenToWorldPoint(touch.position);
                 _startLocalTouchPosition.z = 0f;
                 
-                if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK){
+                if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y){
                     debugingContactPoints(startTargetPoint, _startLocalTouchPosition);
 
                     setDrawPosition(2, _startLocalTouchPosition.x, _startLocalTouchPosition.y);
@@ -89,7 +91,7 @@ public class LineScreenDraw : MonoBehaviour
                     setDrawPosition();
                 }
             }
-            else if (touch.phase == TouchPhase.Ended && _startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK)
+            else if (touch.phase == TouchPhase.Ended && _startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y)
             {
                 _endingLocalTouchPosition = Camera.main.ScreenToWorldPoint(touch.position);
                 _endingLocalTouchPosition.z = 0;
