@@ -2922,8 +2922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55be98851da33a941aa860d17f321f7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tongObject: {fileID: 5798444414461427094}
-  borderLimitToPointTheAttack: -3
+  tongObjecBehaviour: {fileID: 5798444414461427092}
 --- !u!50 &5798444415422599425
 Rigidbody2D:
   serializedVersion: 4
