@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class PlayerActions : MonoBehaviour
 {
+    [Header("Player Action Links")]
+
+    [Tooltip("Component to retrieve the script of the tong behaviour")]
     [SerializeField]
     TongBehaviour tongBehaviour;
 
@@ -18,32 +21,29 @@ public class PlayerActions : MonoBehaviour
     }
 
     public void Update() {
-        if(!tongBehaviour.TongInMouth){
+        if(!tongBehaviour.TongInMouth){//If the tong is not in mouth and the frog move, it will look at the target position of the first user input touch
             SettingFrogsHeadRotation(lineRendererObject.StartLocalTouchPosition - transform.position);
-            //transform.right = lineRendererObject.StartLocalTouchPosition - transform.position;
         }
     }
 
+//Function to controll the movment of the head and notify the tong when it has been spawned
     public void FrogReadyToSpawnTong(Touch touch)
     {
         if (touch.phase == TouchPhase.Began)
         {
-            Debug.Log("This is an event system test " + touch.phase);
             SettingFrogsHeadRotation(lineRendererObject.StartLocalTouchPosition - transform.position);
-            //transform.right = lineRendererObject.StartLocalTouchPosition - transform.position;
         }
         else if (touch.phase == TouchPhase.Moved)
         {
-            Debug.Log("This is an event system test " + touch.phase);
         }
         else if (touch.phase == TouchPhase.Ended)
         {
-            Debug.Log("This is an event system test " + touch.phase);
             spawnTong = tongBehaviour.spawningTongCoroutine(lineRendererObject.Distance);
             StartCoroutine(spawnTong);
         }
     }
 
+//function to set the right rotation of the head's frog
     public void SettingFrogsHeadRotation(Vector3 target){
         transform.right = target;
     }

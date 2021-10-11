@@ -3,24 +3,25 @@ using UnityEngine.U2D;
 
 public class BodyTongBehaviour : MonoBehaviour
 {
-    SpriteShapeController _bodyTongSprite;
-    public SpriteShapeController BodyTongSprite { get => _bodyTongSprite; }
+    
+    [Header("Body Tong Behaviour Settings")]
 
-    private int numberOfNodes;
+    [Tooltip("Component needed to maipulate and strech the sprite")]
+    SpriteShapeController _bodyTongSprite;
+
+    int numberOfNodes;
 
     [SerializeField]
+    [Tooltip("Tong Game Object to get its position")]
     GameObject tong;
-
-
-    public int NumberOfNodes { get => numberOfNodes; private set => numberOfNodes = value; }
 
     private void Awake() {
         _bodyTongSprite = this.GetComponent<SpriteShapeController>();
-        NumberOfNodes = _bodyTongSprite.spline.GetPointCount();
+        numberOfNodes = _bodyTongSprite.spline.GetPointCount();
     }
     
+    //Function to set the position of the last node of the body tong to the position of the tong
     public void NodesFollowing() {
-        //_bodyTongSprite.splineDetail = NumberOfNodes-1;
-        _bodyTongSprite.spline.SetPosition(3,tong.transform.localPosition);
+        _bodyTongSprite.spline.SetPosition(numberOfNodes-1,tong.transform.localPosition);
     }
 }

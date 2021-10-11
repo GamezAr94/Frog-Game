@@ -38,9 +38,6 @@ public class TongBehaviour : MonoBehaviour
     [SerializeField]
     DropsParticlesBehavior dropsParticlesBehavior;
 
-    [SerializeField]
-    HeadBehaviour headBehaviour; //Double check this code
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         switch (other.tag)
@@ -56,15 +53,6 @@ public class TongBehaviour : MonoBehaviour
             default:
                 break;
         }
-        headBehaviour.playHeadAnimations (_tongInMouth); //Check this code
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Body"))
-        {
-            headBehaviour.playHeadAnimations (_tongInMouth); // check this code
-        }
     }
 
     private void catchigObjects(Collider2D catchedObject)
@@ -76,6 +64,8 @@ public class TongBehaviour : MonoBehaviour
         }
     }
 
+//Coroutine to spawn the tong, it can hadle pauses, and it can returns the tong before it has completed its path.
+//it sets the original position of the tong, the right position of the nodes of the body tong and the bools in charge of returning and pausing the tong
     public IEnumerator spawningTongCoroutine(float distance)
     {
         Vector3 startingPos = transform.position;
@@ -107,6 +97,7 @@ public class TongBehaviour : MonoBehaviour
             }
             yield return null;
         }
+
         transform.position = tongPivotObject.position;
 
         bodyTongBehaviour.NodesFollowing();

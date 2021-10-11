@@ -66,6 +66,10 @@ public class LineScreenDraw : MonoBehaviour
         }
     }
 
+//Funtion to retrieve the user input, the position of the first touch, the swipe of the input and the position of the end of the touch
+//this function is the logic to move the frog in the right direction and spawn the tong
+//this function has a debbuging system where two objects are posisionated where the user press and releases its input
+//also this function draw a line to visualize the user input
     private void PositionUserTouch()
     {
         if (Input.touchCount > 0)
@@ -107,6 +111,8 @@ public class LineScreenDraw : MonoBehaviour
                 _endingLocalTouchPosition.z = 0;
 
                 _distance = DistanceBetween2Points2D(_startLocalTouchPosition, _endingLocalTouchPosition);
+                
+                debugingContactPoints(endTargetPoint, _endingLocalTouchPosition);
 
                 if(HorizontalSwipe() > VerticalSwipe()){
 
@@ -120,11 +126,8 @@ public class LineScreenDraw : MonoBehaviour
                 
                     if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y){
 
-
                         if(_distance >= minDistanceToSpawnTong && _startLocalTouchPosition.y > _endingLocalTouchPosition.y){
                             
-                            debugingContactPoints(endTargetPoint, _endingLocalTouchPosition);
-
                             playerActions.FrogReadyToSpawnTong(touch);
                         }
 
