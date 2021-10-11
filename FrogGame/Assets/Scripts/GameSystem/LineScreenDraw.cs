@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class LineScreenDraw : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class LineScreenDraw : MonoBehaviour
     [Tooltip("Float that indicates the minimum distance between the starting and ending user touch input")]
     float minDistanceToSpawnTong = 2.0f;
     
-    [SerializeField]
+    [SerializeField][Range (1f, -5f)]
     [Tooltip("Float that indicates the limit where the user can enter the starting input in the Y axis")]
     const float BORDER_LIMIT_TO_POINT_ATTACK_Y = -3f;
 
@@ -43,8 +44,8 @@ public class LineScreenDraw : MonoBehaviour
         renderLine = this.GetComponent<LineRenderer>();
         renderLine.positionCount = 2;
 
-        startTargetPoint.transform.position = _startLocalTouchPosition;
-        endTargetPoint.transform.position = _endingLocalTouchPosition;
+        startTargetPoint.transform.position = _startLocalTouchPosition;//Debuger object
+        endTargetPoint.transform.position = _endingLocalTouchPosition;//Debuger object
 
         playerActions = this.GetComponent<PlayerActions>();
 
@@ -57,7 +58,6 @@ public class LineScreenDraw : MonoBehaviour
             EventSystem.current.swipeTouch();
         }
     }
-
 
     private void PositionUserTouch()
     {
@@ -82,10 +82,11 @@ public class LineScreenDraw : MonoBehaviour
             else if (touch.phase == TouchPhase.Moved)
             {
                 if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y){
+
                     trackLocalTouchPosition = Camera.main.ScreenToWorldPoint(touch.position);
                     trackLocalTouchPosition.z = 0f;
                     
-                    if(_startLocalTouchPosition.y >= trackLocalTouchPosition.y){
+                    if(_startLocalTouchPosition.y >= trackLocalTouchPosition.y){ //Si el touch es movido por debajo del touch inicial
                         setDrawPosition(0, _startLocalTouchPosition.x, _startLocalTouchPosition.y);
                         setDrawPosition(1, trackLocalTouchPosition.x, trackLocalTouchPosition.y);
                     }else{
@@ -93,23 +94,35 @@ public class LineScreenDraw : MonoBehaviour
                     }
                 }
             }
-            else if (touch.phase == TouchPhase.Ended && _startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y)
+            else if (touch.phase == TouchPhase.Ended)
             {
                 _endingLocalTouchPosition = Camera.main.ScreenToWorldPoint(touch.position);
                 _endingLocalTouchPosition.z = 0;
 
-                _distance = DistanceBetween2Points2D(_startLocalTouchPosition, _endingLocalTouchPosition);
+                if(HorizontalSwipe() > VerticalSwipe()){
 
-                if(_distance >= minDistanceToSpawnTong && _startLocalTouchPosition.y > _endingLocalTouchPosition.y){
-                    debugingContactPoints(endTargetPoint, _endingLocalTouchPosition);
+                    //Frog Body movement left or right
 
+                    playerActions.SettingFrogsHeadRotation(new Vector3(0,5,0)); //Default Target location that the frog will look at
 
-                    playerActions.FrogReadyToSpawnTong(touch);
+                }else{
+                
+                    if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y){
+
+                        _distance = DistanceBetween2Points2D(_startLocalTouchPosition, _endingLocalTouchPosition);
+
+                        if(_distance >= minDistanceToSpawnTong && _startLocalTouchPosition.y > _endingLocalTouchPosition.y){
+                            
+                            debugingContactPoints(endTargetPoint, _endingLocalTouchPosition);
+
+                            playerActions.FrogReadyToSpawnTong(touch);
+                        }
+
+                        //debugingContactPoints(startTargetPoint, _nonReachablePoint);
+                        //debugingContactPoints(endTargetPoint, _nonReachablePoint);
+
+                    }
                 }
-
-                //debugingContactPoints(startTargetPoint, _nonReachablePoint);
-                //debugingContactPoints(endTargetPoint, _nonReachablePoint);
-
                 setDrawPosition();
             }
         }
@@ -145,6 +158,16 @@ public class LineScreenDraw : MonoBehaviour
         distanceCoordinates.z = 0f;
         float distanceFloat = (distanceCoordinates[0] * distanceCoordinates[0]) + (distanceCoordinates[1] * distanceCoordinates[1]);
         return distanceFloat;
+    }
+
+//Function to determinate the absolute value on the X axis in two coordinates
+    private float HorizontalSwipe(){
+        return Mathf.Abs(_startLocalTouchPosition.x - _endingLocalTouchPosition.x);
+    }
+
+//Function to determinate the absolute value on the Y axis in two coordinates
+    private float VerticalSwipe(){
+        return Mathf.Abs(_startLocalTouchPosition.y - _endingLocalTouchPosition.y);
     }
 
 //function to debug the contact points of the user showing where the user clicked or released the touch

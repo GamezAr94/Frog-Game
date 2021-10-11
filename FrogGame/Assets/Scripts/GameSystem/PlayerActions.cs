@@ -19,7 +19,8 @@ public class PlayerActions : MonoBehaviour
 
     public void Update() {
         if(!tongBehaviour.TongInMouth){
-            transform.right = lineRendererObject.StartLocalTouchPosition - transform.position;
+            SettingFrogsHeadRotation(lineRendererObject.StartLocalTouchPosition - transform.position);
+            //transform.right = lineRendererObject.StartLocalTouchPosition - transform.position;
         }
     }
 
@@ -28,7 +29,8 @@ public class PlayerActions : MonoBehaviour
         if (touch.phase == TouchPhase.Began)
         {
             Debug.Log("This is an event system test " + touch.phase);
-            transform.right = lineRendererObject.StartLocalTouchPosition - transform.position;
+            SettingFrogsHeadRotation(lineRendererObject.StartLocalTouchPosition - transform.position);
+            //transform.right = lineRendererObject.StartLocalTouchPosition - transform.position;
         }
         else if (touch.phase == TouchPhase.Moved)
         {
@@ -40,6 +42,10 @@ public class PlayerActions : MonoBehaviour
             spawnTong = tongBehaviour.spawningTongCoroutine(lineRendererObject.Distance);
             StartCoroutine(spawnTong);
         }
+    }
+
+    public void SettingFrogsHeadRotation(Vector3 target){
+        transform.right = target;
     }
 
 }
