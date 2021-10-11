@@ -2459,6 +2459,7 @@ GameObject:
   - component: {fileID: 5798444414937027128}
   - component: {fileID: 5798444414937027129}
   - component: {fileID: 5798444414937027132}
+  - component: {fileID: 5798444414937027133}
   m_Layer: 0
   m_Name: Body
   m_TagString: Body
@@ -2482,6 +2483,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.08208895}
   serializedVersion: 2
   m_Radius: 0.7393396
+--- !u!114 &5798444414937027133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5798444414937027131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5297f6139449e1349a506dc7006f1540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5798444415029534008
 Transform:
   m_ObjectHideFlags: 0
@@ -2950,7 +2963,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minDistanceToSpawnTong: 2
+  minDistanceToMoveFrog: 3
   tongBehaviour: {fileID: 5798444414461427092}
+  bodyMovementScript: {fileID: 5798444414937027133}
   startTargetPoint: {fileID: 2128216516}
   endTargetPoint: {fileID: 586802537}
 --- !u!120 &5798444415422599429

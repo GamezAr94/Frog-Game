@@ -7,8 +7,12 @@ public class LineScreenDraw : MonoBehaviour
     [Header("Line Rendering Settings")]
 
     [SerializeField][Range (0f, 5f)]
-    [Tooltip("Float that indicates the minimum distance between the starting and ending user touch input")]
+    [Tooltip("Float that indicates the minimum distance between the starting and ending user touch input required to spawn the tong")]
     float minDistanceToSpawnTong = 2.0f;
+    
+    [SerializeField][Range (0f, 5f)]
+    [Tooltip("Float that indicates the minimum distance between the starting and ending user touch input reuired to move the frog")]
+    float minDistanceToMoveFrog = 3.0f;
     
     [SerializeField][Range (1f, -5f)]
     [Tooltip("Float that indicates the limit where the user can enter the starting input in the Y axis")]
@@ -30,6 +34,9 @@ public class LineScreenDraw : MonoBehaviour
 
     LineRenderer renderLine;
     PlayerActions playerActions;
+
+    [SerializeField]
+    BodyMovement bodyMovementScript;
 
     [Header("Debuger Tools")]
 
@@ -99,9 +106,13 @@ public class LineScreenDraw : MonoBehaviour
                 _endingLocalTouchPosition = Camera.main.ScreenToWorldPoint(touch.position);
                 _endingLocalTouchPosition.z = 0;
 
+                _distance = DistanceBetween2Points2D(_startLocalTouchPosition, _endingLocalTouchPosition);
+
                 if(HorizontalSwipe() > VerticalSwipe()){
 
-                    //Frog Body movement left or right
+                    if(_distance > minDistanceToMoveFrog){
+                        bodyMovementScript.FrogMovement(_startLocalTouchPosition.x, _endingLocalTouchPosition.x);
+                    }
 
                     playerActions.SettingFrogsHeadRotation(new Vector3(0,5,0)); //Default Target location that the frog will look at
 
@@ -109,7 +120,6 @@ public class LineScreenDraw : MonoBehaviour
                 
                     if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y){
 
-                        _distance = DistanceBetween2Points2D(_startLocalTouchPosition, _endingLocalTouchPosition);
 
                         if(_distance >= minDistanceToSpawnTong && _startLocalTouchPosition.y > _endingLocalTouchPosition.y){
                             
