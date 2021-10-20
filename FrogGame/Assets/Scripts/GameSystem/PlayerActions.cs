@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class PlayerActions : MonoBehaviour
 {
-    [Header("Player Action Links")]
+    [Header("Game Objects/Components")]
 
     [Tooltip("Component to retrieve the script of the tong behaviour")]
     [SerializeField]
     TongBehaviour tongBehaviour;
 
     LineScreenDraw lineRendererObject;
+
 
     IEnumerator spawnTong;
 
@@ -26,7 +27,7 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
-//Function to controll the movment of the head and notify the tong when it has been spawned
+//Function to controll the movment of the head and notify the tong when it has been spawned. Start Coroutine
     public void FrogReadyToSpawnTong(Touch touch)
     {
         if (touch.phase == TouchPhase.Began)

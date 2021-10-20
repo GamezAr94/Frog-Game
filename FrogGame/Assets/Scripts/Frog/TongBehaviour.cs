@@ -10,6 +10,9 @@ public class TongBehaviour : MonoBehaviour
     [SerializeField]
     [Tooltip("Bool to pause the tong at the middle of its spawn")]
     bool tongsIsPaused = false;
+
+    public Vector3 ThisTongPosition { get => this.transform.position; }
+
     [SerializeField]
     [Tooltip("Bool that indicates when the tong must go back to its mouth")]
     bool tongMustGoBack = false;
@@ -45,7 +48,7 @@ public class TongBehaviour : MonoBehaviour
             case "Body":
                 break;
             case "Collectibles":
-                if (tongMustGoBack) // to catch objects only when tong is going forward
+                if (!tongMustGoBack) // to catch objects only when tong is going forward
                 {
                     catchigObjects (other);
                 }

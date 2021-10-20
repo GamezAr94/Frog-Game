@@ -14,7 +14,6 @@ public class LineScreenDraw : MonoBehaviour
     [Tooltip("Float that indicates the minimum distance between the starting and ending user touch input reuired to move the frog")]
     float minDistanceToMoveFrog = 3.0f;
     
-    [SerializeField][Range (1f, -5f)]
     [Tooltip("Float that indicates the limit where the user can enter the starting input in the Y axis")]
     const float BORDER_LIMIT_TO_POINT_ATTACK_Y = -3f;
 
@@ -29,14 +28,17 @@ public class LineScreenDraw : MonoBehaviour
     private float _distance;
     public float Distance { get => _distance; private set => _distance = value; }
 
+
+    [Header("Game Objects/Components")]
+
     [SerializeField]
     TongBehaviour tongBehaviour;
 
-    LineRenderer renderLine;
-    PlayerActions playerActions;
-
     [SerializeField]
     BodyMovement bodyMovementScript;
+
+    LineRenderer renderLine;
+    PlayerActions playerActions;
 
     [Header("Debuger Tools")]
 
@@ -112,7 +114,7 @@ public class LineScreenDraw : MonoBehaviour
 
                 _distance = DistanceBetween2Points2D(_startLocalTouchPosition, _endingLocalTouchPosition);
                 
-                debugingContactPoints(endTargetPoint, _endingLocalTouchPosition);
+                debugingContactPoints(endTargetPoint, _endingLocalTouchPosition); // code to show the contact points of the user input
 
                 if(HorizontalSwipe() > VerticalSwipe()){
 
