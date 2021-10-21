@@ -1718,7 +1718,7 @@ MonoBehaviour:
   _tongInMouth: 1
   tongPivotObject: {fileID: 5798444415029534008}
   bodyTongBehaviour: {fileID: 4284324973811575017}
-  velocityAttack: 0.107
+  desiredTongAttackDuration: 0.1
   rangeOfTong: 8.5
   dropsParticlesBehavior: {fileID: 6573808567958949107, guid: eaa87c6133f834147b5240ca2f05871a, type: 3}
 --- !u!4 &5798444414461427093
@@ -2490,6 +2490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5297f6139449e1349a506dc7006f1540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  desiredDuration: 0.23
 --- !u!4 &5798444415029534008
 Transform:
   m_ObjectHideFlags: 0
