@@ -11,11 +11,12 @@ public class TongBehaviour : MonoBehaviour
     [Tooltip("Bool to pause the tong at the middle of its spawn")]
     bool tongsIsPaused = false;
 
-    public Vector3 ThisTongPosition { get => this.transform.position; }
+    public Vector3 ThisPosition { get => this.transform.position; }
 
     [SerializeField]
     [Tooltip("Bool that indicates when the tong must go back to its mouth")]
     bool tongMustGoBack = false;
+    
     [SerializeField]
     [Tooltip("Bool to indicate whenever the tong is in its mouth")]
     bool _tongInMouth = true;
@@ -31,7 +32,7 @@ public class TongBehaviour : MonoBehaviour
 
     [Tooltip("The greater the slower")]
     [SerializeField][Range (0.1f, 2f)]
-    float velocityAttack = 0.1f;
+    float desiredTongAttackDuration = 0.1f;
 
     [Tooltip("The greater the shorter")]
     [SerializeField][Range (5f, 20f)]
@@ -41,6 +42,11 @@ public class TongBehaviour : MonoBehaviour
     [SerializeField]
     DropsParticlesBehavior dropsParticlesBehavior;
 
+    IEnumerator spawnTong;
+
+    private void Awake() {
+        transform.position = tongPivotObject.position;
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         switch (other.tag)
@@ -67,36 +73,52 @@ public class TongBehaviour : MonoBehaviour
         }
     }
 
+    //Function to start the coroutine that will spawn the tong
+    public void SetCoroutineToSpawnTong(float distance)
+    {
+        spawnTong = spawningTongCoroutine(distance);
+        StartCoroutine(spawnTong);
+    }
+
 //Coroutine to spawn the tong, it can hadle pauses, and it can returns the tong before it has completed its path.
 //it sets the original position of the tong, the right position of the nodes of the body tong and the bools in charge of returning and pausing the tong
-    public IEnumerator spawningTongCoroutine(float distance)
+    IEnumerator spawningTongCoroutine(float distance)
     {
         Vector3 startingPos = transform.position;
         Vector3 finalPos = transform.position + (transform.up * (distance/rangeOfTong));
 
-        float elapsedTimeGo = 0;
+        float percentageAttackCompleted;
+        float elapsedTime = 0;
 
-        while (elapsedTimeGo < velocityAttack && !tongMustGoBack)
+        while (elapsedTime < desiredTongAttackDuration && !tongMustGoBack)
         {
             if(!tongsIsPaused){
-                transform.position = Vector3.Lerp(startingPos, finalPos, (elapsedTimeGo / velocityAttack ));
+                elapsedTime += Time.deltaTime;
+                percentageAttackCompleted = elapsedTime / desiredTongAttackDuration;
+                
+                transform.position = Vector3.Lerp(startingPos, finalPos, percentageAttackCompleted);
                 bodyTongBehaviour.NodesFollowing();
-                elapsedTimeGo += Time.deltaTime;
                 _tongInMouth = false;
             }
             yield return null;
         }
 
-        float elapsedTimeBack = 0;
-        Vector3 currentPosition = transform.position;
+        startingPos = transform.position;
+
+        desiredTongAttackDuration = elapsedTime; // setting the duration of the return equals to the time elapsed going forward
+
+        elapsedTime = 0;
          
-        while (elapsedTimeBack < elapsedTimeGo)
+        while (elapsedTime < desiredTongAttackDuration)
         {
             tongMustGoBack = true;
             if(!tongsIsPaused){
-                transform.position = Vector3.Lerp(currentPosition, tongPivotObject.position, (elapsedTimeBack / elapsedTimeGo));
+
+                elapsedTime += Time.deltaTime;
+                percentageAttackCompleted = elapsedTime / desiredTongAttackDuration;
+
+                transform.position = Vector3.Lerp(startingPos, tongPivotObject.position, percentageAttackCompleted);
                 bodyTongBehaviour.NodesFollowing();
-                elapsedTimeBack += Time.deltaTime;
             }
             yield return null;
         }
@@ -107,5 +129,7 @@ public class TongBehaviour : MonoBehaviour
 
         tongMustGoBack = false;
         _tongInMouth = true;
+
+        StopCoroutine(spawnTong);
     }
 }
