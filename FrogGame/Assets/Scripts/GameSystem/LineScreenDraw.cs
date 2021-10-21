@@ -189,9 +189,10 @@ Vector3 GetThePositionOfTheTouch(Touch touch){
 //Function to move the frog body and set the rotation of the head of the frog
     private void VerticalActivity(){
 
-        if(_distance > minDistanceToMoveFrog){
+        if(_distance > minDistanceToMoveFrog && !bodyMovementScript.IsFrogBodyMoving){
             
-            bodyMovementScript.FrogVerticalMovement(_startLocalTouchPosition.x, _endingLocalTouchPosition.x);
+            //bodyMovementScript.FrogVerticalMovement(_startLocalTouchPosition.x, _endingLocalTouchPosition.x);
+            bodyMovementScript.SetFrogBodyMovementCoroutine(_startLocalTouchPosition.x,_endingLocalTouchPosition.x);
 
         }
 
