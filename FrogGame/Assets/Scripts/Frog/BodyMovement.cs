@@ -17,7 +17,7 @@ public class BodyMovement : MonoBehaviour
 
     [Tooltip("Desired amount of time to move the frog side to side")]
     [SerializeField][Range(0.01f, 3.0f)]
-    float desiredDuration = 3f;
+    float desiredFrogMovementDuration = 3f;
 
     //Function to set and start the coroutine to move the frog
     public void SetFrogBodyMovementCoroutine(float startingPoint, float endingPoint){
@@ -40,10 +40,10 @@ public class BodyMovement : MonoBehaviour
 
         elapsedTime = 0.0f;
 
-        while(elapsedTime <= desiredDuration){
+        while(elapsedTime <= desiredFrogMovementDuration){
 
             elapsedTime += Time.deltaTime;
-            float percentageCompleted = elapsedTime / desiredDuration;
+            float percentageCompleted = elapsedTime / desiredFrogMovementDuration;
 
             if (startingUserInputPoint > endingUserInputPoint && startFrogPosition.x < SCREEN_BOUNDARIES)//movement to the right
             {
