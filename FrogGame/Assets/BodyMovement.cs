@@ -3,7 +3,7 @@ using UnityEngine;
 public class BodyMovement : MonoBehaviour
 {
     //Function to move the frog side to side
-    public void FrogMovement(float startingPoint, float endingPoint)
+    public void FrogVerticalMovement(float startingPoint, float endingPoint)
     {
         if (startingPoint > endingPoint && this.transform.position.x < 2.0f)//movement to the right
         {
