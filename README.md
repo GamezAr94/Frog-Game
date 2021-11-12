@@ -33,3 +33,8 @@ The player is controlling a frog which has to catch insects in order to increase
 ## Screen Shot
 
 ![image](https://user-images.githubusercontent.com/46079765/141534544-6f67f72c-487e-4f60-980d-d0cb8bbb9bcf.png)
+
+## IMPORTANT
+```
+The game isn't finished, I am implementing more enemies, insects, power-ups, and animations
+```
