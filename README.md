@@ -32,4 +32,4 @@ The player is controlling a frog which has to catch insects in order to increase
 
 ## Screen Shot
 
-![alt text](![image](https://user-images.githubusercontent.com/46079765/141534449-d05412f6-8c5e-4dc3-8311-5fa253c2c44e.png))
+![image](https://user-images.githubusercontent.com/46079765/141534544-6f67f72c-487e-4f60-980d-d0cb8bbb9bcf.png)
