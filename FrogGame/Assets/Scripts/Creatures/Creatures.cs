@@ -2,99 +2,82 @@ using System.Collections;
 using UnityEngine;
 public abstract class Creatures : MonoBehaviour
 {
-    [SerializeField]
-    Creature creature;
-    public Creature Creature { get => creature; }
+    [SerializeField][Tooltip("Field to retrieve the information of the creature to instance")]
+    Creature _creatureTypeStruct;
+    public Creature CreatureTypeStruct { get => _creatureTypeStruct; }
 
-    [SerializeField]
-    private TextMesh pointsText;
+ 
+    [Tooltip("Variable to store the exit point of the creature")]
+    Vector3 _exitPoint;
+    public Vector3 ExitPoint { get => _exitPoint; }
 
-    float timeRemaining;
-    public float TimeRemaining { get => timeRemaining; set => timeRemaining = value; }
-
-    [SerializeField]
-    bool hasExit = false;
-    public bool HasExit { get => hasExit; set { hasExit = value; } }
-
-    Vector2 exitPoint;
-    public Vector2 ExitPoint { get => exitPoint; set => exitPoint = value; }
-
-    Vector2 moveSpot;
-    public Vector2 MoveSpot { get => moveSpot;  set => moveSpot = value; }
-
-    protected float[] availableAreaOfMovementX;
-    protected float[] availableAreaOfMovementY;
     
-    protected virtual void Awake()
-    {
-        availableAreaOfMovementX = Creature.creatureBoundaries.coordinatesOfMovementX;
-        availableAreaOfMovementY = Creature.creatureBoundaries.coordinatesOfMovementY;
-        TimeRemaining = Creature.lifeTime;
-    }
-    private void Start()
-    {
-        ExitPoint = Creature.creatureBoundaries.getRandomBorderPoint();
-    }
+    [Tooltip("Field to store the coroutine")]
+    IEnumerator _movementCreature;
+    public IEnumerator MovementCreature { get => _movementCreature; }
 
-    private void Update()
-    {
-        movement();
-        Exit();
-    }
+    
+    [Tooltip("Variable to store the number of remaining movements that the creature has")]
+    int _movementsRemaining;
+    public int MovementsRemaining { get => _movementsRemaining; set => _movementsRemaining = value; }
 
-    protected virtual void movement()
-    {
-    }
 
-    protected virtual void Exit()
-    {
-        if (TimeRemaining > 0)
-        {
-            TimeRemaining -= Time.deltaTime;
-        }
-        else
-        {
-            HasExit = true;
-        }
+    [Tooltip("Event to be called when the OnDestroy() method is called")]
+    System.Action whenDestroyed;
+
+    protected virtual void Awake() {
+
+        _movementsRemaining = _creatureTypeStruct.GetRemainingNumberOfMovements();
+        _exitPoint = _creatureTypeStruct.GetExitPoint;
+        _movementCreature = movementCreatureCoroutine();
+
+        StartCoroutine(_movementCreature);
+        whenDestroyed = () => { StopCoroutine(MovementCreature); };
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.transform.name.Equals("BrainAndPoints"))
-        {
+        if(other.CompareTag("TongTip")){
+            StopCoroutine(_movementCreature);
+            CreatureCaught(other);
+            whenDestroyed = DestroyedOnMouth;
+        }
+        if(this.transform.parent == null && other.CompareTag("Boundaries")){
+            Destroy(this.gameObject);      
+        }
+        if(this.transform.parent && other.CompareTag("Mouth")){
             Destroy(this.gameObject);
         }
-        else if (other.CompareTag("Boundaries") && HasExit)
-        {
-            Destroy(this.gameObject);
-        }else if(other.CompareTag("TongTip")){
-            // this.transform.SetParent(other.transform);
-            if(pointsText != null){
-                ShowFloatingText();
-            }
-        }
     }
-    private void ShowFloatingText(){
-        TextMesh instance = Instantiate(pointsText, this.gameObject.transform.position, Quaternion.identity);
-        instance.GetComponent<TextMesh>().text = Creature.value.ToString();
-    }
-    protected virtual void SetParticleSystem() { }
 
-    protected void lookAtTarget(Vector3 targetSpot)
+    protected void DestroyedOnMouth(){
+        Debug.Log("Function to activate the logic when the creature has been caught and destroy");
+        // Logic to do when the creature is in the mouth
+        // - play a sound
+        // - send an evento to update the score UI
+        // - play an animation 
+    }
+
+    void OnDestroy() {
+        whenDestroyed();
+    }
+
+    protected virtual IEnumerator movementCreatureCoroutine(){
+        yield return null;
+    }
+    
+    protected void CreatureCaught(Collider2D caughtObject)
     {
-        Vector3 target = new Vector3(targetSpot.x, targetSpot.y, 0);
-        target.x = target.x - this.gameObject.transform.position.x;
-        target.y = target.x - this.gameObject.transform.position.y;
-        float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
-        if (Mathf.Abs(angle) <= 90)
-        {
-            this.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-            this.transform.localScale = new Vector3(1, 1, 1);
-        }
-        else
-        {
-            this.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 50f));
-            this.transform.localScale = new Vector3(1, -1, 1);
-        }
+        this.transform.parent = caughtObject.transform;
+        //Some logic to do when the creature is caught
+        // - change the sprite
+        // - play a sound
+        // - play some particles effects
+        // - show text of the points gained
+    }
+
+    protected Vector2 nextRandomSpot(float[] minMaxCoordinatesX, float[] minMaxCoordinatesY)
+    {
+        return new Vector2(Random.Range(minMaxCoordinatesX[0], minMaxCoordinatesX[1]), Random.Range(minMaxCoordinatesY[0], minMaxCoordinatesY[1]));
     }
 }

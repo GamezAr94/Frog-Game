@@ -21,12 +21,12 @@ public class BodyMovement : MonoBehaviour
 
     //Function to set and start the coroutine to move the frog
     public void SetFrogBodyMovementCoroutine(float startingPoint, float endingPoint){
-        frogBodyMovement = FrogVerticalMovementCoroutine(startingPoint, endingPoint);
+        frogBodyMovement = FrogHorizontalMovementCoroutine(startingPoint, endingPoint);
         StartCoroutine(frogBodyMovement);
     }
 
     //Coroutine to move the frog side to side
-    private IEnumerator FrogVerticalMovementCoroutine(float startingUserInputPoint, float endingUserInputPoint)
+    private IEnumerator FrogHorizontalMovementCoroutine(float startingUserInputPoint, float endingUserInputPoint)
     {
         _isFrogBodyMoving = true;
 

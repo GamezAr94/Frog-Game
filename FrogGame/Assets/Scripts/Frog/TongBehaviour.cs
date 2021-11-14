@@ -5,6 +5,9 @@ using System.Collections;
 
 public class TongBehaviour : MonoBehaviour
 {
+    const string ATTAKING_TAG_NAME = "TongTip";
+    const string DISABLED_TONG_TAG_NAME = "DisabledTongTip";
+
     [Header("Tong Settings")]
 
     [SerializeField]
@@ -30,7 +33,7 @@ public class TongBehaviour : MonoBehaviour
     [Tooltip("The body of the tong")]
     BodyTongBehaviour bodyTongBehaviour;
 
-    [Tooltip("The greater the slower")]
+    [Tooltip("The time that tong will take to complete the attack")]
     [SerializeField][Range (0.1f, 2f)]
     float desiredTongAttackDuration = 0.1f;
 
@@ -38,39 +41,15 @@ public class TongBehaviour : MonoBehaviour
     [SerializeField][Range (5f, 20f)]
     float rangeOfTong = 12f;
 
-    [Header("Tong Animations")]
-    [SerializeField]
-    DropsParticlesBehavior dropsParticlesBehavior;
-
     IEnumerator spawnTong;
 
     private void Awake() {
         transform.position = tongPivotObject.position;
-    }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        switch (other.tag)
-        {
-            case "Body":
-                break;
-            case "Collectibles":
-                if (!tongMustGoBack) // to catch objects only when tong is going forward
-                {
-                    catchigObjects (other);
-                }
-                break;
-            default:
-                break;
-        }
+        ChangeTagName(DISABLED_TONG_TAG_NAME);
     }
 
-    private void catchigObjects(Collider2D catchedObject)
-    {
-        if (catchedObject.transform.parent != this.transform)
-        {
-            dropsParticlesBehavior.DropParticles(catchedObject.transform.position);
-            catchedObject.transform.parent = this.transform;
-        }
+    void ChangeTagName(string tag){
+        this.transform.gameObject.tag = tag;
     }
 
     //Function to start the coroutine that will spawn the tong
@@ -90,6 +69,8 @@ public class TongBehaviour : MonoBehaviour
         float percentageAttackCompleted;
         float elapsedTime = 0;
 
+        ChangeTagName(ATTAKING_TAG_NAME);
+
         while (elapsedTime < desiredTongAttackDuration && !tongMustGoBack)
         {
             if(!tongsIsPaused){
@@ -108,7 +89,9 @@ public class TongBehaviour : MonoBehaviour
         desiredTongAttackDuration = elapsedTime; // setting the duration of the return equals to the time elapsed going forward
 
         elapsedTime = 0;
-         
+
+        ChangeTagName(DISABLED_TONG_TAG_NAME);
+        
         while (elapsedTime < desiredTongAttackDuration)
         {
             tongMustGoBack = true;

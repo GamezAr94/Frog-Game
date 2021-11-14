@@ -22,7 +22,7 @@ public class PointSystem : MonoBehaviour
         }
         if (other.CompareTag("Collectibles"))
         {
-            points = other.transform.GetComponent<Creatures>().Creature.value;
+            //points = other.transform.GetComponent<Creatures>().Creature.value; // -> I commented this line because I erased all the code from Creature 
             // creatures.Add(other.transform.GetComponent<Creatures>());
         }
         gameManager.UpdateScore(combo, points, tries);
