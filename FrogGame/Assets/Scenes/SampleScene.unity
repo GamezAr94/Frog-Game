@@ -996,7 +996,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1465664370}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -13.3591, z: 0.029999733}
+  m_LocalPosition: {x: 0, y: -13.3591, z: 0}
   m_LocalScale: {x: 0.76, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1696810530}
@@ -1041,7 +1041,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -18
+  m_SortingOrder: -172
   m_Sprite: {fileID: 21300000, guid: 14c57d66e5d5606428e381ea68604def, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2108,7 +2108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _creatureTypeStruct: {fileID: 11400000, guid: f54371215bbfb20418572f4eb8e8974e, type: 2}
-  stop: 1
+  stop: 0
 --- !u!212 &2152612600556106534
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2606,7 +2606,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72d6ec6ba4bafd43a42a58f349137c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tong: {fileID: 5798444414461427094}
 --- !u!212 &5798444413644937957
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3098,7 +3097,6 @@ MonoBehaviour:
   tongMustGoBack: 0
   _tongInMouth: 1
   tongPivotObject: {fileID: 5798444415029534008}
-  bodyTongBehaviour: {fileID: 4284324973811575017}
   desiredTongAttackDuration: 0.288
   rangeOfTong: 7.26
 --- !u!4 &5798444414461427093
@@ -4199,19 +4197,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &5798444415422599424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5798444415422599427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55be98851da33a941aa860d17f321f7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tongBehaviour: {fileID: 5798444414461427092}
 --- !u!4 &5798444415422599426
 Transform:
   m_ObjectHideFlags: 0
@@ -4239,7 +4224,6 @@ GameObject:
   - component: {fileID: 5798444415422599429}
   - component: {fileID: 5798444415422599438}
   - component: {fileID: 5798444415422599428}
-  - component: {fileID: 5798444415422599424}
   m_Layer: 0
   m_Name: BrainAndPoints
   m_TagString: Mouth
@@ -4262,7 +4246,6 @@ MonoBehaviour:
   minDistanceToSpawnTong: 1.2
   minDistanceToMoveFrog: 1.77
   tongBehaviour: {fileID: 5798444414461427092}
-  bodyMovementScript: {fileID: 5798444414937027133}
   startTargetPoint: {fileID: 2128216516}
   endTargetPoint: {fileID: 586802537}
 --- !u!120 &5798444415422599429
@@ -4284,7 +4267,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4304,10 +4287,10 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  - {x: 1, y: 1, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -4316,7 +4299,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.03144654
+        value: 0.10836566
         inSlope: 0
         outSlope: 0
         tangentMode: 0
