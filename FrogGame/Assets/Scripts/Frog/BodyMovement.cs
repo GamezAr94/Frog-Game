@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class BodyMovement : MonoBehaviour
 {
-
+    const float TOTAL_DISTANCE_TO_MOVE_FROG = 2; // Desired amount of distance to move the frog side to side (2.0f is the perfect distance) it shouldn't exceede the screen boundaries
+    const float SCREEN_BOUNDARIES = 2.0f;
+    
     IEnumerator frogBodyMovement;
     Vector3 startFrogPosition;
     Vector3 endFrogPositionLeft;
     Vector3 endFrogPositionRight;
-    const float TOTAL_DISTANCE_TO_MOVE_FROG = 2; // Desired amount of distance to move the frog side to side (2.0f is the perfect distance) it shouldn't exceede the screen boundaries
-    const float SCREEN_BOUNDARIES = 2.0f;
     bool _isFrogBodyMoving;
     public bool IsFrogBodyMoving { get => _isFrogBodyMoving; }
     float elapsedTime;
@@ -19,12 +19,18 @@ public class BodyMovement : MonoBehaviour
     [SerializeField][Range(0.01f, 3.0f)]
     float desiredDuration = 3f;
 
-    //Function to set and start the coroutine to move the frog
-    public void SetFrogBodyMovementCoroutine(float startingPoint, float endingPoint){
-        frogBodyMovement = FrogHorizontalMovementCoroutine(startingPoint, endingPoint);
-        StartCoroutine(frogBodyMovement);
+    private void Awake() {
+        EventSystem.current.onMovingFrogSideToSide += SetFrogBodyMovementCoroutine;
     }
 
+    //Function to set and start the coroutine to move the frog
+    public void SetFrogBodyMovementCoroutine(float startingPoint, float endingPoint){
+        if(!_isFrogBodyMoving){
+            frogBodyMovement = FrogHorizontalMovementCoroutine(startingPoint, endingPoint);
+            StartCoroutine(frogBodyMovement);
+        }
+    }
+    
     //Coroutine to move the frog side to side
     private IEnumerator FrogHorizontalMovementCoroutine(float startingUserInputPoint, float endingUserInputPoint)
     {

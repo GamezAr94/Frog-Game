@@ -29,10 +29,6 @@ public class TongBehaviour : MonoBehaviour
     [Tooltip("The pivot where the tong has to go back")]
     Transform tongPivotObject;
 
-    [SerializeField]
-    [Tooltip("The body of the tong")]
-    BodyTongBehaviour bodyTongBehaviour;
-
     [Tooltip("The time that tong will take to complete the attack")]
     [SerializeField][Range (0.1f, 2f)]
     float desiredTongAttackDuration = 0.1f;
@@ -46,6 +42,12 @@ public class TongBehaviour : MonoBehaviour
     private void Awake() {
         transform.position = tongPivotObject.position;
         ChangeTagName(DISABLED_TONG_TAG_NAME);
+    }
+
+    private void Update() {
+        if(!TongInMouth){
+            EventSystem.current.SettingHeadsRotation(ThisPosition);
+        }
     }
 
     void ChangeTagName(string tag){
@@ -78,7 +80,7 @@ public class TongBehaviour : MonoBehaviour
                 percentageAttackCompleted = elapsedTime / desiredTongAttackDuration;
                 
                 transform.position = Vector3.Lerp(startingPos, finalPos, percentageAttackCompleted);
-                bodyTongBehaviour.NodesFollowing();
+                EventSystem.current.BodyTongFOllowingTong(this.transform.localPosition);
                 _tongInMouth = false;
             }
             yield return null;
@@ -101,14 +103,14 @@ public class TongBehaviour : MonoBehaviour
                 percentageAttackCompleted = elapsedTime / desiredTongAttackDuration;
 
                 transform.position = Vector3.Lerp(startingPos, tongPivotObject.position, percentageAttackCompleted);
-                bodyTongBehaviour.NodesFollowing();
+                EventSystem.current.BodyTongFOllowingTong(this.transform.localPosition);
             }
             yield return null;
         }
 
         transform.position = tongPivotObject.position;
 
-        bodyTongBehaviour.NodesFollowing();
+        EventSystem.current.BodyTongFOllowingTong(this.transform.localPosition);
 
         tongMustGoBack = false;
         _tongInMouth = true;
