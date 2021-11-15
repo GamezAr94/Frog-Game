@@ -5,13 +5,6 @@ using UnityEngine;
 [SerializeField]
 public struct BorderSides
 {
-    public enum borderSides
-    {
-        Left,
-        Rigth,
-        Top
-    }
-    public borderSides side;
     public Vector3 point1;
     public Vector3 point2;
 }

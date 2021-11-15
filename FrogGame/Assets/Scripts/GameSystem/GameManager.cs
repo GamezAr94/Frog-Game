@@ -35,4 +35,7 @@ public class GameManager : MonoBehaviour
         textScore.text = score.ToString();
         textTries.text = tries.ToString();
     }
+    void AddingPoints(){
+
+    }
 }

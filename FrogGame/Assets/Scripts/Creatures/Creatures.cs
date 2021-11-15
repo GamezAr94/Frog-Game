@@ -42,9 +42,6 @@ public abstract class Creatures : MonoBehaviour
             CreatureCaught(other);
             whenDestroyed = DestroyedOnMouth;
         }
-        if(this.transform.parent == null && other.CompareTag("Boundaries")){
-            Destroy(this.gameObject);      
-        }
         if(this.transform.parent && other.CompareTag("Mouth")){
             Destroy(this.gameObject);
         }

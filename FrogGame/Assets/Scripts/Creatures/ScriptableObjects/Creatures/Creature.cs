@@ -4,15 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CreatureDetails", menuName = "Creature/CreatureDetails")]
 public class Creature : ScriptableObject
 {
-    [Header("Type of Creature")]
-
-    [SerializeField]
-    [Tooltip("Selecting the type of creature to assign its settings")]
-    CreatureType creatureType;
-
-
     [Header("Values Of Creature")]
-
     
     [SerializeField][Range(0, 50)]
     [Tooltip("This is the Score value that it will give to the player after catching it")]
@@ -23,6 +15,13 @@ public class Creature : ScriptableObject
     [Tooltip("the numbers of hits it can receive before being caught")]    
     int _strength;
     public int Strength { get => _strength; }
+
+    [Header("Limits Of Movement")]
+
+    [SerializeField]
+    [Tooltip("Setting the limits where the creature can fly, also this boundaries set the starting and ending point")]
+    CreatureBoundaries _creatureBoundaries;
+    public CreatureBoundaries CreatureBoundaries { get => _creatureBoundaries; }
 
 
     [Header("Movement Settings - (2 items per array)")]
@@ -71,12 +70,5 @@ public class Creature : ScriptableObject
         return time;
     }
 
-
-    [Header("Limits Of Movement")]
-
-    [SerializeField]
-    [Tooltip("Setting the limits where the creature can fly, also this boundaries set the starting and ending point")]
-    CreatureBoundaries _creatureBoundaries;
-    public CreatureBoundaries CreatureBoundaries { get => _creatureBoundaries; }
 
 }

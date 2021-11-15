@@ -7,7 +7,6 @@ using System.Linq;
 [SerializeField]
 public struct CreatureSpawnDetails
 {
-    public CreatureType creature;
     public int totalInstances;
     public Creatures behaviour;
 }

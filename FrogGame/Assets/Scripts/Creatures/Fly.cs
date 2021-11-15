@@ -51,5 +51,6 @@ public class Fly : Creatures
 
             yield return null;
         } 
+        Destroy(this.gameObject);
     }
 }
