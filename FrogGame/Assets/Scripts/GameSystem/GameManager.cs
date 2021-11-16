@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
 {
     int score = 0;
     int maxCombo = 0;
-    int numOfTries = 0;
     int totalTries = 0;
     [SerializeField]
     Text textScore;

@@ -2015,7 +2015,7 @@ MonoBehaviour:
   tongMustGoBack: 0
   _tongInMouth: 1
   tongPivotObject: {fileID: 5798444415029534008}
-  desiredTongAttackDuration: 0.288
+  desiredTongAttackDuration: 0.571
   rangeOfTong: 7.26
 --- !u!4 &5798444414461427093
 Transform:
@@ -2769,7 +2769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5297f6139449e1349a506dc7006f1540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  desiredDuration: 3
+  desiredMovementDuration: 0.7
 --- !u!4 &5798444415029534008
 Transform:
   m_ObjectHideFlags: 0

@@ -50,7 +50,11 @@ public class TongBehaviour : MonoBehaviour
             EventSystem.current.SettingHeadsRotation(ThisPosition);
         }
     }
-
+    private void OnDestroy() {
+        if(spawnTong!=null){
+            StopCoroutine(spawnTong);
+        }
+    }
     void ChangeTagName(string tag){
         this.transform.gameObject.tag = tag;
     }

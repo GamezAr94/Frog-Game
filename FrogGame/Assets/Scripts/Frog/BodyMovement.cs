@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BodyMovement : MonoBehaviour
 {
+    [Tooltip("Desired amount of time to move the frog side to side")]
+    [SerializeField][Range(0.01f, 3.0f)]
+    public float desiredMovementDuration = 3f;
     const float TOTAL_DISTANCE_TO_MOVE_FROG = 2; // Desired amount of distance to move the frog side to side (2.0f is the perfect distance) it shouldn't exceede the screen boundaries
     const float SCREEN_BOUNDARIES = 2.0f;
     
@@ -15,9 +18,6 @@ public class BodyMovement : MonoBehaviour
     public bool IsFrogBodyMoving { get => _isFrogBodyMoving; }
     float elapsedTime;
 
-    [Tooltip("Desired amount of time to move the frog side to side")]
-    [SerializeField][Range(0.01f, 3.0f)]
-    float desiredDuration = 3f;
 
     private void Awake() {
         EventSystem.current.onMovingFrogSideToSide += SetFrogBodyMovementCoroutine;
@@ -28,6 +28,11 @@ public class BodyMovement : MonoBehaviour
         if(!_isFrogBodyMoving){
             frogBodyMovement = FrogHorizontalMovementCoroutine(startingPoint, endingPoint);
             StartCoroutine(frogBodyMovement);
+        }
+    }
+    private void OnDestroy() {
+        if(frogBodyMovement!=null){
+            StopCoroutine(frogBodyMovement);
         }
     }
     
@@ -46,10 +51,10 @@ public class BodyMovement : MonoBehaviour
 
         elapsedTime = 0.0f;
 
-        while(elapsedTime <= desiredDuration){
+        while(elapsedTime <= desiredMovementDuration){
 
             elapsedTime += Time.deltaTime;
-            float percentageCompleted = elapsedTime / desiredDuration;
+            float percentageCompleted = elapsedTime / desiredMovementDuration;
 
             if (startingUserInputPoint > endingUserInputPoint && startFrogPosition.x < SCREEN_BOUNDARIES)//movement to the right
             {

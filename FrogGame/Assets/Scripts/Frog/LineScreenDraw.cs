@@ -43,9 +43,6 @@ public class LineScreenDraw : MonoBehaviour
     [Tooltip("Game object that helps to visualize the position of the users touch exit")]
     public GameObject endTargetPoint;
 
-    bool isReadyToAcceptInput = true;
-
-
     private void Awake()
     {
         renderLine = this.GetComponent<LineRenderer>();
@@ -76,7 +73,6 @@ public class LineScreenDraw : MonoBehaviour
                 _startLocalTouchPosition = GetThePositionOfTheTouch(touch);
                 
                 if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y && tongBehaviour.TongInMouth){
-                    isReadyToAcceptInput = true;
 
                     //debugingContactPoints(startTargetPoint, _startLocalTouchPosition);
 
@@ -88,7 +84,7 @@ public class LineScreenDraw : MonoBehaviour
             }
             else if (touch.phase == TouchPhase.Moved)
             {
-                if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y  && tongBehaviour.TongInMouth && isReadyToAcceptInput){
+                if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y  && tongBehaviour.TongInMouth){
 
                     trackLocalTouchPosition = GetThePositionOfTheTouch(touch);
                     
@@ -117,13 +113,11 @@ public class LineScreenDraw : MonoBehaviour
                     
                 }else{
                 
-                    if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y && tongBehaviour.TongInMouth && isReadyToAcceptInput){
+                    if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y && tongBehaviour.TongInMouth){
 
                         if(_distance >= minDistanceToSpawnTong && _startLocalTouchPosition.y > _endingLocalTouchPosition.y){
                             
                             tongBehaviour.SetCoroutineToSpawnTong(_distance);
-
-                            isReadyToAcceptInput = false;
 
                         }
 
