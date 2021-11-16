@@ -42,6 +42,7 @@ public class TongBehaviour : MonoBehaviour
     private void Awake() {
         transform.position = tongPivotObject.position;
         ChangeTagName(DISABLED_TONG_TAG_NAME);
+
     }
 
     private void Update() {
@@ -93,6 +94,8 @@ public class TongBehaviour : MonoBehaviour
         elapsedTime = 0;
 
         ChangeTagName(DISABLED_TONG_TAG_NAME);
+
+        EventSystem.current.SettingCombo(this.transform.childCount);
         
         while (elapsedTime < desiredTongAttackDuration)
         {

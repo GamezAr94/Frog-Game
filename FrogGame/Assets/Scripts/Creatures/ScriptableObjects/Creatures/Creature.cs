@@ -9,7 +9,7 @@ public class Creature : ScriptableObject
     [SerializeField][Range(0, 50)]
     [Tooltip("This is the Score value that it will give to the player after catching it")]
     int _scoreValue;
-    public int ScoreValue { get => ScoreValue; }
+    public int ScoreValue { get => _scoreValue; }
 
     [Range(0, 3)][SerializeField]
     [Tooltip("the numbers of hits it can receive before being caught")]    
