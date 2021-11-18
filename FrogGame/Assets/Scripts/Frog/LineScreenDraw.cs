@@ -43,6 +43,8 @@ public class LineScreenDraw : MonoBehaviour
     [Tooltip("Game object that helps to visualize the position of the users touch exit")]
     public GameObject endTargetPoint;
 
+    bool isReadyToAcceptInput = true; //avoid the user entering an input before the tong cames back to its mouth
+
     private void Awake()
     {
         renderLine = this.GetComponent<LineRenderer>();
@@ -74,6 +76,8 @@ public class LineScreenDraw : MonoBehaviour
                 
                 if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y && tongBehaviour.TongInMouth){
 
+                    isReadyToAcceptInput = true;
+
                     //debugingContactPoints(startTargetPoint, _startLocalTouchPosition);
 
                     setDrawPosition(2, _startLocalTouchPosition.x, _startLocalTouchPosition.y);
@@ -84,7 +88,8 @@ public class LineScreenDraw : MonoBehaviour
             }
             else if (touch.phase == TouchPhase.Moved)
             {
-                if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y  && tongBehaviour.TongInMouth){
+                if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y  && tongBehaviour.TongInMouth && isReadyToAcceptInput){
+                    
 
                     trackLocalTouchPosition = GetThePositionOfTheTouch(touch);
                     
@@ -113,12 +118,13 @@ public class LineScreenDraw : MonoBehaviour
                     
                 }else{
                 
-                    if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y && tongBehaviour.TongInMouth){
+                    if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y && tongBehaviour.TongInMouth && isReadyToAcceptInput){
 
                         if(_distance >= minDistanceToSpawnTong && _startLocalTouchPosition.y > _endingLocalTouchPosition.y){
                             
                             tongBehaviour.SetCoroutineToSpawnTong(_distance);
 
+                            isReadyToAcceptInput = false;
                         }
 
                         //debugingContactPoints(startTargetPoint, _nonReachablePoint);
