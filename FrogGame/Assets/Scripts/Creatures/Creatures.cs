@@ -6,6 +6,8 @@ public abstract class Creatures : MonoBehaviour
     Creature _creatureTypeStruct;
     public Creature CreatureTypeStruct { get => _creatureTypeStruct; }
 
+    public GameObject sprite;
+
  
     [Tooltip("Variable to store the exit point of the creature")]
     Vector3 _exitPoint;
@@ -31,6 +33,8 @@ public abstract class Creatures : MonoBehaviour
         _movementCreature = movementCreatureCoroutine();
 
         StartCoroutine(_movementCreature);
+    }
+    private void Start() {
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -69,5 +73,17 @@ public abstract class Creatures : MonoBehaviour
     protected Vector2 nextRandomSpot(float[] minMaxCoordinatesX, float[] minMaxCoordinatesY)
     {
         return new Vector2(Random.Range(minMaxCoordinatesX[0], minMaxCoordinatesX[1]), Random.Range(minMaxCoordinatesY[0], minMaxCoordinatesY[1]));
+    }
+
+    protected void LookForward(Vector3 nextStop){
+        Vector3 dir = nextStop - sprite.transform.position;
+        //float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if(sprite.transform.position.x > nextStop.x){
+            sprite.transform.localScale = new Vector3(1,1,1);
+            //sprite.transform.rotation= Quaternion.AngleAxis(angle -180, Vector3.forward);
+        }else{
+            sprite.transform.localScale = new Vector3(-1,1,1);
+            //sprite.transform.rotation= Quaternion.AngleAxis(angle, Vector3.forward);
+        }
     }
 }

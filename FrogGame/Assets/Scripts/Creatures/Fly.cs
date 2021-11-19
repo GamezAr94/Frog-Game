@@ -20,7 +20,7 @@ public class Fly : Creatures
             endFlyPosition = nextRandomSpot(CreatureTypeStruct.CreatureBoundaries.coordinatesOfMovementX, CreatureTypeStruct.CreatureBoundaries.coordinatesOfMovementY);
             elapsedTime = 0.0f;
             desiredMovementDuration = CreatureTypeStruct.DesiredMovementDuration;
-
+            LookForward(endFlyPosition);
             while(elapsedTime <= desiredMovementDuration){
 
                 if(!stop){
@@ -40,6 +40,7 @@ public class Fly : Creatures
         endFlyPosition = ExitPoint;
         elapsedTime = 0.0f;
         desiredMovementDuration = CreatureTypeStruct.DesiredMovementDuration;
+        LookForward(endFlyPosition);
 
         while(elapsedTime <= desiredMovementDuration){
             
