@@ -14,8 +14,6 @@ public class TongBehaviour : MonoBehaviour
     [Tooltip("Bool to pause the tong at the middle of its spawn")]
     bool tongsIsPaused = false;
 
-    public Vector3 ThisPosition { get => this.transform.position; }
-
     [SerializeField]
     [Tooltip("Bool that indicates when the tong must go back to its mouth")]
     bool tongMustGoBack = false;
@@ -30,8 +28,8 @@ public class TongBehaviour : MonoBehaviour
     Transform tongPivotObject;
 
     [Tooltip("The time that tong will take to complete the attack")]
-    [SerializeField][Range (0.1f, 2f)]
-    float desiredTongAttackDuration = 0.1f;
+    [SerializeField][Range (0.1f, 1f)]
+    float speedTongAttack = 0.1f;
 
     [Tooltip("The greater the shorter")]
     [SerializeField][Range (5f, 20f)]
@@ -47,7 +45,7 @@ public class TongBehaviour : MonoBehaviour
 
     private void Update() {
         if(!TongInMouth){
-            EventSystem.current.SettingHeadsRotation(ThisPosition);
+            EventSystem.current.SettingHeadsRotation(this.transform.position);
         }
     }
     private void OnDestroy() {
@@ -66,9 +64,59 @@ public class TongBehaviour : MonoBehaviour
         StartCoroutine(spawnTong);
     }
 
+    IEnumerator spawningTongCoroutine(float distance)
+    {
+        Vector3 finalPos = transform.position + (transform.up * (distance/rangeOfTong));
+        
+
+        ChangeTagName(ATTAKING_TAG_NAME);
+
+        while (Vector3.Distance(this.transform.position, finalPos) >= 0.2f && !tongMustGoBack)
+        {
+            if(!tongsIsPaused){
+                transform.position = Vector3.MoveTowards(transform.position, finalPos, speedTongAttack);
+
+                EventSystem.current.BodyTongFOllowingTong(this.transform.localPosition);
+                _tongInMouth = false;
+            }
+            yield return null;
+        }
+
+        ChangeTagName(DISABLED_TONG_TAG_NAME);
+
+        EventSystem.current.SettingCombo(this.transform.childCount);
+
+        finalPos = tongPivotObject.position;
+        
+        while (Vector3.Distance(this.transform.position, finalPos) >= 0.2f)
+        {
+            tongMustGoBack = true;
+
+            if(!tongsIsPaused){
+
+                transform.position = Vector3.MoveTowards(transform.position, finalPos, speedTongAttack * 1.5f);
+
+                EventSystem.current.BodyTongFOllowingTong(this.transform.localPosition);
+            }
+            yield return null;
+        }
+
+        transform.position = tongPivotObject.position;
+
+        EventSystem.current.BodyTongFOllowingTong(this.transform.localPosition);
+
+        tongMustGoBack = false;
+        _tongInMouth = true;
+
+        StopCoroutine(spawnTong);
+    }
+
+//LERP MOVEMENT - THIS WILL CAUSE THAT THE TONG SPENDS THE SAME AMOUNT OF TIME REGARDLESS THE DISTANCE 
+// ====================================================================================================
+/*
 //Coroutine to spawn the tong, it can hadle pauses, and it can returns the tong before it has completed its path.
 //it sets the original position of the tong, the right position of the nodes of the body tong and the bools in charge of returning and pausing the tong
-    IEnumerator spawningTongCoroutine(float distance)
+    /*IEnumerator spawningTongCoroutine(float distance)
     {
         Vector3 startingPos = transform.position;
         Vector3 finalPos = transform.position + (transform.up * (distance/rangeOfTong));
@@ -124,4 +172,6 @@ public class TongBehaviour : MonoBehaviour
 
         StopCoroutine(spawnTong);
     }
+    */
+
 }

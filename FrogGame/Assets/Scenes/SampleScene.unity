@@ -2993,7 +2993,7 @@ MonoBehaviour:
   tongMustGoBack: 0
   _tongInMouth: 1
   tongPivotObject: {fileID: 5798444415029534008}
-  desiredTongAttackDuration: 0.571
+  speedTongAttack: 0.503
   rangeOfTong: 7.26
 --- !u!4 &5798444414461427093
 Transform:
