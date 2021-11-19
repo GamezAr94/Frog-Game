@@ -29,6 +29,6 @@ public class GameManager : MonoBehaviour
         }
     }
     void AddingPoints(int points){
-        score += points + maxCombo; 
+        score += points; 
     } 
 }

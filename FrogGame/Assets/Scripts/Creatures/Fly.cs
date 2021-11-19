@@ -17,7 +17,7 @@ public class Fly : Creatures
         while(MovementsRemaining > 0){
 
             startFlyPosition = this.transform.position;
-            endFlyPosition = nextRandomSpot(CreatureTypeStruct.CreatureBoundaries.coordinatesOfMovementX, CreatureTypeStruct.CreatureBoundaries.coordinatesOfMovementY);
+            endFlyPosition = nextRandomSpot(CreatureTypeStruct.CreatureBoundaries.CoordinatesOfMovementX, CreatureTypeStruct.CreatureBoundaries.CoordinatesOfMovementY);
             elapsedTime = 0.0f;
             desiredMovementDuration = CreatureTypeStruct.DesiredMovementDuration;
             LookForward(endFlyPosition);

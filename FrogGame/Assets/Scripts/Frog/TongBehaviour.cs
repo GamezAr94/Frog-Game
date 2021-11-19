@@ -7,6 +7,11 @@ public class TongBehaviour : MonoBehaviour
 {
     const string ATTAKING_TAG_NAME = "TongTip";
     const string DISABLED_TONG_TAG_NAME = "DisabledTongTip";
+    
+    [Header("Screen Boundaries")]
+    [SerializeField]
+    [Tooltip("Screen boundaries that the tong cannot pass")]
+    CreatureBoundaries SCREEN_BOUNDARIES;
 
     [Header("Tong Settings")]
 
@@ -71,7 +76,7 @@ public class TongBehaviour : MonoBehaviour
 
         ChangeTagName(ATTAKING_TAG_NAME);
 
-        while (Vector3.Distance(this.transform.position, finalPos) >= 0.2f && !tongMustGoBack)
+        while (Vector3.Distance(this.transform.position, finalPos) >= 0.2f && !tongMustGoBack && ScreenLimits())
         {
             if(!tongsIsPaused){
                 transform.position = Vector3.MoveTowards(transform.position, finalPos, speedTongAttack);
@@ -84,7 +89,7 @@ public class TongBehaviour : MonoBehaviour
 
         ChangeTagName(DISABLED_TONG_TAG_NAME);
 
-        EventSystem.current.SettingCombo(this.transform.childCount);
+        //EventSystem.current.SettingCombo(this.transform.childCount); //this event is to handle the COMBOS, I need to think about how to implement it
 
         finalPos = tongPivotObject.position;
         
@@ -111,6 +116,12 @@ public class TongBehaviour : MonoBehaviour
         StopCoroutine(spawnTong);
     }
 
+    bool ScreenLimits(){
+        if(this.transform.position.y > SCREEN_BOUNDARIES.CoordinatesOfMovementY[0] || this.transform.position.x > SCREEN_BOUNDARIES.CoordinatesOfMovementX[0] || this.transform.position.x < SCREEN_BOUNDARIES.CoordinatesOfMovementX[1]){
+            return false;
+        }
+        return true;
+    }
 //LERP MOVEMENT - THIS WILL CAUSE THAT THE TONG SPENDS THE SAME AMOUNT OF TIME REGARDLESS THE DISTANCE 
 // ====================================================================================================
 /*
@@ -173,5 +184,4 @@ public class TongBehaviour : MonoBehaviour
         StopCoroutine(spawnTong);
     }
     */
-
 }

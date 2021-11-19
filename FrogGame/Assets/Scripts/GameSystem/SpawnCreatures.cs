@@ -29,6 +29,10 @@ public class SpawnCreatures : MonoBehaviour
         creatureSpawnBoundaries.DrawBorderToDebug(creatureSpawnBoundaries.SpawningBorder, Color.white);
         setListOfCreatures();
         spawnTimeManager = SpawnOjectsTimer(2f);
+    }
+
+    private void Start() {
+        //add hthe spawnObjectsTimer to another coroutine to control when it should starts
         StartCoroutine(spawnTimeManager);
     }
 

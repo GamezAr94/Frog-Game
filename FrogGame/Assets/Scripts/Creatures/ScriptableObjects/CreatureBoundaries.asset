@@ -19,12 +19,9 @@ MonoBehaviour:
   - 4.73
   - -2.3
   spawningBorder:
-  - side: 0
-    point1: {x: -4, y: -3, z: 0}
+  - point1: {x: -4, y: -3, z: 0}
     point2: {x: -4, y: 6, z: 0}
-  - side: 1
-    point1: {x: 4, y: -3, z: 0}
+  - point1: {x: 4, y: -3, z: 0}
     point2: {x: 4, y: 6, z: 0}
-  - side: 2
-    point1: {x: -4, y: 6, z: 0}
+  - point1: {x: -4, y: 6, z: 0}
     point2: {x: 4, y: 6, z: 0}

@@ -31,8 +31,6 @@ public abstract class Creatures : MonoBehaviour
 
         StartCoroutine(_movementCreature);
     }
-    private void Start() {
-    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -45,7 +43,6 @@ public abstract class Creatures : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
 
     void OnDestroy() {
         if(_movementCreature != null){

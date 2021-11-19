@@ -2989,11 +2989,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 741feafe553c30744bff4b7e654a23a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SCREEN_BOUNDARIES: {fileID: 11400000, guid: 95b413977e5dff044bcfb95f7881240a, type: 2}
   tongsIsPaused: 0
   tongMustGoBack: 0
   _tongInMouth: 1
   tongPivotObject: {fileID: 5798444415029534008}
-  speedTongAttack: 0.499
+  speedTongAttack: 0.271
   rangeOfTong: 7.26
 --- !u!4 &5798444414461427093
 Transform:
