@@ -5,13 +5,14 @@ using System.Collections;
 
 public class TongBehaviour : MonoBehaviour
 {
+    const string ATTAKING_TAG_NAME = "TongTip";
+    const string DISABLED_TONG_TAG_NAME = "DisabledTongTip";
+
     [Header("Tong Settings")]
 
     [SerializeField]
     [Tooltip("Bool to pause the tong at the middle of its spawn")]
     bool tongsIsPaused = false;
-
-    public Vector3 ThisPosition { get => this.transform.position; }
 
     [SerializeField]
     [Tooltip("Bool that indicates when the tong must go back to its mouth")]
@@ -26,51 +27,34 @@ public class TongBehaviour : MonoBehaviour
     [Tooltip("The pivot where the tong has to go back")]
     Transform tongPivotObject;
 
-    [SerializeField]
-    [Tooltip("The body of the tong")]
-    BodyTongBehaviour bodyTongBehaviour;
-
-    [Tooltip("The greater the slower")]
-    [SerializeField][Range (0.1f, 2f)]
-    float desiredTongAttackDuration = 0.1f;
+    [Tooltip("The time that tong will take to complete the attack")]
+    [SerializeField][Range (0.1f, 1f)]
+    float speedTongAttack = 0.1f;
 
     [Tooltip("The greater the shorter")]
     [SerializeField][Range (5f, 20f)]
     float rangeOfTong = 12f;
 
-    [Header("Tong Animations")]
-    [SerializeField]
-    DropsParticlesBehavior dropsParticlesBehavior;
-
     IEnumerator spawnTong;
 
     private void Awake() {
         transform.position = tongPivotObject.position;
-    }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        switch (other.tag)
-        {
-            case "Body":
-                break;
-            case "Collectibles":
-                if (!tongMustGoBack) // to catch objects only when tong is going forward
-                {
-                    catchigObjects (other);
-                }
-                break;
-            default:
-                break;
-        }
+        ChangeTagName(DISABLED_TONG_TAG_NAME);
+
     }
 
-    private void catchigObjects(Collider2D catchedObject)
-    {
-        if (catchedObject.transform.parent != this.transform)
-        {
-            dropsParticlesBehavior.DropParticles(catchedObject.transform.position);
-            catchedObject.transform.parent = this.transform;
+    private void Update() {
+        if(!TongInMouth){
+            EventSystem.current.SettingHeadsRotation(this.transform.position);
         }
+    }
+    private void OnDestroy() {
+        if(spawnTong!=null){
+            StopCoroutine(spawnTong);
+        }
+    }
+    void ChangeTagName(string tag){
+        this.transform.gameObject.tag = tag;
     }
 
     //Function to start the coroutine that will spawn the tong
@@ -80,15 +64,67 @@ public class TongBehaviour : MonoBehaviour
         StartCoroutine(spawnTong);
     }
 
+    IEnumerator spawningTongCoroutine(float distance)
+    {
+        Vector3 finalPos = transform.position + (transform.up * (distance/rangeOfTong));
+        
+
+        ChangeTagName(ATTAKING_TAG_NAME);
+
+        while (Vector3.Distance(this.transform.position, finalPos) >= 0.2f && !tongMustGoBack)
+        {
+            if(!tongsIsPaused){
+                transform.position = Vector3.MoveTowards(transform.position, finalPos, speedTongAttack);
+
+                EventSystem.current.BodyTongFOllowingTong(this.transform.localPosition);
+                _tongInMouth = false;
+            }
+            yield return null;
+        }
+
+        ChangeTagName(DISABLED_TONG_TAG_NAME);
+
+        EventSystem.current.SettingCombo(this.transform.childCount);
+
+        finalPos = tongPivotObject.position;
+        
+        while (Vector3.Distance(this.transform.position, finalPos) >= 0.2f)
+        {
+            tongMustGoBack = true;
+
+            if(!tongsIsPaused){
+                transform.position = Vector3.MoveTowards(transform.position, finalPos, speedTongAttack * 1.5f);
+
+                EventSystem.current.BodyTongFOllowingTong(this.transform.localPosition);
+            }
+            finalPos = tongPivotObject.position;
+            yield return null;
+        }
+
+        transform.position = tongPivotObject.position;
+
+        EventSystem.current.BodyTongFOllowingTong(this.transform.localPosition);
+
+        tongMustGoBack = false;
+        _tongInMouth = true;
+
+        StopCoroutine(spawnTong);
+    }
+
+//LERP MOVEMENT - THIS WILL CAUSE THAT THE TONG SPENDS THE SAME AMOUNT OF TIME REGARDLESS THE DISTANCE 
+// ====================================================================================================
+/*
 //Coroutine to spawn the tong, it can hadle pauses, and it can returns the tong before it has completed its path.
 //it sets the original position of the tong, the right position of the nodes of the body tong and the bools in charge of returning and pausing the tong
-    IEnumerator spawningTongCoroutine(float distance)
+    /*IEnumerator spawningTongCoroutine(float distance)
     {
         Vector3 startingPos = transform.position;
         Vector3 finalPos = transform.position + (transform.up * (distance/rangeOfTong));
 
         float percentageAttackCompleted;
         float elapsedTime = 0;
+
+        ChangeTagName(ATTAKING_TAG_NAME);
 
         while (elapsedTime < desiredTongAttackDuration && !tongMustGoBack)
         {
@@ -97,7 +133,7 @@ public class TongBehaviour : MonoBehaviour
                 percentageAttackCompleted = elapsedTime / desiredTongAttackDuration;
                 
                 transform.position = Vector3.Lerp(startingPos, finalPos, percentageAttackCompleted);
-                bodyTongBehaviour.NodesFollowing();
+                EventSystem.current.BodyTongFOllowingTong(this.transform.localPosition);
                 _tongInMouth = false;
             }
             yield return null;
@@ -108,7 +144,11 @@ public class TongBehaviour : MonoBehaviour
         desiredTongAttackDuration = elapsedTime; // setting the duration of the return equals to the time elapsed going forward
 
         elapsedTime = 0;
-         
+
+        ChangeTagName(DISABLED_TONG_TAG_NAME);
+
+        EventSystem.current.SettingCombo(this.transform.childCount);
+        
         while (elapsedTime < desiredTongAttackDuration)
         {
             tongMustGoBack = true;
@@ -118,18 +158,20 @@ public class TongBehaviour : MonoBehaviour
                 percentageAttackCompleted = elapsedTime / desiredTongAttackDuration;
 
                 transform.position = Vector3.Lerp(startingPos, tongPivotObject.position, percentageAttackCompleted);
-                bodyTongBehaviour.NodesFollowing();
+                EventSystem.current.BodyTongFOllowingTong(this.transform.localPosition);
             }
             yield return null;
         }
 
         transform.position = tongPivotObject.position;
 
-        bodyTongBehaviour.NodesFollowing();
+        EventSystem.current.BodyTongFOllowingTong(this.transform.localPosition);
 
         tongMustGoBack = false;
         _tongInMouth = true;
 
         StopCoroutine(spawnTong);
     }
+    */
+
 }

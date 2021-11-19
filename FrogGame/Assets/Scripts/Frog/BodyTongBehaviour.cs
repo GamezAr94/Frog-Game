@@ -11,17 +11,14 @@ public class BodyTongBehaviour : MonoBehaviour
 
     int numberOfNodes;
 
-    [SerializeField]
-    [Tooltip("Tong Game Object to get its position")]
-    GameObject tong;
-
     private void Awake() {
         _bodyTongSprite = this.GetComponent<SpriteShapeController>();
         numberOfNodes = _bodyTongSprite.spline.GetPointCount();
+        EventSystem.current.onBodyTongFollowingTong += NodesFollowing;
     }
     
     //Function to set the position of the last node of the body tong to the position of the tong
-    public void NodesFollowing() {
-        _bodyTongSprite.spline.SetPosition(numberOfNodes-1,tong.transform.localPosition);
+    public void NodesFollowing(Vector3 tongPosition) {
+        _bodyTongSprite.spline.SetPosition(numberOfNodes-1,tongPosition);
     }
 }

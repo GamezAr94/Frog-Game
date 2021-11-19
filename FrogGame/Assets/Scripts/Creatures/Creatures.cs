@@ -2,99 +2,88 @@ using System.Collections;
 using UnityEngine;
 public abstract class Creatures : MonoBehaviour
 {
-    [SerializeField]
-    Creature creature;
-    public Creature Creature { get => creature; }
+    [SerializeField][Tooltip("Field to retrieve the information of the creature to instance")]
+    Creature _creatureTypeStruct;
+    public Creature CreatureTypeStruct { get => _creatureTypeStruct; }
 
-    [SerializeField]
-    private TextMesh pointsText;
+    public GameObject sprite;
 
-    float timeRemaining;
-    public float TimeRemaining { get => timeRemaining; set => timeRemaining = value; }
+ 
+    [Tooltip("Variable to store the exit point of the creature")]
+    Vector3 _exitPoint;
+    public Vector3 ExitPoint { get => _exitPoint; }
 
-    [SerializeField]
-    bool hasExit = false;
-    public bool HasExit { get => hasExit; set { hasExit = value; } }
-
-    Vector2 exitPoint;
-    public Vector2 ExitPoint { get => exitPoint; set => exitPoint = value; }
-
-    Vector2 moveSpot;
-    public Vector2 MoveSpot { get => moveSpot;  set => moveSpot = value; }
-
-    protected float[] availableAreaOfMovementX;
-    protected float[] availableAreaOfMovementY;
     
-    protected virtual void Awake()
-    {
-        availableAreaOfMovementX = Creature.creatureBoundaries.coordinatesOfMovementX;
-        availableAreaOfMovementY = Creature.creatureBoundaries.coordinatesOfMovementY;
-        TimeRemaining = Creature.lifeTime;
-    }
-    private void Start()
-    {
-        ExitPoint = Creature.creatureBoundaries.getRandomBorderPoint();
-    }
+    [Tooltip("Field to store the coroutine")]
+    IEnumerator _movementCreature;
+    public IEnumerator MovementCreature { get => _movementCreature; }
 
-    private void Update()
-    {
-        movement();
-        Exit();
-    }
+    int scoreValue;
+    
+    [Tooltip("Variable to store the number of remaining movements that the creature has")]
+    int _movementsRemaining;
+    public int MovementsRemaining { get => _movementsRemaining; set => _movementsRemaining = value; }
 
-    protected virtual void movement()
-    {
-    }
+    protected virtual void Awake() {
+        
+        scoreValue = _creatureTypeStruct.ScoreValue;
 
-    protected virtual void Exit()
-    {
-        if (TimeRemaining > 0)
-        {
-            TimeRemaining -= Time.deltaTime;
-        }
-        else
-        {
-            HasExit = true;
-        }
+        _movementsRemaining = _creatureTypeStruct.GetRemainingNumberOfMovements();
+        _exitPoint = _creatureTypeStruct.GetExitPoint;
+        _movementCreature = movementCreatureCoroutine();
+
+        StartCoroutine(_movementCreature);
+    }
+    private void Start() {
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.transform.name.Equals("BrainAndPoints"))
-        {
+        if(other.CompareTag("TongTip")){
+            StopCoroutine(_movementCreature);
+            CreatureCaught(other);
+        }
+        if(this.transform.parent && other.CompareTag("Mouth")){
+            EventSystem.current.AddingPoints(scoreValue);
             Destroy(this.gameObject);
         }
-        else if (other.CompareTag("Boundaries") && HasExit)
-        {
-            Destroy(this.gameObject);
-        }else if(other.CompareTag("TongTip")){
-            // this.transform.SetParent(other.transform);
-            if(pointsText != null){
-                ShowFloatingText();
-            }
-        }
     }
-    private void ShowFloatingText(){
-        TextMesh instance = Instantiate(pointsText, this.gameObject.transform.position, Quaternion.identity);
-        instance.GetComponent<TextMesh>().text = Creature.value.ToString();
-    }
-    protected virtual void SetParticleSystem() { }
 
-    protected void lookAtTarget(Vector3 targetSpot)
-    {
-        Vector3 target = new Vector3(targetSpot.x, targetSpot.y, 0);
-        target.x = target.x - this.gameObject.transform.position.x;
-        target.y = target.x - this.gameObject.transform.position.y;
-        float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
-        if (Mathf.Abs(angle) <= 90)
-        {
-            this.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-            this.transform.localScale = new Vector3(1, 1, 1);
+
+    void OnDestroy() {
+        if(_movementCreature != null){
+            StopCoroutine(_movementCreature);
         }
-        else
-        {
-            this.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 50f));
-            this.transform.localScale = new Vector3(1, -1, 1);
+    }
+
+    protected virtual IEnumerator movementCreatureCoroutine(){
+        yield return null;
+    }
+    
+    protected void CreatureCaught(Collider2D caughtObject)
+    {
+        this.transform.parent = caughtObject.transform;
+        //Some logic to do when the creature is caught
+        // - change the sprite
+        // - play a sound
+        // - play some particles effects
+        // - show text of the points gained
+    }
+
+    protected Vector2 nextRandomSpot(float[] minMaxCoordinatesX, float[] minMaxCoordinatesY)
+    {
+        return new Vector2(Random.Range(minMaxCoordinatesX[0], minMaxCoordinatesX[1]), Random.Range(minMaxCoordinatesY[0], minMaxCoordinatesY[1]));
+    }
+
+    protected void LookForward(Vector3 nextStop){
+        Vector3 dir = nextStop - sprite.transform.position;
+        //float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if(sprite.transform.position.x > nextStop.x){
+            sprite.transform.localScale = new Vector3(1,1,1);
+            //sprite.transform.rotation= Quaternion.AngleAxis(angle -180, Vector3.forward);
+        }else{
+            sprite.transform.localScale = new Vector3(-1,1,1);
+            //sprite.transform.rotation= Quaternion.AngleAxis(angle, Vector3.forward);
         }
     }
 }

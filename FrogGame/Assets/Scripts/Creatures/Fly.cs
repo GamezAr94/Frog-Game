@@ -1,36 +1,57 @@
+using System.Collections;
 using UnityEngine;
 
 public class Fly : Creatures
 {
-    protected override void Awake()
-    {
-        base.Awake();
-        MoveSpot = nextRandomSpot(availableAreaOfMovementX, availableAreaOfMovementY);
-        lookAtTarget(MoveSpot);
-    }
-    protected override void movement()
-    {
-        if (transform.parent == null)
-        {
-            this.transform.position = Vector2.MoveTowards(this.transform.position, MoveSpot, Creature.movementSpeed * Time.deltaTime);
-            if (Vector2.Distance(transform.position, MoveSpot) < 0.2f)
-            {
-                MoveSpot = nextRandomSpot(availableAreaOfMovementX, availableAreaOfMovementY);
+    [SerializeField]
+    bool stop;
 
-                lookAtTarget(MoveSpot);
+    //This type of movements allows the creatures to move fast if the distance is long and slow if the distance is short
+    protected override IEnumerator movementCreatureCoroutine(){
+
+        Vector3 startFlyPosition;
+        Vector3 endFlyPosition;
+        float elapsedTime;
+        float desiredMovementDuration;
+
+        while(MovementsRemaining > 0){
+
+            startFlyPosition = this.transform.position;
+            endFlyPosition = nextRandomSpot(CreatureTypeStruct.CreatureBoundaries.coordinatesOfMovementX, CreatureTypeStruct.CreatureBoundaries.coordinatesOfMovementY);
+            elapsedTime = 0.0f;
+            desiredMovementDuration = CreatureTypeStruct.DesiredMovementDuration;
+            LookForward(endFlyPosition);
+            while(elapsedTime <= desiredMovementDuration){
+
+                if(!stop){
+                    elapsedTime += Time.deltaTime;
+                    float percentageCompleted = elapsedTime / desiredMovementDuration;
+                    this.transform.position = Vector3.Lerp(startFlyPosition, endFlyPosition, percentageCompleted);
+                }
+
+                yield return null;
             }
-        }
-    }
 
-    private Vector2 nextRandomSpot(float[] minMaxCoordinatesX, float[] minMaxCoordinatesY)
-    {
-        if (HasExit)
-        {
-            return ExitPoint;
+            MovementsRemaining--;
+            yield return new WaitForSeconds(CreatureTypeStruct.GetDesiredTimeToWaitBetweenMovements());
         }
-        else
-        {
-            return new Vector2(Random.Range(minMaxCoordinatesX[0], minMaxCoordinatesX[1]), Random.Range(minMaxCoordinatesY[0], minMaxCoordinatesY[1]));
-        }
+
+        startFlyPosition = this.transform.position;
+        endFlyPosition = ExitPoint;
+        elapsedTime = 0.0f;
+        desiredMovementDuration = CreatureTypeStruct.DesiredMovementDuration;
+        LookForward(endFlyPosition);
+
+        while(elapsedTime <= desiredMovementDuration){
+            
+            if(!stop){
+                elapsedTime += Time.deltaTime;
+                float percentageCompleted = elapsedTime / desiredMovementDuration;
+                this.transform.position = Vector3.Lerp(startFlyPosition, endFlyPosition, percentageCompleted);
+            }
+
+            yield return null;
+        } 
+        Destroy(this.gameObject);
     }
 }

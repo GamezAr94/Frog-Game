@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ddefa5ad746bd546866aa4abbbc1c1d, type: 3}
   m_Name: FatFly
   m_EditorClassIdentifier: 
-  movementSpeed: 0.65
-  creatureType: 1
-  lifeTime: 20.1
-  value: 5
-  creatureBoundaries: {fileID: 11400000, guid: 95b413977e5dff044bcfb95f7881240a, type: 2}
+  _scoreValue: 2
+  _strength: 0
+  _creatureBoundaries: {fileID: 11400000, guid: 95b413977e5dff044bcfb95f7881240a, type: 2}
+  _desiredWaitToMoveTime:
+  - 0.52
+  _rangeOfMovementsOnScene: 07000000
+  _desiredMovementDuration: 5.93

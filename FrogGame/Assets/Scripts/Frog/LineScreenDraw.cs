@@ -3,6 +3,8 @@ using System;
 
 public class LineScreenDraw : MonoBehaviour
 {
+    [Tooltip("Float that indicates the limit where the user can enter the starting input in the Y axis")]
+    const float BORDER_LIMIT_TO_POINT_ATTACK_Y = -3f;
     
     [Header("Line Rendering Settings")]
 
@@ -14,8 +16,6 @@ public class LineScreenDraw : MonoBehaviour
     [Tooltip("Float that indicates the minimum distance between the starting and ending user touch input reuired to move the frog")]
     float minDistanceToMoveFrog = 3.0f;
     
-    [Tooltip("Float that indicates the limit where the user can enter the starting input in the Y axis")]
-    const float BORDER_LIMIT_TO_POINT_ATTACK_Y = -3f;
 
     private Vector3 _startLocalTouchPosition;
     public Vector3 StartLocalTouchPosition { get => _startLocalTouchPosition; private set => _startLocalTouchPosition = value; }
@@ -34,11 +34,7 @@ public class LineScreenDraw : MonoBehaviour
     [SerializeField]
     TongBehaviour tongBehaviour;
 
-    [SerializeField]
-    BodyMovement bodyMovementScript;
-
     LineRenderer renderLine;
-    PlayerActions playerActions;
 
     [Header("Debuger Tools")]
 
@@ -47,8 +43,7 @@ public class LineScreenDraw : MonoBehaviour
     [Tooltip("Game object that helps to visualize the position of the users touch exit")]
     public GameObject endTargetPoint;
 
-    bool isReadyToAcceptInput = true;
-
+    bool isReadyToAcceptInput = true; //avoid the user entering an input before the tong cames back to its mouth
 
     private void Awake()
     {
@@ -57,15 +52,11 @@ public class LineScreenDraw : MonoBehaviour
 
         startTargetPoint.transform.position = _startLocalTouchPosition;//Debuger object
         endTargetPoint.transform.position = _endingLocalTouchPosition;//Debuger object
-
-        playerActions = this.GetComponent<PlayerActions>();
+                        
+        setDrawPosition();
 
         EventSystem.current.onSwipeTouch += PositionUserTouch;
-    }
-
-    private void Update()
-    {
-        EventSystem.current.swipeTouch();
+        EventSystem.current.onSettingHeadsRotation += SettingFrogsHeadRotation;
     }
 
 //Funtion to retrieve the user input, the position of the first touch, the swipe of the input and the position of the end of the touch
@@ -85,17 +76,18 @@ public class LineScreenDraw : MonoBehaviour
                 if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y && tongBehaviour.TongInMouth){
                     isReadyToAcceptInput = true;
 
-                    debugingContactPoints(startTargetPoint, _startLocalTouchPosition);
+                    //debugingContactPoints(startTargetPoint, _startLocalTouchPosition);
 
                     setDrawPosition(2, _startLocalTouchPosition.x, _startLocalTouchPosition.y);
 
-                    playerActions.SettingFrogsHeadRotation(_startLocalTouchPosition);
+                    SettingFrogsHeadRotation(_startLocalTouchPosition);
                 }
 
             }
             else if (touch.phase == TouchPhase.Moved)
             {
                 if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y  && tongBehaviour.TongInMouth && isReadyToAcceptInput){
+                    
 
                     trackLocalTouchPosition = GetThePositionOfTheTouch(touch);
                     
@@ -113,11 +105,16 @@ public class LineScreenDraw : MonoBehaviour
 
                 _distance = DistanceBetween2Points2D(_startLocalTouchPosition, _endingLocalTouchPosition);
                 
-                debugingContactPoints(endTargetPoint, _endingLocalTouchPosition); // code to show the contact points of the user input
+                //debugingContactPoints(endTargetPoint, _endingLocalTouchPosition); // code to show the contact points of the user input
 
                 if(HorizontalSwipe() > VerticalSwipe()){
 
-                    VerticalActivity();
+                    if(_distance > minDistanceToMoveFrog){
+                        EventSystem.current.MovingFrogSideToSide(_startLocalTouchPosition.x,_endingLocalTouchPosition.x);
+                    }
+                    if(isReadyToAcceptInput){
+                        SettingFrogsHeadRotation(Vector3.zero); //Default Target location that the frog will look at
+                    }
                     
                 }else{
                 
@@ -128,7 +125,6 @@ public class LineScreenDraw : MonoBehaviour
                             tongBehaviour.SetCoroutineToSpawnTong(_distance);
 
                             isReadyToAcceptInput = false;
-
                         }
 
                         //debugingContactPoints(startTargetPoint, _nonReachablePoint);
@@ -188,22 +184,13 @@ Vector3 GetThePositionOfTheTouch(Touch touch){
         return Mathf.Abs(_startLocalTouchPosition.y - _endingLocalTouchPosition.y);
     }
 
-//Function to move the frog body and set the rotation of the head of the frog
-    private void VerticalActivity(){
-
-        if(_distance > minDistanceToMoveFrog && !bodyMovementScript.IsFrogBodyMoving){
-            
-            //bodyMovementScript.FrogVerticalMovement(_startLocalTouchPosition.x, _endingLocalTouchPosition.x);
-            bodyMovementScript.SetFrogBodyMovementCoroutine(_startLocalTouchPosition.x,_endingLocalTouchPosition.x);
-
-        }
-
-        playerActions.SettingFrogsHeadRotation(Vector3.zero); //Default Target location that the frog will look at
-
-    }
-
 //function to debug the contact points of the user showing where the user clicked or released the touch
     private void debugingContactPoints(GameObject debuger, Vector3 contact){
         debuger.transform.position = contact;
+    }
+
+    //function to set the right rotation of the head's frog
+    public void SettingFrogsHeadRotation(Vector3 target){
+        transform.right = target - transform.position;
     }
 }

@@ -4,29 +4,39 @@ using UnityEngine;
 
 public class BodyMovement : MonoBehaviour
 {
-
+    [Tooltip("Desired amount of time to move the frog side to side")]
+    [SerializeField][Range(0.01f, 3.0f)]
+    public float desiredMovementDuration = 3f;
+    const float TOTAL_DISTANCE_TO_MOVE_FROG = 2; // Desired amount of distance to move the frog side to side (2.0f is the perfect distance) it shouldn't exceede the screen boundaries
+    const float SCREEN_BOUNDARIES = 2.0f;
+    
     IEnumerator frogBodyMovement;
     Vector3 startFrogPosition;
     Vector3 endFrogPositionLeft;
     Vector3 endFrogPositionRight;
-    const float TOTAL_DISTANCE_TO_MOVE_FROG = 2; // Desired amount of distance to move the frog side to side (2.0f is the perfect distance) it shouldn't exceede the screen boundaries
-    const float SCREEN_BOUNDARIES = 2.0f;
     bool _isFrogBodyMoving;
-    public bool IsFrogBodyMoving { get => _isFrogBodyMoving; }
     float elapsedTime;
 
-    [Tooltip("Desired amount of time to move the frog side to side")]
-    [SerializeField][Range(0.01f, 3.0f)]
-    float desiredDuration = 3f;
+
+    private void Awake() {
+        EventSystem.current.onMovingFrogSideToSide += SetFrogBodyMovementCoroutine;
+    }
 
     //Function to set and start the coroutine to move the frog
     public void SetFrogBodyMovementCoroutine(float startingPoint, float endingPoint){
-        frogBodyMovement = FrogVerticalMovementCoroutine(startingPoint, endingPoint);
-        StartCoroutine(frogBodyMovement);
+        if(!_isFrogBodyMoving){
+            frogBodyMovement = FrogHorizontalMovementCoroutine(startingPoint, endingPoint);
+            StartCoroutine(frogBodyMovement);
+        }
     }
-
+    private void OnDestroy() {
+        if(frogBodyMovement!=null){
+            StopCoroutine(frogBodyMovement);
+        }
+    }
+    
     //Coroutine to move the frog side to side
-    private IEnumerator FrogVerticalMovementCoroutine(float startingUserInputPoint, float endingUserInputPoint)
+    private IEnumerator FrogHorizontalMovementCoroutine(float startingUserInputPoint, float endingUserInputPoint)
     {
         _isFrogBodyMoving = true;
 
@@ -40,18 +50,18 @@ public class BodyMovement : MonoBehaviour
 
         elapsedTime = 0.0f;
 
-        while(elapsedTime <= desiredDuration){
+        while(elapsedTime <= desiredMovementDuration){
 
             elapsedTime += Time.deltaTime;
-            float percentageCompleted = elapsedTime / desiredDuration;
+            float percentageCompleted = elapsedTime / desiredMovementDuration;
 
-            if (startingUserInputPoint > endingUserInputPoint && startFrogPosition.x < SCREEN_BOUNDARIES)//movement to the right
-            {
-                transform.position = Vector3.Lerp(startFrogPosition, endFrogPositionRight, percentageCompleted);
-            }
-            else if (startingUserInputPoint < endingUserInputPoint && startFrogPosition.x > -SCREEN_BOUNDARIES)//movement to the left
+            if (startingUserInputPoint > endingUserInputPoint && startFrogPosition.x > -SCREEN_BOUNDARIES)//movement to the left
             {
                 transform.position = Vector3.Lerp(startFrogPosition, endFrogPositionLeft, percentageCompleted);
+            }
+            else if (startingUserInputPoint < endingUserInputPoint && startFrogPosition.x < SCREEN_BOUNDARIES)//movement to the right
+            {
+                transform.position = Vector3.Lerp(startFrogPosition, endFrogPositionRight, percentageCompleted);
             }
             else
             {

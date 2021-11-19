@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ddefa5ad746bd546866aa4abbbc1c1d, type: 3}
   m_Name: Fly
   m_EditorClassIdentifier: 
-  movementSpeed: 6.06
-  creatureType: 0
-  lifeTime: 7.1
-  value: 14
-  creatureBoundaries: {fileID: 11400000, guid: 95b413977e5dff044bcfb95f7881240a, type: 2}
+  _scoreValue: 1
+  _strength: 1
+  _creatureBoundaries: {fileID: 11400000, guid: 95b413977e5dff044bcfb95f7881240a, type: 2}
+  _desiredWaitToMoveTime: []
+  _rangeOfMovementsOnScene: 0700000015000000
+  _desiredMovementDuration: 0.94
