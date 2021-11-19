@@ -15,7 +15,6 @@ public class BodyMovement : MonoBehaviour
     Vector3 endFrogPositionLeft;
     Vector3 endFrogPositionRight;
     bool _isFrogBodyMoving;
-    public bool IsFrogBodyMoving { get => _isFrogBodyMoving; }
     float elapsedTime;
 
 
@@ -56,13 +55,13 @@ public class BodyMovement : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float percentageCompleted = elapsedTime / desiredMovementDuration;
 
-            if (startingUserInputPoint > endingUserInputPoint && startFrogPosition.x < SCREEN_BOUNDARIES)//movement to the right
-            {
-                transform.position = Vector3.Lerp(startFrogPosition, endFrogPositionRight, percentageCompleted);
-            }
-            else if (startingUserInputPoint < endingUserInputPoint && startFrogPosition.x > -SCREEN_BOUNDARIES)//movement to the left
+            if (startingUserInputPoint > endingUserInputPoint && startFrogPosition.x > -SCREEN_BOUNDARIES)//movement to the left
             {
                 transform.position = Vector3.Lerp(startFrogPosition, endFrogPositionLeft, percentageCompleted);
+            }
+            else if (startingUserInputPoint < endingUserInputPoint && startFrogPosition.x < SCREEN_BOUNDARIES)//movement to the right
+            {
+                transform.position = Vector3.Lerp(startFrogPosition, endFrogPositionRight, percentageCompleted);
             }
             else
             {

@@ -59,7 +59,6 @@ public class LineScreenDraw : MonoBehaviour
         EventSystem.current.onSettingHeadsRotation += SettingFrogsHeadRotation;
     }
 
-
 //Funtion to retrieve the user input, the position of the first touch, the swipe of the input and the position of the end of the touch
 //this function is the logic to move the frog in the right direction and spawn the tong
 //this function has a debbuging system where two objects are posisionated where the user press and releases its input
@@ -75,7 +74,6 @@ public class LineScreenDraw : MonoBehaviour
                 _startLocalTouchPosition = GetThePositionOfTheTouch(touch);
                 
                 if(_startLocalTouchPosition.y >= BORDER_LIMIT_TO_POINT_ATTACK_Y && tongBehaviour.TongInMouth){
-
                     isReadyToAcceptInput = true;
 
                     //debugingContactPoints(startTargetPoint, _startLocalTouchPosition);
@@ -114,7 +112,9 @@ public class LineScreenDraw : MonoBehaviour
                     if(_distance > minDistanceToMoveFrog){
                         EventSystem.current.MovingFrogSideToSide(_startLocalTouchPosition.x,_endingLocalTouchPosition.x);
                     }
-                    SettingFrogsHeadRotation(Vector3.zero); //Default Target location that the frog will look at
+                    if(isReadyToAcceptInput){
+                        SettingFrogsHeadRotation(Vector3.zero); //Default Target location that the frog will look at
+                    }
                     
                 }else{
                 

@@ -93,11 +93,11 @@ public class TongBehaviour : MonoBehaviour
             tongMustGoBack = true;
 
             if(!tongsIsPaused){
-
                 transform.position = Vector3.MoveTowards(transform.position, finalPos, speedTongAttack * 1.5f);
 
                 EventSystem.current.BodyTongFOllowingTong(this.transform.localPosition);
             }
+            finalPos = tongPivotObject.position;
             yield return null;
         }
 
