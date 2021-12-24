@@ -56,7 +56,7 @@ public class LineScreenDraw : MonoBehaviour
         setDrawPosition();
 
         EventSystem.current.onSwipeTouch += PositionUserTouch;
-        EventSystem.current.onSettingHeadsRotation += SettingFrogsHeadRotation;
+        //EventSystem.current.onSettingHeadsRotation += SettingFrogsHeadRotation;
     }
 
 //Funtion to retrieve the user input, the position of the first touch, the swipe of the input and the position of the end of the touch
@@ -80,7 +80,8 @@ public class LineScreenDraw : MonoBehaviour
 
                     setDrawPosition(2, _startLocalTouchPosition.x, _startLocalTouchPosition.y);
 
-                    SettingFrogsHeadRotation(_startLocalTouchPosition);
+                    //SettingFrogsHeadRotation(_startLocalTouchPosition);
+                    EventSystem.current.SettingHeadsRotation(_startLocalTouchPosition);
                 }
 
             }
@@ -113,7 +114,8 @@ public class LineScreenDraw : MonoBehaviour
                         EventSystem.current.MovingFrogSideToSide(_startLocalTouchPosition.x,_endingLocalTouchPosition.x);
                     }
                     if(isReadyToAcceptInput){
-                        SettingFrogsHeadRotation(Vector3.zero); //Default Target location that the frog will look at
+                        //SettingFrogsHeadRotation(Vector3.zero); //Default Target location that the frog will look at
+                        EventSystem.current.SettingHeadsRotation(_startLocalTouchPosition);
                     }
                     
                 }else{
@@ -190,7 +192,7 @@ Vector3 GetThePositionOfTheTouch(Touch touch){
     }
 
     //function to set the right rotation of the head's frog
-    public void SettingFrogsHeadRotation(Vector3 target){
-        transform.right = target - transform.position;
-    }
+    //public void SettingFrogsHeadRotation(Vector3 target){
+      //  transform.right = target - transform.position;
+    //}
 }

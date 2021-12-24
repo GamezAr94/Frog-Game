@@ -6,6 +6,9 @@ public class FatFly : Creatures
     [SerializeField]
     bool stop;
 
+    [SerializeField]
+    bool infinite;
+
     //This type of movements allows the creatures to have a constant movement speed
     protected override IEnumerator movementCreatureCoroutine(){
 
@@ -13,13 +16,13 @@ public class FatFly : Creatures
         
         float movementSpeed = CreatureTypeStruct.DesiredMovementDuration;
 
-        while(MovementsRemaining > 0){
+        while(MovementsRemaining > 0 || infinite){
             endFlyPosition = nextRandomSpot(CreatureTypeStruct.CreatureBoundaries.CoordinatesOfMovementX, CreatureTypeStruct.CreatureBoundaries.CoordinatesOfMovementY);
             LookForward(endFlyPosition);
             while(Vector3.Distance(this.transform.position, endFlyPosition) >= 0.2f){
 
                 if(!stop){
-                    this.transform.position = Vector3.MoveTowards(this.transform.position, endFlyPosition, movementSpeed *0.1f);
+                    this.transform.position = Vector3.MoveTowards(this.transform.position, endFlyPosition, movementSpeed);
                 }
 
                 yield return null;

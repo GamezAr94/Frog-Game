@@ -17,5 +17,6 @@ MonoBehaviour:
   _creatureBoundaries: {fileID: 11400000, guid: 95b413977e5dff044bcfb95f7881240a, type: 2}
   _desiredWaitToMoveTime:
   - 1.24
+  - 0.7
   _rangeOfMovementsOnScene: 07000000
-  _desiredMovementDuration: 0.19
+  _desiredMovementDuration: 0.11
