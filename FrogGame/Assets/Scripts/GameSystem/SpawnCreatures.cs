@@ -14,7 +14,7 @@ public class SpawnCreatures : MonoBehaviour
 {
 
     [SerializeField]
-    public CreatureSpawnDetails[] creaturesToSpawn;
+    CreatureSpawnDetails[] creaturesToSpawn;
 
     [SerializeField]
     [Range(0, 10)]

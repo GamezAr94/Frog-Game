@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 5383703560598103780}
   - component: {fileID: 5383703560598103706}
   - component: {fileID: 5383703560598103789}
-  - component: {fileID: 5383703560598103703}
+  - component: {fileID: 4121150287311102792}
   m_Layer: 0
   m_Name: FatFly
   m_TagString: Collectibles
@@ -399,7 +399,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &5383703560598103703
+--- !u!114 &4121150287311102792
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -408,11 +408,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5383703560598103788}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc3a90d7ec7c6934bac8cc4f4f77b32e, type: 3}
+  m_Script: {fileID: 11500000, guid: 17b0ab988aa879f48bbb5a294d23e8f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _creatureTypeStruct: {fileID: 11400000, guid: f76f09da49479ec40bb686dddbcb72e9, type: 2}
-  sprite: {fileID: 8388197155129641491}
   stop: 0
 --- !u!1 &5383703560598103799
 GameObject:
