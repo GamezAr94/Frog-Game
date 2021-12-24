@@ -18,7 +18,7 @@ public class BodyMovement : MonoBehaviour
     float elapsedTime;
 
 
-    private void Awake() {
+    private void Start() {
         EventSystem.current.onMovingFrogSideToSide += SetFrogBodyMovementCoroutine;
     }
 
