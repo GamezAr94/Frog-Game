@@ -10,7 +10,6 @@ public class LoaderCallback : MonoBehaviour
     void Update()
     {
         if(isFirstUpdate){
-            Debug.Log("Button move scene");
             isFirstUpdate = false;
             ButtonManager.LoaderCallback();
         }

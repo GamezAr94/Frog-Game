@@ -8,7 +8,6 @@ public class ButtonManager : MonoBehaviour
     public void ButtonMoveScene(int level){
         //set the loader callback action to load the target scene
         onLoaderCallback = () => {SceneManager.LoadScene(level);};
-        Debug.Log("Button move scene");
         //Load the loading scene
         SceneManager.LoadScene("Loading");
     }
