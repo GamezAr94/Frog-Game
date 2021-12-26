@@ -20,6 +20,7 @@ public class EventSystem : MonoBehaviour
     public event Action<Vector3> onBodyTongFollowingTong;
     public event Action<int> onAddingPoints;
     public event Action<int> onSettingCombo;
+    public event Action onSettingStamina;
 
 //Event where the PlayerAction and LineScreenDraw script are subscribed to show the line of the users input, to rotate the frogs head and to spawn the tong
     public void swipeTouch(){
@@ -55,6 +56,13 @@ public class EventSystem : MonoBehaviour
     public void SettingCombo(int combo){
         if(onSettingCombo != null){
             onSettingCombo(combo);
+        }
+    }
+
+    public void SettingStamina(){
+        if(onSettingStamina != null){
+            Debug.Log("HERE");
+            onSettingStamina();
         }
     }
 }

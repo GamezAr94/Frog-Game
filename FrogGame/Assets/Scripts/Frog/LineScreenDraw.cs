@@ -122,7 +122,7 @@ public class LineScreenDraw : MonoBehaviour
                         if(_distance >= minDistanceToSpawnTong && _startLocalTouchPosition.y > _endingLocalTouchPosition.y){
                             
                             tongBehaviour.SetCoroutineToSpawnTong(_distance);
-
+                            EventSystem.current.SettingStamina();
                             isReadyToAcceptInput = false;
                         }
 
