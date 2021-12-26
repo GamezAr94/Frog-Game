@@ -86,7 +86,6 @@ public class TongBehaviour : MonoBehaviour
             if(!tongsIsPaused){
                 speedTongAttack = movementCurveTongAttack.Evaluate(time);
                 time += Time.deltaTime;
-Debug.Log(time);
                 transform.position = Vector3.MoveTowards(transform.position, finalPos, speedTongAttack);
 
                 EventSystem.current.BodyTongFOllowingTong(this.transform.localPosition);
