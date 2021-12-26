@@ -751,7 +751,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5297f6139449e1349a506dc7006f1540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  desiredMovementDuration: 0.7
+  movementCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: -1.8293035
+      outSlope: -1.8293035
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.0630418
+    - serializedVersion: 3
+      time: 0.3253479
+      value: 0.6755028
+      inSlope: 0.020947395
+      outSlope: 0.020947395
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.08308558
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &632586495
 Transform:
   m_ObjectHideFlags: 0
@@ -3195,8 +3218,55 @@ MonoBehaviour:
   tongMustGoBack: 0
   _tongInMouth: 1
   tongPivotObject: {fileID: 5798444415029534008}
-  speedTongAttack: 0.271
-  rangeOfTong: 7.26
+  rangeOfTong: 9
+  movementCurveTongAttack:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 6.2084017
+      outSlope: 6.2084017
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.06377887
+    - serializedVersion: 3
+      time: 0.5001079
+      value: 0.28743094
+      inSlope: -1.7799648
+      outSlope: -1.7799648
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.10419963
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  movementCurveTongBack:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.023693236
+      outSlope: 0.023693236
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.08771486
+    - serializedVersion: 3
+      time: 0.48571217
+      value: 0.6400469
+      inSlope: -0.009981505
+      outSlope: -0.009981505
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.12118528
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &5798444414461427093
 Transform:
   m_ObjectHideFlags: 0
