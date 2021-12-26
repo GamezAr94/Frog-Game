@@ -66,6 +66,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -448,6 +449,21 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      PupilR: -2240656904702697065
+      EyeBallR: 3363743534859110193
+      main_frogCharacter-unity_2.0.1_Android_Size_13: 4363410381017734366
+      Head: 3856368193256648296
+      LegR: -5897155813146211653
+      EyeBallL: -6151661035759120451
+      EyeBrowL: 3152501657517858919
+      ArmR: 2911044105206730626
+      PupilL: 5403424794278583786
+      ArmL: 4451599419074779337
+      TipTong: 8482944642065939822
+      LegL: -7618893843986689978
+      main_frogCharacter-unity_2.0.1_Android_Size_11: -862035125690470277
+      Body: -4819515076676871631
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
