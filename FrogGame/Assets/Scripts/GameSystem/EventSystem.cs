@@ -61,7 +61,6 @@ public class EventSystem : MonoBehaviour
 
     public void SettingStamina(){
         if(onSettingStamina != null){
-            Debug.Log("HERE");
             onSettingStamina();
         }
     }
