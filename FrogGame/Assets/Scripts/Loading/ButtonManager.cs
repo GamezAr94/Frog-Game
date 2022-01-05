@@ -4,6 +4,12 @@ using System;
 
 public class ButtonManager : MonoBehaviour
 {
+    [SerializeField]
+    GameObject pauseMenu;
+
+    [SerializeField]
+    GameObject pauseButton;
+    
     private static Action onLoaderCallback;
     public void ButtonMoveScene(int level){
         //set the loader callback action to load the target scene
@@ -19,5 +25,14 @@ public class ButtonManager : MonoBehaviour
             onLoaderCallback();
             onLoaderCallback = null;
         }
+    }
+    public void EnableDisablePauseMenu(bool activate){
+        if (activate){ 
+            Time.timeScale = 0;
+        } else{ 
+            Time.timeScale = 1;
+        }
+        pauseMenu.SetActive(activate);
+        pauseButton.SetActive(!activate);
     }
 }

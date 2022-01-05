@@ -83,7 +83,7 @@ public class TongBehaviour : MonoBehaviour
 
         while (Vector3.Distance(this.transform.position, finalPos) >= 0.2f && !tongMustGoBack && ScreenLimits())
         {
-            if(!tongsIsPaused){
+            if(!tongsIsPaused &&  Time.timeScale != 0){
                 speedTongAttack = movementCurveTongAttack.Evaluate(time);
                 time += Time.deltaTime;
                 transform.position = Vector3.MoveTowards(transform.position, finalPos, speedTongAttack);
@@ -105,7 +105,7 @@ public class TongBehaviour : MonoBehaviour
         {
             tongMustGoBack = true;
 
-            if(!tongsIsPaused){
+            if(!tongsIsPaused && Time.timeScale != 0){
 
                 speedTongAttack = movementCurveTongBack.Evaluate(time);
                 time += Time.deltaTime;

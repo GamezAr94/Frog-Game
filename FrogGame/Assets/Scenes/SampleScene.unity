@@ -308,7 +308,7 @@ GameObject:
   - component: {fileID: 79427692}
   - component: {fileID: 79427691}
   - component: {fileID: 79427694}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: BGFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -498,7 +498,7 @@ GameObject:
   - component: {fileID: 271747345}
   - component: {fileID: 271747344}
   - component: {fileID: 271747347}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: BGGrassL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -513,7 +513,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 271747342}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.45, y: 3.6772432, z: 5.6455083}
+  m_LocalPosition: {x: 7.22, y: 3.6772432, z: 5.6455083}
   m_LocalScale: {x: -10, y: 18.181818, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -661,7 +661,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 299452126}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.05272701, y: -5.1261253, z: -1.5636151}
+  m_LocalPosition: {x: 0, y: -5.1261253, z: -1.5636151}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1442,7 +1442,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.05272701, y: -5.1261253, z: -1.5636151}
+  m_LocalPosition: {x: 0, y: -5.1261253, z: -1.5636151}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1577,7 +1577,7 @@ GameObject:
   m_Component:
   - component: {fileID: 632586495}
   - component: {fileID: 632586494}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: FrogCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1765,6 +1765,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
         m_MethodName: ButtonMoveScene
         m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 823255969}
+        m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
+        m_MethodName: EnableDisablePauseMenu
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2243,6 +2255,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0ab2335139d09f49aa599b7eb74def0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseMenu: {fileID: 172117288}
+  pauseButton: {fileID: 1972345980}
 --- !u!1 &871444221
 GameObject:
   m_ObjectHideFlags: 0
@@ -2336,7 +2350,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 899201553}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.05272701, y: -5.1261253, z: -0.5136152}
+  m_LocalPosition: {x: 0, y: -5.1261253, z: -0.5136152}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2374,7 +2388,7 @@ Camera:
   m_Depth: -100
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 2147483647
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -2531,7 +2545,7 @@ GameObject:
   - component: {fileID: 1294321716}
   - component: {fileID: 1294321715}
   - component: {fileID: 1294321718}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: BGGrassR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2546,7 +2560,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1294321713}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.99, y: 3.6772432, z: 5.6455083}
+  m_LocalPosition: {x: -4.27, y: 3.6772432, z: 5.6455083}
   m_LocalScale: {x: 10, y: 18.181818, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -3021,8 +3035,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2031702049}
-        m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
+      - m_Target: {fileID: 823255969}
+        m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
         m_MethodName: EnableDisablePauseMenu
         m_Mode: 6
         m_Arguments:
@@ -3456,10 +3470,10 @@ RectTransform:
   m_Father: {fileID: 172117289}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 338, y: 600}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1712361338
 MonoBehaviour:
@@ -3917,8 +3931,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2031702049}
-        m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
+      - m_Target: {fileID: 823255969}
+        m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
         m_MethodName: EnableDisablePauseMenu
         m_Mode: 6
         m_Arguments:
@@ -4116,6 +4130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 172117288}
+  pauseButton: {fileID: 1972345980}
 --- !u!1 &2042967682
 GameObject:
   m_ObjectHideFlags: 0
@@ -4561,7 +4576,7 @@ GameObject:
   - component: {fileID: 2071865855100633940}
   - component: {fileID: 2071865855100633941}
   - component: {fileID: 2071865855100633944}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4670,7 +4685,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5798444413644937958}
   - component: {fileID: 5798444413644937957}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Eyelashes_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4754,7 +4769,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5798444413888216958}
   - component: {fileID: 5798444413888216957}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Parpado_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4838,7 +4853,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5798444413949005682}
   - component: {fileID: 5798444413949005681}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Hand_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4854,7 +4869,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5798444414040029479}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Eyelashes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4955,7 +4970,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5798444414257295761}
   - component: {fileID: 5798444414257295760}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Parpado_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5040,7 +5055,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5798444414289677987}
   - component: {fileID: 5798444414289677986}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Eye_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5073,7 +5088,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5798444414443590402}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: ArmsContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5104,20 +5119,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 6.2084017
-      outSlope: 6.2084017
+      inSlope: 10.59717
+      outSlope: 10.59717
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.06377887
+      outWeight: 0.021914648
     - serializedVersion: 3
-      time: 0.5001079
-      value: 0.28743094
-      inSlope: -1.7799648
-      outSlope: -1.7799648
+      time: 0.23545945
+      value: 0.57983905
+      inSlope: -4.835785
+      outSlope: -4.835785
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.10419963
+      inWeight: 0.044778265
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -5173,7 +5188,7 @@ GameObject:
   - component: {fileID: 5798444414461427096}
   - component: {fileID: 5798444414461427099}
   - component: {fileID: 5798444414461427092}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Tong
   m_TagString: DisabledTongTip
   m_Icon: {fileID: 0}
@@ -5274,7 +5289,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5798444414544716818}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: LegsContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5307,7 +5322,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5798444414558719096}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: EyesContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5339,7 +5354,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5798444414566801804}
   - component: {fileID: 5798444414566803059}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Leg_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5423,7 +5438,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5798444414653367476}
   - component: {fileID: 5798444414653367481}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Pupil_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5492,7 +5507,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5798444414726893555}
   - component: {fileID: 5798444414726893554}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Eye_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5723,7 +5738,7 @@ GameObject:
   - component: {fileID: 5798444414911132864}
   - component: {fileID: 5798444414911132865}
   - component: {fileID: 4284324973811575017}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Body_Tong
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5755,7 +5770,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5798444414922051770}
   - component: {fileID: 5798444414922051775}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Pupil_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5891,7 +5906,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5798444414937027128}
   - component: {fileID: 5798444414937027129}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5922,7 +5937,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5798444415029534008}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: TongPivotPosition
   m_TagString: Untagged
   m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
@@ -5954,7 +5969,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5798444415089062596}
   - component: {fileID: 5798444415089062603}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Leg_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6090,7 +6105,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5798444415147585937}
   - component: {fileID: 5798444415147585936}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Hand_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6122,7 +6137,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5798444415186340664}
   - component: {fileID: 5798444415186340671}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Eyelashes_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6208,7 +6223,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5798444415292565788}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Parpados
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6242,7 +6257,7 @@ GameObject:
   - component: {fileID: 5798444415422599429}
   - component: {fileID: 5798444415422599438}
   - component: {fileID: 5798444415422599428}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: BrainAndPoints
   m_TagString: Mouth
   m_Icon: {fileID: 0}
