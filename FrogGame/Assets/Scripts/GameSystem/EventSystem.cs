@@ -8,10 +8,15 @@ public class EventSystem : MonoBehaviour
     void Awake(){
         current = this;
     }
+    private void Start() {
+        StartingGame();//this code starts the countdown, the spawning process and the parallax effect
+    }
     
     private void Update()
     {
-        swipeTouch();
+        if(Time.timeScale != 0){
+            swipeTouch();
+        }
     }
 
     public event Action onSwipeTouch;
@@ -21,6 +26,9 @@ public class EventSystem : MonoBehaviour
     public event Action<int> onAddingPoints;
     public event Action<int> onSettingCombo;
     public event Action onSettingStamina;
+    public event Action onStartingSpawnCreatures;
+    public event Action<bool> onParallaxEffect;
+    public event Action onStartingGame;
 
 //Event where the PlayerAction and LineScreenDraw script are subscribed to show the line of the users input, to rotate the frogs head and to spawn the tong
     public void swipeTouch(){
@@ -64,4 +72,21 @@ public class EventSystem : MonoBehaviour
             onSettingStamina();
         }
     }
+
+    public void StartingSpawnCreatures(){
+        if(onStartingSpawnCreatures != null){
+            onStartingSpawnCreatures();
+        }
+    }
+    public void ParallaxEffect(bool isStarting){
+        if(onParallaxEffect != null){
+            onParallaxEffect(isStarting);
+        }
+    }
+    public void StartingGame(){
+        if(onStartingGame != null){
+            onStartingGame();
+        }
+    }
+    
 }

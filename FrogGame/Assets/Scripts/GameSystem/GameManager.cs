@@ -1,16 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using System;
 
 public class GameManager : MonoBehaviour
 {
     public static int score = 0;
     int maxCombo = 0;
-
-    [SerializeField]
-    Text textTries;
 
 
     private void Awake()

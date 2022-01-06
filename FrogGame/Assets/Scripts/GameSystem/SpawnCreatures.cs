@@ -15,6 +15,9 @@ public class SpawnCreatures : MonoBehaviour
 
     [SerializeField]
     CreatureSpawnDetails[] creaturesToSpawn;
+    
+    [SerializeField]
+    float countDownToStartGame;
 
     [SerializeField]
     [Range(0, 10)]
@@ -28,11 +31,16 @@ public class SpawnCreatures : MonoBehaviour
     {
         creatureSpawnBoundaries.DrawBorderToDebug(creatureSpawnBoundaries.SpawningBorder, Color.white);
         setListOfCreatures();
-        spawnTimeManager = SpawnOjectsTimer(2f);
+        spawnTimeManager = SpawnOjectsTimer();
+        EventSystem.current.onStartingSpawnCreatures += StartingTheGame;
     }
 
     private void Start() {
         //add hthe spawnObjectsTimer to another coroutine to control when it should starts
+        //StartCoroutine(spawnTimeManager);
+    }
+
+    public void StartingTheGame(){
         StartCoroutine(spawnTimeManager);
     }
 
@@ -53,9 +61,8 @@ public class SpawnCreatures : MonoBehaviour
         }
     }
 
-    public IEnumerator SpawnOjectsTimer(float time)
+    public IEnumerator SpawnOjectsTimer()
     {
-        yield return new WaitForSeconds(time);
         while (listOfCreaturesToSpawn != null && listOfCreaturesToSpawn.Count > 0)
         {
             Vector3 randomPoint = creatureSpawnBoundaries.getRandomBorderPoint();
