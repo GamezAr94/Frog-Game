@@ -12,8 +12,17 @@ public class ButtonManager : MonoBehaviour
     
     private static Action onLoaderCallback;
     public void ButtonMoveScene(int level){
+        Time.timeScale = 1;
         //set the loader callback action to load the target scene
         onLoaderCallback = () => {SceneManager.LoadScene(level);};
+        //Load the loading scene
+        SceneManager.LoadScene("Loading");
+    }
+
+    public void RetryScene(){
+        Time.timeScale = 1;
+        //set the loader callback action to load the target scene
+        onLoaderCallback = () => {SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-1);};
         //Load the loading scene
         SceneManager.LoadScene("Loading");
     }

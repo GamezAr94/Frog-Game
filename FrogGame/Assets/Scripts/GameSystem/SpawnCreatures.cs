@@ -44,6 +44,10 @@ public class SpawnCreatures : MonoBehaviour
         StartCoroutine(spawnTimeManager);
     }
 
+    public int getTotalNumberOfCreaturesInTheLevel(){
+        return listOfCreaturesToSpawn.Count;
+    }
+
     private void setListOfCreatures()
     {
         listOfCreaturesToSpawn = new List<Creatures>();
@@ -73,6 +77,7 @@ public class SpawnCreatures : MonoBehaviour
             listOfCreaturesToSpawn.RemoveAt(randomCreatureFromList);
             yield return new WaitForSeconds(Random.Range(timeMinMax[0], timeMinMax[1]));
         }
+        EventSystem.current.EndingGame(true);
         StopCoroutine(spawnTimeManager);
     }
 }

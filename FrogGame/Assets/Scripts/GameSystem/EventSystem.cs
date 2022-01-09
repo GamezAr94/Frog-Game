@@ -29,6 +29,8 @@ public class EventSystem : MonoBehaviour
     public event Action onStartingSpawnCreatures;
     public event Action<bool> onParallaxEffect;
     public event Action onStartingGame;
+    public event Action<bool> onEndingGame;
+    public event Action onCompletingLevel;
 
 //Event where the PlayerAction and LineScreenDraw script are subscribed to show the line of the users input, to rotate the frogs head and to spawn the tong
     public void swipeTouch(){
@@ -88,5 +90,14 @@ public class EventSystem : MonoBehaviour
             onStartingGame();
         }
     }
-    
+    public void EndingGame(bool isEnding){
+        if(onEndingGame != null){
+            onEndingGame(isEnding);
+        }
+    }
+    public void CompletingGame(){
+        if(onCompletingLevel != null){
+            onCompletingLevel();
+        }
+    }
 }
