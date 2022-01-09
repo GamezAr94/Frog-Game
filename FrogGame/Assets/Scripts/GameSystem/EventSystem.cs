@@ -23,7 +23,8 @@ public class EventSystem : MonoBehaviour
     public event Action<float,float> onMovingFrogSideToSide;
     public event Action<Vector3> onSettingHeadsRotation;
     public event Action<Vector3> onBodyTongFollowingTong;
-    public event Action<int> onAddingPoints;
+    public event Action onAddingPoints;
+    public event Action<int> onAddingGold;
     public event Action<int> onSettingCombo;
     public event Action onSettingStamina;
     public event Action onStartingSpawnCreatures;
@@ -57,9 +58,15 @@ public class EventSystem : MonoBehaviour
         }
     }
 
-    public void AddingPoints(int points){
+    public void AddingPoints(){
         if(onAddingPoints != null){
-            onAddingPoints(points);
+            onAddingPoints();
+        }
+    }
+
+    public void AddingGold(int gold){
+        if(onAddingGold != null){
+            onAddingGold(gold);
         }
     }
 

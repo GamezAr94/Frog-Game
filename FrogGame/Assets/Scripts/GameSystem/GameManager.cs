@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static int score = 0;
+    public static int creaturesCought = 0;
+    public static int goldCought = 0;
     int maxCombo = 0;
     bool isEndingTheGame = false;
 
     private void Awake()
     {
         EventSystem.current.onAddingPoints += AddingPoints;
+        EventSystem.current.onAddingGold += AddingGold;
         EventSystem.current.onEndingGame += theGameIsEnding;
         EventSystem.current.onSettingCombo += Combo; // Uncoment to accept combos
     }
@@ -32,8 +34,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void AddingPoints(int points){
-        score += points; 
+    void AddingPoints(){
+        creaturesCought += 1; 
+    } 
+    void AddingGold(int gold){
+        goldCought += gold; 
     } 
 
     public void theGameIsEnding(bool isEnding){

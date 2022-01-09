@@ -15,7 +15,7 @@ public abstract class Creatures : MonoBehaviour
     IEnumerator _movementCreature;
     public IEnumerator MovementCreature { get => _movementCreature; }
 
-    int scoreValue;
+    int scoreValueGold;
     
     [Tooltip("Variable to store the number of remaining movements that the creature has")]
     int _movementsRemaining;
@@ -23,7 +23,7 @@ public abstract class Creatures : MonoBehaviour
 
     protected virtual void Awake() {
         
-        scoreValue = _creatureTypeStruct.ScoreValue;
+        scoreValueGold = _creatureTypeStruct.ScoreValue;
 
         _movementsRemaining = _creatureTypeStruct.GetRemainingNumberOfMovements();
         _exitPoint = _creatureTypeStruct.GetExitPoint;
@@ -39,7 +39,8 @@ public abstract class Creatures : MonoBehaviour
             CreatureCaught(other);
         }
         if(this.transform.parent && other.CompareTag("Mouth")){
-            EventSystem.current.AddingPoints(scoreValue);
+            EventSystem.current.AddingPoints();
+            EventSystem.current.AddingGold(scoreValueGold);
             Destroy(this.gameObject);
         }
     }

@@ -16,30 +16,33 @@ public class ScoreGradeScript : MonoBehaviour
     TextMeshProUGUI score;
     int temporalScore = 0;
 
+    [SerializeField]
+    SpawnCreatures totalNumberOfCreatures;
     // Start is called before the first frame update
     private void Awake() {
 
-        score.text = GameManager.score.ToString();
-
+        score.text = GameManager.creaturesCought.ToString();
+        slider.maxValue = totalNumberOfCreatures.getTotalNumberOfCreaturesInTheLevel();
 
     }
 
     private void Start() {
-                stars[0].color = new Color(255,255,255,1);
-                stars[1].color = new Color(255,255,255,1);
-                stars[2].color = new Color(255,255,255,1);
+                score.text = GameManager.creaturesCought.ToString()+"/"+slider.maxValue.ToString();
+                stars[0].color = new Color(255,255,255,0.2f);
+                stars[1].color = new Color(255,255,255,0.2f);
+                stars[2].color = new Color(255,255,255,0.2f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(temporalScore != GameManager.score){
+        if(temporalScore != GameManager.creaturesCought){
 
-            slider.value = GameManager.score;
+            slider.value = GameManager.creaturesCought;
 
-            temporalScore = GameManager.score;
+            temporalScore = GameManager.creaturesCought;
 
-            score.text = GameManager.score.ToString();
+            score.text = GameManager.creaturesCought.ToString()+"/"+slider.maxValue.ToString();
 
             if(slider.value >= slider.maxValue*0.58f){
                 stars[0].color = new Color(255,255,255,1);
