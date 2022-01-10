@@ -18,4 +18,7 @@ public class GoldScript : MonoBehaviour
     {
         goldCought.text = GameManager.goldCought.ToString();
     }
+    public int getTotalGoldCought(){
+        return GameManager.goldCought;
+    }
 }
