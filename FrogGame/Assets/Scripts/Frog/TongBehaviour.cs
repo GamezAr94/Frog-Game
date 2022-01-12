@@ -7,6 +7,11 @@ public class TongBehaviour : MonoBehaviour
 {
     const string ATTAKING_TAG_NAME = "TongTip";
     const string DISABLED_TONG_TAG_NAME = "DisabledTongTip";
+    
+    [Header("Screen Boundaries")]
+    [SerializeField]
+    [Tooltip("Screen boundaries that the tong cannot pass")]
+    CreatureBoundaries SCREEN_BOUNDARIES;
 
     [Header("Tong Settings")]
 
@@ -27,13 +32,15 @@ public class TongBehaviour : MonoBehaviour
     [Tooltip("The pivot where the tong has to go back")]
     Transform tongPivotObject;
 
-    [Tooltip("The time that tong will take to complete the attack")]
-    [SerializeField][Range (0.1f, 1f)]
-    float speedTongAttack = 0.1f;
-
     [Tooltip("The greater the shorter")]
     [SerializeField][Range (5f, 20f)]
     float rangeOfTong = 12f;
+
+    [SerializeField][Tooltip("Animation curve to define the speed of the tong when attacking")]
+    AnimationCurve movementCurveTongAttack;
+
+    [SerializeField][Tooltip("Animation curve to define the movement of the tong when moving backward")]
+    AnimationCurve movementCurveTongBack;
 
     IEnumerator spawnTong;
 
@@ -64,16 +71,21 @@ public class TongBehaviour : MonoBehaviour
         StartCoroutine(spawnTong);
     }
 
+    // function that accepts a param distance which is the distance of the user's touch
     IEnumerator spawningTongCoroutine(float distance)
     {
         Vector3 finalPos = transform.position + (transform.up * (distance/rangeOfTong));
         
-
         ChangeTagName(ATTAKING_TAG_NAME);
 
-        while (Vector3.Distance(this.transform.position, finalPos) >= 0.2f && !tongMustGoBack)
+        float time = 0;
+        float speedTongAttack = 0;
+
+        while (Vector3.Distance(this.transform.position, finalPos) >= 0.2f && !tongMustGoBack && ScreenLimits())
         {
             if(!tongsIsPaused){
+                speedTongAttack = movementCurveTongAttack.Evaluate(time);
+                time += Time.deltaTime;
                 transform.position = Vector3.MoveTowards(transform.position, finalPos, speedTongAttack);
 
                 EventSystem.current.BodyTongFOllowingTong(this.transform.localPosition);
@@ -84,15 +96,20 @@ public class TongBehaviour : MonoBehaviour
 
         ChangeTagName(DISABLED_TONG_TAG_NAME);
 
-        EventSystem.current.SettingCombo(this.transform.childCount);
+        //EventSystem.current.SettingCombo(this.transform.childCount); //this event is to handle the COMBOS, I need to think about how to implement it
 
         finalPos = tongPivotObject.position;
+        time = 0;
         
         while (Vector3.Distance(this.transform.position, finalPos) >= 0.2f)
         {
             tongMustGoBack = true;
 
             if(!tongsIsPaused){
+
+                speedTongAttack = movementCurveTongBack.Evaluate(time);
+                time += Time.deltaTime;
+
                 transform.position = Vector3.MoveTowards(transform.position, finalPos, speedTongAttack * 1.5f);
 
                 EventSystem.current.BodyTongFOllowingTong(this.transform.localPosition);
@@ -109,6 +126,13 @@ public class TongBehaviour : MonoBehaviour
         _tongInMouth = true;
 
         StopCoroutine(spawnTong);
+    }
+
+    bool ScreenLimits(){
+        if(this.transform.position.y > SCREEN_BOUNDARIES.CoordinatesOfMovementY[0] || this.transform.position.x > SCREEN_BOUNDARIES.CoordinatesOfMovementX[0] || this.transform.position.x < SCREEN_BOUNDARIES.CoordinatesOfMovementX[1]){
+            return false;
+        }
+        return true;
     }
 
 //LERP MOVEMENT - THIS WILL CAUSE THAT THE TONG SPENDS THE SAME AMOUNT OF TIME REGARDLESS THE DISTANCE 
@@ -173,5 +197,4 @@ public class TongBehaviour : MonoBehaviour
         StopCoroutine(spawnTong);
     }
     */
-
 }

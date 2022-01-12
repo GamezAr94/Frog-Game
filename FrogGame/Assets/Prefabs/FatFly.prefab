@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5383703560598103776}
   - component: {fileID: 5383703560598103710}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.043000013, y: -0.02399993, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8388197155129641490}
   m_RootOrder: 4
@@ -42,6 +43,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -92,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5383703560598103777}
   - component: {fileID: 5383703560598103711}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,6 +111,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.13099998, y: -0.012000084, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8388197155129641490}
   m_RootOrder: 0
@@ -124,6 +127,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -174,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5383703560598103778}
   - component: {fileID: 5383703560598103696}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,6 +195,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.06800002, y: 0.007999897, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8388197155129641490}
   m_RootOrder: 3
@@ -206,6 +211,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -256,7 +262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5383703560598103779}
   - component: {fileID: 5383703560598103697}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,6 +279,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.13300002, y: 0.010000229, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8388197155129641490}
   m_RootOrder: 2
@@ -288,6 +295,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -339,8 +347,8 @@ GameObject:
   - component: {fileID: 5383703560598103780}
   - component: {fileID: 5383703560598103706}
   - component: {fileID: 5383703560598103789}
-  - component: {fileID: 5383703560598103703}
-  m_Layer: 0
+  - component: {fileID: 4121150287311102792}
+  m_Layer: 6
   m_Name: FatFly
   m_TagString: Collectibles
   m_Icon: {fileID: 0}
@@ -357,6 +365,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.458, y: 3.9974694, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8388197155129641490}
   m_Father: {fileID: 0}
@@ -399,7 +408,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &5383703560598103703
+--- !u!114 &4121150287311102792
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -408,12 +417,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5383703560598103788}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc3a90d7ec7c6934bac8cc4f4f77b32e, type: 3}
+  m_Script: {fileID: 11500000, guid: 17b0ab988aa879f48bbb5a294d23e8f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _creatureTypeStruct: {fileID: 11400000, guid: f76f09da49479ec40bb686dddbcb72e9, type: 2}
-  sprite: {fileID: 8388197155129641491}
   stop: 0
+  infinite: 0
 --- !u!1 &5383703560598103799
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,7 +433,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5383703560598103791}
   - component: {fileID: 5383703560598103709}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -441,6 +450,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.07099998, y: -0.08400011, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8388197155129641490}
   m_RootOrder: 1
@@ -456,6 +466,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -505,7 +516,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8388197155129641490}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: containerCreature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -522,6 +533,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5383703560598103777}
   - {fileID: 5383703560598103791}

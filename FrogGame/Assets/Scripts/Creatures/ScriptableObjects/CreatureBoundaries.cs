@@ -9,11 +9,14 @@ public struct BorderSides
     public Vector3 point2;
 }
 
-[CreateAssetMenu(fileName = "Creature Boundaries", menuName = "Creature/CreatureBoundaries")]
+[CreateAssetMenu(fileName = "Creature Boundaries", menuName = "Boundaries/CreaturesBoundaries")]
 public class CreatureBoundaries : ScriptableObject
 {
+    [SerializeField][Tooltip("Screen Area")]
+    float[] coordinatesOfMovementX, coordinatesOfMovementY;  
+    public float[] CoordinatesOfMovementY { get => coordinatesOfMovementY; }
+    public float[] CoordinatesOfMovementX { get => coordinatesOfMovementX; } 
     
-    public float[] coordinatesOfMovementX, coordinatesOfMovementY;    
 
     [SerializeField]
     private BorderSides[] spawningBorder;

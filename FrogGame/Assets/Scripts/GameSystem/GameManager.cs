@@ -1,21 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using System;
 
 public class GameManager : MonoBehaviour
 {
-    public static int score = 0;
     int maxCombo = 0;
-
-    [SerializeField]
-    Text textTries;
-
+    bool isEndingTheGame = false;
 
     private void Awake()
     {
-        EventSystem.current.onAddingPoints += AddingPoints;
+        EventSystem.current.onEndingGame += theGameIsEnding;
         EventSystem.current.onSettingCombo += Combo; // Uncoment to accept combos
     }
 
@@ -28,7 +20,19 @@ public class GameManager : MonoBehaviour
             maxCombo = 0;
         }
     }
-    void AddingPoints(int points){
-        score += points + maxCombo; 
-    } 
+
+    private void FixedUpdate() {
+        //If I want to add a level managed by time I just have to create a switch case where this current if statement is by number of creatures in the scene
+        //and other where the time should be greather than zero, in both cases call the complething game.
+        if(isEndingTheGame && Time.timeScale != 0){
+            int totalEnemies = GameObject.FindGameObjectsWithTag("Collectibles").Length;
+            if(totalEnemies == 0){
+                EventSystem.current.CompletingGame();
+            }
+        }
+    }
+
+    public void theGameIsEnding(bool isEnding){
+        isEndingTheGame = isEnding;
+    }
 }

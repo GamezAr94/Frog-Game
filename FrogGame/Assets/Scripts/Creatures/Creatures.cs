@@ -6,9 +6,6 @@ public abstract class Creatures : MonoBehaviour
     Creature _creatureTypeStruct;
     public Creature CreatureTypeStruct { get => _creatureTypeStruct; }
 
-    public GameObject sprite;
-
- 
     [Tooltip("Variable to store the exit point of the creature")]
     Vector3 _exitPoint;
     public Vector3 ExitPoint { get => _exitPoint; }
@@ -18,7 +15,7 @@ public abstract class Creatures : MonoBehaviour
     IEnumerator _movementCreature;
     public IEnumerator MovementCreature { get => _movementCreature; }
 
-    int scoreValue;
+    int scoreValueGold;
     
     [Tooltip("Variable to store the number of remaining movements that the creature has")]
     int _movementsRemaining;
@@ -26,15 +23,13 @@ public abstract class Creatures : MonoBehaviour
 
     protected virtual void Awake() {
         
-        scoreValue = _creatureTypeStruct.ScoreValue;
+        scoreValueGold = _creatureTypeStruct.ScoreValue;
 
         _movementsRemaining = _creatureTypeStruct.GetRemainingNumberOfMovements();
         _exitPoint = _creatureTypeStruct.GetExitPoint;
         _movementCreature = movementCreatureCoroutine();
 
         StartCoroutine(_movementCreature);
-    }
-    private void Start() {
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -44,11 +39,11 @@ public abstract class Creatures : MonoBehaviour
             CreatureCaught(other);
         }
         if(this.transform.parent && other.CompareTag("Mouth")){
-            EventSystem.current.AddingPoints(scoreValue);
+            EventSystem.current.AddingPoints();
+            EventSystem.current.AddingGold(scoreValueGold);
             Destroy(this.gameObject);
         }
     }
-
 
     void OnDestroy() {
         if(_movementCreature != null){
@@ -76,14 +71,14 @@ public abstract class Creatures : MonoBehaviour
     }
 
     protected void LookForward(Vector3 nextStop){
-        Vector3 dir = nextStop - sprite.transform.position;
-        //float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        if(sprite.transform.position.x > nextStop.x){
-            sprite.transform.localScale = new Vector3(1,1,1);
-            //sprite.transform.rotation= Quaternion.AngleAxis(angle -180, Vector3.forward);
+        Vector3 dir = nextStop - this.transform.position;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if(this.transform.position.x > nextStop.x){
+            this.transform.localScale = new Vector3(1,1,1);
+            this.transform.rotation= Quaternion.AngleAxis(angle -180, Vector3.forward);
         }else{
-            sprite.transform.localScale = new Vector3(-1,1,1);
-            //sprite.transform.rotation= Quaternion.AngleAxis(angle, Vector3.forward);
+            this.transform.localScale = new Vector3(-1,1,1);
+            this.transform.rotation= Quaternion.AngleAxis(angle, Vector3.forward);
         }
     }
 }

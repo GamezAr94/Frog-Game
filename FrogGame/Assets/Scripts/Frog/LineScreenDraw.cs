@@ -56,7 +56,6 @@ public class LineScreenDraw : MonoBehaviour
         setDrawPosition();
 
         EventSystem.current.onSwipeTouch += PositionUserTouch;
-        EventSystem.current.onSettingHeadsRotation += SettingFrogsHeadRotation;
     }
 
 //Funtion to retrieve the user input, the position of the first touch, the swipe of the input and the position of the end of the touch
@@ -80,7 +79,7 @@ public class LineScreenDraw : MonoBehaviour
 
                     setDrawPosition(2, _startLocalTouchPosition.x, _startLocalTouchPosition.y);
 
-                    SettingFrogsHeadRotation(_startLocalTouchPosition);
+                    EventSystem.current.SettingHeadsRotation(_startLocalTouchPosition);
                 }
 
             }
@@ -113,7 +112,7 @@ public class LineScreenDraw : MonoBehaviour
                         EventSystem.current.MovingFrogSideToSide(_startLocalTouchPosition.x,_endingLocalTouchPosition.x);
                     }
                     if(isReadyToAcceptInput){
-                        SettingFrogsHeadRotation(Vector3.zero); //Default Target location that the frog will look at
+                        EventSystem.current.SettingHeadsRotation(Vector3.zero); //Default Target location that the frog will look at
                     }
                     
                 }else{
@@ -123,7 +122,7 @@ public class LineScreenDraw : MonoBehaviour
                         if(_distance >= minDistanceToSpawnTong && _startLocalTouchPosition.y > _endingLocalTouchPosition.y){
                             
                             tongBehaviour.SetCoroutineToSpawnTong(_distance);
-
+                            EventSystem.current.SettingStamina();
                             isReadyToAcceptInput = false;
                         }
 
@@ -187,10 +186,5 @@ Vector3 GetThePositionOfTheTouch(Touch touch){
 //function to debug the contact points of the user showing where the user clicked or released the touch
     private void debugingContactPoints(GameObject debuger, Vector3 contact){
         debuger.transform.position = contact;
-    }
-
-    //function to set the right rotation of the head's frog
-    public void SettingFrogsHeadRotation(Vector3 target){
-        transform.right = target - transform.position;
     }
 }
