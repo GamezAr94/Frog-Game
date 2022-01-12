@@ -3565,7 +3565,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 823255964}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 308302a418a3fe94c9af1ae83f62f549, type: 3}
   m_Name: 
@@ -4615,6 +4615,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1371859363}
+  - component: {fileID: 1371859364}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -4640,6 +4641,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1371859364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371859362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 308302a418a3fe94c9af1ae83f62f549, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreStats: {fileID: 1739258029}
+  goldStats: {fileID: 1849543283}
+  goldScoreText: {fileID: 2040734952}
+  NextLevelButton: {fileID: 2111604097}
+  creaturesScoreText: {fileID: 749001864}
+  stars:
+  - {fileID: 1761656546}
+  - {fileID: 1465628277}
+  - {fileID: 1036601616}
+  numberOfLevel: {fileID: 88778159}
+  UILevelCompleted: {fileID: 307244910}
 --- !u!1 &1390908045
 GameObject:
   m_ObjectHideFlags: 0
@@ -6572,7 +6596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa28a9c757849845a4b415374cfd4d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goldCought: {fileID: 1390908047}
+  goldCoughtText: {fileID: 1390908047}
 --- !u!1 &1902068773
 GameObject:
   m_ObjectHideFlags: 0
@@ -7022,7 +7046,7 @@ GameObject:
   - component: {fileID: 2031702047}
   - component: {fileID: 2031702046}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Pause
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9669,7 +9693,7 @@ GameObject:
   - component: {fileID: 6077497609414512162}
   - component: {fileID: 6077497609414512163}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Stats
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

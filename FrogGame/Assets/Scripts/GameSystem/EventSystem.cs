@@ -15,7 +15,7 @@ public class EventSystem : MonoBehaviour
     private void Update()
     {
         if(Time.timeScale != 0){
-            swipeTouch();
+            swipeTouch(); // this event controlls all the behaviour of the frog, the user innput, the spawning thong and the frog's movement.
         }
     }
 

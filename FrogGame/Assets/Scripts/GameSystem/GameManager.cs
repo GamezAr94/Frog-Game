@@ -2,15 +2,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static int creaturesCought = 0;
-    public static int goldCought = 0;
     int maxCombo = 0;
     bool isEndingTheGame = false;
 
     private void Awake()
     {
-        EventSystem.current.onAddingPoints += AddingPoints;
-        EventSystem.current.onAddingGold += AddingGold;
         EventSystem.current.onEndingGame += theGameIsEnding;
         EventSystem.current.onSettingCombo += Combo; // Uncoment to accept combos
     }
@@ -26,6 +22,8 @@ public class GameManager : MonoBehaviour
     }
 
     private void FixedUpdate() {
+        //If I want to add a level managed by time I just have to create a switch case where this current if statement is by number of creatures in the scene
+        //and other where the time should be greather than zero, in both cases call the complething game.
         if(isEndingTheGame && Time.timeScale != 0){
             int totalEnemies = GameObject.FindGameObjectsWithTag("Collectibles").Length;
             if(totalEnemies == 0){
@@ -33,13 +31,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-    void AddingPoints(){
-        creaturesCought += 1; 
-    } 
-    void AddingGold(int gold){
-        goldCought += gold; 
-    } 
 
     public void theGameIsEnding(bool isEnding){
         isEndingTheGame = isEnding;
