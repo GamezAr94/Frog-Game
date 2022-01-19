@@ -13,7 +13,7 @@ public class ScoreGradeScript : MonoBehaviour
     Slider slider; 
 
     [SerializeField]
-    TextMeshProUGUI[] stars;
+    Image[] stars;
     
 
     [SerializeField]
