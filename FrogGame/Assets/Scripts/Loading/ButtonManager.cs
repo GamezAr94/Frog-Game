@@ -41,7 +41,7 @@ public class ButtonManager : MonoBehaviour
         } else{ 
             Time.timeScale = 1;
         }
-        pauseMenu.SetActive(activate);
+        //pauseMenu.SetActive(activate);
         pauseButton.SetActive(!activate);
     }
 }
