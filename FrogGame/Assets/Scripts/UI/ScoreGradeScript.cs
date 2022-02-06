@@ -29,7 +29,7 @@ public class ScoreGradeScript : MonoBehaviour
     // Start is called before the first frame update
     private void Awake() {
         score.text = creaturesCought.ToString();
-        slider.maxValue = totalNumberOfCreatures.getTotalNumberOfCreaturesInTheLevel();
+        slider.maxValue = totalNumberOfCreatures.GetTotalNumberOfCreaturesInTheLevel();
         EventSystem.current.onAddingPoints += AddingPoints; 
     }
     private void Start() {

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -12,7 +11,7 @@ public class CountDown : MonoBehaviour
     float timerToStartTheGame = 3f;
 
     IEnumerator counterToStartGame;
-
+    
     private void Awake() {
         counterToStartGame = CountDownText(timerToStartTheGame);
     }

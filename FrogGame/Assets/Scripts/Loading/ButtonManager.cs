@@ -4,17 +4,15 @@ using System;
 
 public class ButtonManager : MonoBehaviour
 {
-    [SerializeField]
-    GameObject pauseMenu;
 
     [SerializeField]
     GameObject pauseButton;
     
-    private static Action onLoaderCallback;
+    private static Action _onLoaderCallback;
     public void ButtonMoveScene(int level){
         Time.timeScale = 1;
         //set the loader callback action to load the target scene
-        onLoaderCallback = () => {SceneManager.LoadScene(level);};
+        _onLoaderCallback = () => {SceneManager.LoadScene(level);};
         //Load the loading scene
         SceneManager.LoadScene("Loading");
     }
@@ -22,25 +20,22 @@ public class ButtonManager : MonoBehaviour
     public void RetryScene(){
         Time.timeScale = 1;
         //set the loader callback action to load the target scene
-        onLoaderCallback = () => {SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-1);};
+        _onLoaderCallback = () => {SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-1);};
         //Load the loading scene
         SceneManager.LoadScene("Loading");
     }
 
     public static void LoaderCallback(){
-        // Triggered after the first Udate which lets the screen refresh
-        // Execute the loader callback ation which will load the target scene
-        if(onLoaderCallback != null){
-            onLoaderCallback();
-            onLoaderCallback = null;
+        // Triggered after the first Update which lets the screen refresh
+        // Execute the loader callback action which will load the target scene
+        if(_onLoaderCallback != null){
+            _onLoaderCallback();
+            _onLoaderCallback = null;
         }
     }
-    public void EnableDisablePauseMenu(bool activate){
-        if (activate){ 
-            Time.timeScale = 0;
-        } else{ 
-            Time.timeScale = 1;
-        }
+    public void EnableDisablePauseMenu(bool activate)
+    {
+        Time.timeScale = activate ? 0 : 1;
         //pauseMenu.SetActive(activate);
         pauseButton.SetActive(!activate);
     }
