@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
@@ -29,10 +27,12 @@ public class LevelCompleted : MonoBehaviour
     TextMeshProUGUI numberOfLevel; 
 
     [SerializeField]
-    GameObject UILevelCompleted; 
+    GameObject UILevelCompleted;
+
+    [SerializeField] private GameObject bg;
 
     private void Awake() {
-        UILevelCompleted.SetActive(false);
+        //UILevelCompleted.SetActive(false);
     }
     // Start is called before the first frame update
     void Start()
@@ -42,23 +42,19 @@ public class LevelCompleted : MonoBehaviour
         for(int i = 0; i < scoreStats.getTotalStars(); i++){
             stars[i].color = new Color(255,255,255,0f);
         }
-        EventSystem.current.onCompletingLevel += showingEndingUIScreen;
+        EventSystem.current.onCompletingLevel += ShowingEndingUIScreen;
     }
 
-    public void showingEndingUIScreen(){
+    void ShowingEndingUIScreen(){
         //Convert this to a coroutine so when the level is completed the UI wont appear right away and it will let the ui to refresh the stats
         goldScoreText.text = goldStats.getTotalGoldCought().ToString();
         creaturesScoreText.text = scoreStats.getTotalCreaturesCought();
         int starsCollected = scoreStats.TotalStars;
-        if(starsCollected <= 1){
-            NextLevelButton.interactable = false;
-        }else{
-            NextLevelButton.interactable = true;
-        }
+        NextLevelButton.interactable = starsCollected > 1;
         for(int i = 0; i < starsCollected; i++){
             stars[i].color = new Color(255,255,255,1);
         }
-        UILevelCompleted.SetActive(true);
+        //UILevelCompleted.SetActive(true);
         Time.timeScale = 0.1f;
     } 
 }
