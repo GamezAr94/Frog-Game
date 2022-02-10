@@ -22,7 +22,6 @@ public class EventSystem : MonoBehaviour
     public event Action onSwipeTouch;
     public event Action<float,float> onMovingFrogSideToSide;
     public event Action<Vector3> onSettingHeadsRotation;
-    public event Action<Vector3> onBodyTongFollowingTong;
     public event Action onAddingPoints;
     public event Action<int> onAddingGold;
     public event Action<int> onSettingCombo;
@@ -49,12 +48,6 @@ public class EventSystem : MonoBehaviour
     public void SettingHeadsRotation(Vector3 lookingAt){
         if(onSettingHeadsRotation != null){
             onSettingHeadsRotation(lookingAt);
-        }
-    }
-
-    public void BodyTongFOllowingTong(Vector3 tongPosition){
-        if(onBodyTongFollowingTong != null){
-            onBodyTongFollowingTong(tongPosition);
         }
     }
 

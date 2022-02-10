@@ -5,8 +5,8 @@ using System.Collections;
 
 public class TongBehaviour : MonoBehaviour
 {
-    const string ATTAKING_TAG_NAME = "TongTip";
-    const string DISABLED_TONG_TAG_NAME = "DisabledTongTip";
+    const string ATTAKING_TAG_NAME = "TongTip"; //Tag name to identify whenever the tong is able to catch creatures
+    const string DISABLED_TONG_TAG_NAME = "DisabledTongTip"; //Tag name to identify whenever the tong is NOT able to catch creatures
     
     [Header("Screen Boundaries")]
     [SerializeField]
@@ -87,8 +87,7 @@ public class TongBehaviour : MonoBehaviour
                 speedTongAttack = movementCurveTongAttack.Evaluate(time);
                 time += Time.deltaTime;
                 transform.position = Vector3.MoveTowards(transform.position, finalPos, speedTongAttack);
-
-                EventSystem.current.BodyTongFOllowingTong(this.transform.localPosition);
+                
                 _tongInMouth = false;
             }
             yield return null;
@@ -111,17 +110,13 @@ public class TongBehaviour : MonoBehaviour
                 time += Time.deltaTime;
 
                 transform.position = Vector3.MoveTowards(transform.position, finalPos, speedTongAttack * 1.5f);
-
-                EventSystem.current.BodyTongFOllowingTong(this.transform.localPosition);
             }
             finalPos = tongPivotObject.position;
             yield return null;
         }
 
         transform.position = tongPivotObject.position;
-
-        EventSystem.current.BodyTongFOllowingTong(this.transform.localPosition);
-
+        
         tongMustGoBack = false;
         _tongInMouth = true;
 
