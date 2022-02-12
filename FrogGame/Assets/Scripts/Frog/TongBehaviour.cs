@@ -124,7 +124,11 @@ public class TongBehaviour : MonoBehaviour
     }
 
     bool ScreenLimits(){
-        if(this.transform.position.y > SCREEN_BOUNDARIES.CoordinatesOfMovementY[0] || this.transform.position.x > SCREEN_BOUNDARIES.CoordinatesOfMovementX[0] || this.transform.position.x < SCREEN_BOUNDARIES.CoordinatesOfMovementX[1]){
+        if (SCREEN_BOUNDARIES == null)
+        {
+            Debug.Log("No boundaries assigned: CreatureBoundaries missing");
+        }
+        if(this.transform.position.y > SCREEN_BOUNDARIES?.CoordinatesOfMovementY[0] || this.transform.position.x > SCREEN_BOUNDARIES?.CoordinatesOfMovementX[0] || this.transform.position.x < SCREEN_BOUNDARIES?.CoordinatesOfMovementX[1]){
             return false;
         }
         return true;

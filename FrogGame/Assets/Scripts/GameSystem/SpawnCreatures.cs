@@ -27,7 +27,7 @@ public class SpawnCreatures : MonoBehaviour
     IEnumerator _spawnTimeManager;
     private void Awake()
     {
-        creatureSpawnBoundaries.DrawBorderToDebug(creatureSpawnBoundaries.SpawningBorder, Color.white);
+        creatureSpawnBoundaries.DrawBorderToDebug(creatureSpawnBoundaries.SpawningBorder, Color.red);
         SetListOfCreatures();
         _spawnTimeManager = SpawnObjectsTimer();
         EventSystem.current.onStartingSpawnCreatures += StartingTheGame;

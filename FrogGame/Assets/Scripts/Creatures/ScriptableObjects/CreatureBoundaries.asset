@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: CreatureBoundaries
   m_EditorClassIdentifier: 
   coordinatesOfMovementX:
-  - 2.5
-  - -2.5
+  - 5
+  - -5
   coordinatesOfMovementY:
-  - 4.73
-  - -2.3
+  - 9.5
+  - -2.5
   spawningBorder:
-  - point1: {x: -4, y: -3, z: 0}
-    point2: {x: -4, y: 6, z: 0}
-  - point1: {x: 4, y: -3, z: 0}
-    point2: {x: 4, y: 6, z: 0}
-  - point1: {x: -4, y: 6, z: 0}
-    point2: {x: 4, y: 6, z: 0}
+  - point1: {x: -6, y: -3, z: 0}
+    point2: {x: -6, y: 10.5, z: 0}
+  - point1: {x: 6, y: -3, z: 0}
+    point2: {x: 6, y: 10.5, z: 0}
+  - point1: {x: -6, y: 10.5, z: 0}
+    point2: {x: 6, y: 10.5, z: 0}
