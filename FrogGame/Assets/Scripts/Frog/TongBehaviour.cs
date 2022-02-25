@@ -65,28 +65,26 @@ public class TongBehaviour : MonoBehaviour
     }
 
     //Function to start the coroutine that will spawn the tong
-    public void SetCoroutineToSpawnTong(float distance)
+    public void SetCoroutineToSpawnTong(Vector3 target)
     {
-        spawnTong = spawningTongCoroutine(distance);
+        spawnTong = SpawningTongCoroutine(target);
         StartCoroutine(spawnTong);
     }
 
     // function that accepts a param distance which is the distance of the user's touch
-    IEnumerator spawningTongCoroutine(float distance)
+    IEnumerator SpawningTongCoroutine(Vector3 target)
     {
-        Vector3 finalPos = transform.position + (transform.up * (distance/rangeOfTong));
-        
         ChangeTagName(ATTAKING_TAG_NAME);
 
         float time = 0;
         float speedTongAttack = 0;
 
-        while (Vector3.Distance(this.transform.position, finalPos) >= 0.2f && !tongMustGoBack && ScreenLimits())
+        while (Vector3.Distance(this.transform.position, target) >= 0.2f && !tongMustGoBack && ScreenLimits())
         {
             if(!tongsIsPaused){
                 speedTongAttack = movementCurveTongAttack.Evaluate(time);
                 time += Time.deltaTime;
-                transform.position = Vector3.MoveTowards(transform.position, finalPos, speedTongAttack);
+                transform.position = Vector3.MoveTowards(transform.position, target, speedTongAttack);
                 
                 _tongInMouth = false;
             }
@@ -97,10 +95,9 @@ public class TongBehaviour : MonoBehaviour
 
         //EventSystem.current.SettingCombo(this.transform.childCount); //this event is to handle the COMBOS, I need to think about how to implement it
 
-        finalPos = tongPivotObject.position;
         time = 0;
         
-        while (Vector3.Distance(this.transform.position, finalPos) >= 0.2f)
+        while (Vector3.Distance(this.transform.position, tongPivotObject.position) >= 0.2f)
         {
             tongMustGoBack = true;
 
@@ -109,9 +106,8 @@ public class TongBehaviour : MonoBehaviour
                 speedTongAttack = movementCurveTongBack.Evaluate(time);
                 time += Time.deltaTime;
 
-                transform.position = Vector3.MoveTowards(transform.position, finalPos, speedTongAttack * 1.5f);
+                transform.position = Vector3.MoveTowards(transform.position, tongPivotObject.position, speedTongAttack * 1.5f);
             }
-            finalPos = tongPivotObject.position;
             yield return null;
         }
 
