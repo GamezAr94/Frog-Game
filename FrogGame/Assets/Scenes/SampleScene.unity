@@ -2976,20 +2976,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: -1.8293035
-      outSlope: -1.8293035
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.0630418
+      outWeight: 0
     - serializedVersion: 3
-      time: 0.3253479
-      value: 0.6755028
-      inSlope: 0.020947395
-      outSlope: 0.020947395
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.08308558
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -4194,9 +4194,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creaturesToSpawn:
-  - totalInstances: 5
+  - totalInstances: 0
     behaviour: {fileID: 4872835602030775884, guid: d850ec7b8dea7114a96c95b0151e73ac, type: 3}
-  - totalInstances: 5
+  - totalInstances: 0
     behaviour: {fileID: 4121150287311102792, guid: b14248162be18a4408759b21269e2fa3, type: 3}
   timeMinMax:
   - 1.11
@@ -9454,7 +9454,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: -0.00040315837
-      value: 0.17305532
+      value: 0.34963003
       inSlope: 0.13999492
       outSlope: 0.13999492
       tangentMode: 0
@@ -9479,20 +9479,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0.5572168
-      outSlope: 0.5572168
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.054209914
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1.6611186
-      outSlope: 1.6611186
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04498279
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -10161,7 +10161,6 @@ GameObject:
   - component: {fileID: 5798444415422599426}
   - component: {fileID: 5798444415422599429}
   - component: {fileID: 5798444415422599428}
-  - component: {fileID: 5798444415422599430}
   m_Layer: 0
   m_Name: BrainAndPoints
   m_TagString: Untagged
@@ -10287,22 +10286,6 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!58 &5798444415422599430
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5798444415422599427}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.6996538, y: 0.000000035804057}
-  serializedVersion: 2
-  m_Radius: 0.39665928
 --- !u!1 &6077497609414512161
 GameObject:
   m_ObjectHideFlags: 0
