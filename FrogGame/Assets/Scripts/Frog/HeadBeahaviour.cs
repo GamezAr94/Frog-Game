@@ -17,12 +17,14 @@ public class HeadBeahaviour : MonoBehaviour
 
     private void Update() {
         if(tarjetObject){
-            SettingFrogsHeadRotation(tarjetObject.transform.position);
+            //SettingFrogsHeadRotation(tarjetObject.transform.position);
         }
     }
 
     //function to set the right rotation of the head's frog
-    public void SettingFrogsHeadRotation(Vector3 target){
+    public void SettingFrogsHeadRotation(Vector3 target)
+    {
+        target.z = 0;
         this.transform.up = target - transform.position;
     }
 }

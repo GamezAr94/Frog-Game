@@ -2976,18 +2976,18 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
@@ -9448,27 +9448,26 @@ MonoBehaviour:
   tongMustGoBack: 0
   _tongInMouth: 1
   tongPivotObject: {fileID: 5798444415422599426}
-  rangeOfTong: 11.07
   movementCurveTongAttack:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -0.00040315837
-      value: 0.34963003
-      inSlope: 0.13999492
-      outSlope: 0.13999492
-      tangentMode: 0
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.21039385
+      outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0.60194397
-      inSlope: 0.7739578
-      outSlope: 0.7739578
-      tangentMode: 0
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.074327186
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -9911,7 +9910,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5798444415029534008}
-  - component: {fileID: 5798444415029534010}
   m_Layer: 0
   m_Name: TongPivotPosition
   m_TagString: Untagged
@@ -9919,19 +9917,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &5798444415029534010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5798444415029534009}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b598dc471d7a9c48807ed8015b9acd0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tongTargetPositionGameObject: {fileID: 0}
 --- !u!4 &5798444415089062596
 Transform:
   m_ObjectHideFlags: 0
@@ -10182,7 +10167,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minDistanceToSpawnTong: 1.2
   minDistanceToMoveFrogX: 1.77
-  minDistanceToMoveFrogY: 1
   tongBehaviour: {fileID: 5798444414461427092}
   tongTargetPositionGameObject: {fileID: 383457561}
   startTargetPoint: {fileID: 2128216516}

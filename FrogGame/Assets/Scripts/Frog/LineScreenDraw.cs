@@ -13,12 +13,6 @@ public class LineScreenDraw : MonoBehaviour
     [SerializeField][Range (0f, 5f)]
     [Tooltip("Float that indicates the minimum distance in the X axis starting and ending the user touch input required to move the frog")]
     float minDistanceToMoveFrogX = 1.77f;
-    
-    [SerializeField][Range (0f, 5f)]
-    [Tooltip("Float that indicates the minimum distance in the Y axis starting and ending the user touch input required to move the frog")]
-    float minDistanceToMoveFrogY = 1.0f;
-
-    private bool _isHorizontalMovement = false; //this will help determinate if the touch was horizontal or vertical 
 
     private float _distance;
 
@@ -57,7 +51,7 @@ public class LineScreenDraw : MonoBehaviour
         startTargetPoint.transform.position = _startLocalTouchPosition;//Debugger object
         endTargetPoint.transform.position = _endingLocalTouchPosition;//Debugger object
                         
-        setDrawPosition(this.transform.position);
+        SetDrawPosition(this.transform.position);
 
         EventSystem.current.onSwipeTouch += PositionUserTouch;
     }
@@ -75,13 +69,13 @@ public class LineScreenDraw : MonoBehaviour
             if (touch.phase == TouchPhase.Began)
             {
                 _startLocalTouchPosition = GetThePositionOfTheTouch(touch);
-                
+
+                DebugingContactPoints(startTargetPoint, _startLocalTouchPosition);
+
+                SetDrawPosition(tongTargetPositionGameObject.transform.position);
+                    
                 if(tongBehaviour.TongInMouth){
                     _isReadyToAcceptInput = true;
-
-                    debugingContactPoints(startTargetPoint, _startLocalTouchPosition);
-
-                    setDrawPosition(tongTargetPositionGameObject.transform.position);
 
                     EventSystem.current.SettingHeadsRotation(_startLocalTouchPosition);
                 }
@@ -89,7 +83,7 @@ public class LineScreenDraw : MonoBehaviour
             }
             else if (touch.phase == TouchPhase.Moved)
             {
-                if(tongBehaviour.TongInMouth && _isReadyToAcceptInput){
+                if(_isReadyToAcceptInput){
                     
                     _trackLocalTouchPosition = GetThePositionOfTheTouch(touch);
                     
@@ -97,28 +91,13 @@ public class LineScreenDraw : MonoBehaviour
                     
                     float tempDistance = DistanceBetween2Points2D(_startLocalTouchPosition, _trackLocalTouchPosition);
                     
-                    if (HorizontalSwipe() > VerticalSwipe() && VerticalSwipe() < minDistanceToMoveFrogY) //If the touch is horizontal and the vertical is greater than the minimum requirement 
+                    if (HorizontalSwipe(_trackLocalTouchPosition.x) > VerticalSwipe(_trackLocalTouchPosition.y)) //If the touch is horizontal  
                     {
-                        _isHorizontalMovement = true;
-                        //this is a debugging tool to check weather the touch has a minimum horizontal distance or not
-                        if (tempDistance > minDistanceToMoveFrogX)
-                        {
-                            _renderLine.startColor = Color.yellow;
-                            _renderLine.endColor = Color.yellow;
-                        }else
-                        {
-                            _renderLine.startColor = Color.black;
-                            _renderLine.endColor = Color.black;
-                        }
-
-                        
-                        setDrawPosition(_startLocalTouchPosition, 0);
-                        setDrawPosition(_trackLocalTouchPosition, 1);
+                        SetDrawPosition(this.transform.position);
                         tongTargetPositionGameObject.transform.localPosition = new Vector3(0, 0, 0);
                     }
                     else
                     {
-                        _isHorizontalMovement = false;
                         if (tempDistance > minDistanceToSpawnTong)//Debugging tool to check weather the touch has a minimum vertical distance to spawn the tong
                         {
                             _renderLine.startColor = Color.white;
@@ -128,15 +107,16 @@ public class LineScreenDraw : MonoBehaviour
                             _renderLine.startColor = Color.gray;
                             _renderLine.endColor = Color.gray;
                         }
+                        
                         if(_startLocalTouchPosition.y > _trackLocalTouchPosition.y) //if the user moves the touch above its first touch the line and mark will disappear
                         {
                             tongTargetPositionGameObject.transform.localPosition = new Vector3(0, _distance, 0);
-                            setDrawPosition(tongTargetPositionGameObject.transform.position, 1);
-                            setDrawPosition(this.transform.position, 0);
+                            SetDrawPosition(tongTargetPositionGameObject.transform.position, 1);
+                            SetDrawPosition(this.transform.position, 0);
                         }
                         else
                         {
-                            setDrawPosition(this.transform.position);
+                            SetDrawPosition(this.transform.position);
                         }
                     }
 
@@ -148,9 +128,9 @@ public class LineScreenDraw : MonoBehaviour
 
                 _distance = DistanceBetween2Points2D(_startLocalTouchPosition, _endingLocalTouchPosition);
                 
-                debugingContactPoints(endTargetPoint, _endingLocalTouchPosition); // code to show the contact points of the user input
+                DebugingContactPoints(endTargetPoint, _endingLocalTouchPosition); // code to show the contact points of the user input
 
-                if(HorizontalSwipe() > VerticalSwipe()){
+                if(HorizontalSwipe(_endingLocalTouchPosition.x) > VerticalSwipe(_endingLocalTouchPosition.y)){
 
                     if(_distance > minDistanceToMoveFrogX){
                         EventSystem.current.MovingFrogSideToSide(_startLocalTouchPosition.x,_endingLocalTouchPosition.x);
@@ -161,31 +141,31 @@ public class LineScreenDraw : MonoBehaviour
                     
                 }else{
                 
-                    if(tongBehaviour.TongInMouth && _isReadyToAcceptInput){
+                    if(_isReadyToAcceptInput){
 
                         if(_distance >= minDistanceToSpawnTong && _startLocalTouchPosition.y > _endingLocalTouchPosition.y){
                             
                             tongBehaviour.SetCoroutineToSpawnTong(tongTargetPositionGameObject.transform.position);
-                            EventSystem.current.SettingStamina();// I NEED TO CHECK THIS CODE !!!! <===============
+                            //EventSystem.current.SettingStamina();// I NEED TO CHECK THIS CODE !!!! <===============
                             _isReadyToAcceptInput = false;
                         }
 
                     }
                 }
                 tongTargetPositionGameObject.transform.localPosition = new Vector3(0, 0, 0);
-                setDrawPosition(this.transform.position);
+                SetDrawPosition(this.transform.position);
             }
         }
     }
 
-Vector3 GetThePositionOfTheTouch(Touch touch){
-    Vector3 positionTouch = Camera.main.ScreenToWorldPoint(touch.position);
-    positionTouch.z = 0f;
-    return positionTouch;
-}
+    Vector3 GetThePositionOfTheTouch(Touch touch){
+        Vector3 positionTouch = Camera.main.ScreenToWorldPoint(touch.position);
+        positionTouch.z = 0f;
+        return positionTouch;
+    }
 
-// Function to draw the unser input drag touch
-    public void setDrawPosition(Vector3 position, int lineNum = 2)
+    // Function to draw the user input drag touch
+    private void SetDrawPosition(Vector3 position, int lineNum = 2)
     {
         if (lineNum == 2)
         {
@@ -202,7 +182,7 @@ Vector3 GetThePositionOfTheTouch(Touch touch){
         }
         else
         {
-            Debug.LogError("Wrong LineNum Input. Input must be a number between 0 and 2 inclusive. Your Inut = " + lineNum);
+            Debug.LogError("Wrong LineNum Input. Input must be a number between 0 and 2 inclusive. Your Input = " + lineNum);
         }
     }
 
@@ -216,17 +196,17 @@ Vector3 GetThePositionOfTheTouch(Touch touch){
     }
 
 //Function to determinate the absolute value on the X axis in two coordinates
-    private float HorizontalSwipe(){
-        return Mathf.Abs(_startLocalTouchPosition.x - _trackLocalTouchPosition.x);
+    private float HorizontalSwipe(float end){
+        return Mathf.Abs(_startLocalTouchPosition.x - end);
     }
 
 //Function to determinate the absolute value on the Y axis in two coordinates
-    private float VerticalSwipe(){
-        return Mathf.Abs(_startLocalTouchPosition.y - _trackLocalTouchPosition.y);
+    private float VerticalSwipe(float end){
+        return Mathf.Abs(_startLocalTouchPosition.y - end);
     }
 
 //function to debug the contact points of the user showing where the user clicked or released the touch
-    private void debugingContactPoints(GameObject debuger, Vector3 contact){
+    private void DebugingContactPoints(GameObject debuger, Vector3 contact){
         debuger.transform.position = contact;
     }
 }

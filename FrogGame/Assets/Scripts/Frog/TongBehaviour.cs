@@ -32,10 +32,6 @@ public class TongBehaviour : MonoBehaviour
     [Tooltip("The pivot where the tong has to go back")]
     Transform tongPivotObject;
 
-    [Tooltip("The greater the shorter")]
-    [SerializeField][Range (5f, 20f)]
-    float rangeOfTong = 12f;
-
     [SerializeField][Tooltip("Animation curve to define the speed of the tong when attacking")]
     AnimationCurve movementCurveTongAttack;
 
@@ -48,12 +44,6 @@ public class TongBehaviour : MonoBehaviour
         transform.position = tongPivotObject.position;
         ChangeTagName(DISABLED_TONG_TAG_NAME);
 
-    }
-
-    private void Update() {
-        if(!TongInMouth){
-            EventSystem.current.SettingHeadsRotation(this.transform.position);
-        }
     }
     private void OnDestroy() {
         if(spawnTong!=null){
