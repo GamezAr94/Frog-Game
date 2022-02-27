@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "CreatureDetails", menuName = "Creature/CreatureDetails")]
 public class Creature : ScriptableObject
@@ -38,10 +39,11 @@ public class Creature : ScriptableObject
     public int[] RangeOfMovementsOnScreen { get => _rangeOfMovementsOnScene; }
     
 
-    [SerializeField][Range(0, 10)]
+    [FormerlySerializedAs("_desiredMovementDuration")]
+    [SerializeField][Range(0, 50)]
     [Tooltip("Desired Movement duration between each point, the starting and ending point")]
-    float _desiredMovementDuration;
-    public float DesiredMovementDuration { get => _desiredMovementDuration; }
+    float desiredMovementDuration;
+    public float DesiredMovementDuration { get => desiredMovementDuration; }
 
     public Vector3 GetExitPoint { get => _creatureBoundaries.getRandomBorderPoint(); }
     

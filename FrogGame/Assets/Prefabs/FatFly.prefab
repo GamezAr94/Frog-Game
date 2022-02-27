@@ -421,6 +421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _creatureTypeStruct: {fileID: 11400000, guid: f76f09da49479ec40bb686dddbcb72e9, type: 2}
+  juicePrefab: {fileID: 9045248710020137841, guid: 647d60dd0fdfdf24999e4cd90536f358, type: 3}
   stop: 0
   infinite: 0
 --- !u!1 &5383703560598103799

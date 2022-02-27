@@ -19,8 +19,8 @@ public class WinningUILeanTweenAnimation : MonoBehaviour
 
     void ShowingWinningUI()
     {
-        LeanTween.alpha(background.transform.GetComponent<Image>().rectTransform, .6f, screenUIDuration).setIgnoreTimeScale(true);
-        LeanTween.moveLocalY(content, 0, .2f).setEase(screenUIEase);
+        LeanTween.alpha(background.transform.GetComponent<Image>().rectTransform, .2f, screenUIDuration).setIgnoreTimeScale(true);
+        LeanTween.moveLocalY(content, 0, .3f).setEase(screenUIEase).setDelay(0.05f);
         EventSystem.current.onCompletingLevel -= ShowingWinningUI;
     }
     

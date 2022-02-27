@@ -26,13 +26,21 @@ public class LevelCompleted : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI numberOfLevel; 
 
+    [Header("UI Elements")]
+    
     [SerializeField]
     GameObject UILevelCompleted;
-
-    [SerializeField] private GameObject bg;
+    
+    [SerializeField]
+    GameObject UIPause;
+    
+    [SerializeField]
+    GameObject UIStats;
 
     private void Awake() {
-        //UILevelCompleted.SetActive(false);
+        UILevelCompleted.SetActive(false);
+        UIPause.SetActive(true);
+        UIStats.SetActive(true);
     }
     // Start is called before the first frame update
     void Start()
@@ -47,6 +55,9 @@ public class LevelCompleted : MonoBehaviour
 
     void ShowingEndingUIScreen(){
         //Convert this to a coroutine so when the level is completed the UI wont appear right away and it will let the ui to refresh the stats
+        UILevelCompleted.SetActive(true);
+        UIPause.SetActive(false);
+        UIStats.SetActive(false);
         goldScoreText.text = goldStats.getTotalGoldCought().ToString();
         creaturesScoreText.text = scoreStats.getTotalCreaturesCought();
         int starsCollected = scoreStats.TotalStars;

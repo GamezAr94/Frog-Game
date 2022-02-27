@@ -1,48 +1,52 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using TMPro;
 
 public class CountDown : MonoBehaviour
 {
-    [SerializeField]
-    TextMeshProUGUI countDownText; 
+    TextMeshProUGUI _countDownText; 
 
     [SerializeField][Tooltip("This variable controlls the countdown before the start the game")]
     float timerToStartTheGame = 3f;
 
     IEnumerator counterToStartGame;
-    
-    private void Awake() {
-        counterToStartGame = CountDownText(timerToStartTheGame);
-    }
 
-    // Start is called before the first frame update
-    void Start()
+    [Tooltip("GameObject with text mesh pro to display the counter")]
+    [SerializeField] private GameObject counterText;
+    
+    private void Awake()
     {
+        _countDownText = counterText.GetComponent<TextMeshProUGUI>();
         EventSystem.current.onStartingGame += StartingGame;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     public void StartingGame(){
+        counterToStartGame = CountDownText(timerToStartTheGame);
         StartCoroutine(counterToStartGame);
     }
 
-    public IEnumerator CountDownText(float time){
-        countDownText.enabled = true;
+    private void OnDestroy()
+    {
+        StopCoroutine(counterToStartGame);
+    }
+
+    public IEnumerator CountDownText(float time)
+    {
+        yield return new WaitForSeconds(.2f);
+        
+        counterText.SetActive(true);
+        
         while(time >= 0){
             if(time > 0){
-                countDownText.text = ((int)time).ToString();
+                _countDownText.text = ((int)time).ToString();
             }else{
-                countDownText.text = "Go!";
+                _countDownText.text = "Go!";
             }
             time -= 1;
             yield return new WaitForSeconds(1f);
         }
-        countDownText.enabled = false;
+        counterText.SetActive(false);
 
         EventSystem.current.ParallaxEffect(true);
         EventSystem.current.StartingSpawnCreatures();

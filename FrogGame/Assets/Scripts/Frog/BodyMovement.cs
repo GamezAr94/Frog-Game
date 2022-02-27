@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class BodyMovement : MonoBehaviour
@@ -12,9 +13,17 @@ public class BodyMovement : MonoBehaviour
 
     [SerializeField]
     AnimationCurve movementCurve;
+    
+    [SerializeField]
+    [Range(10, 50)]
+    [Tooltip("Speed of the car when moving side to side, the greater the faster")]
+    int movementSpeed;
+
+    public static Vector3 FrogPosition;
 
 
     private void Start() {
+        FrogPosition = this.transform.position;
         EventSystem.current.onMovingFrogSideToSide += SetFrogBodyMovementCoroutine;
     }
 
@@ -48,12 +57,14 @@ public class BodyMovement : MonoBehaviour
             time += Time.deltaTime;
 
             if(endingPosition.x >= -SCREEN_BOUNDARIES && endingPosition.x <= SCREEN_BOUNDARIES){
-                transform.position = Vector3.MoveTowards(this.transform.position, endingPosition, speedMovement);
+                transform.position = Vector3.MoveTowards(this.transform.position, endingPosition, movementSpeed*speedMovement*Time.deltaTime);
             }
             else{
                 break;
             }
 
+            FrogPosition = this.transform.position;
+            
             yield return null;
         }
 

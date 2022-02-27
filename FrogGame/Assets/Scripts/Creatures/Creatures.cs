@@ -4,6 +4,9 @@ public abstract class Creatures : MonoBehaviour
 {
     [SerializeField][Tooltip("Field to retrieve the information of the creature to instance")]
     Creature _creatureTypeStruct;
+    
+    [SerializeField]
+    GameObject juicePrefab;
     public Creature CreatureTypeStruct { get => _creatureTypeStruct; }
 
     [Tooltip("Variable to store the exit point of the creature")]
@@ -29,7 +32,7 @@ public abstract class Creatures : MonoBehaviour
         _exitPoint = _creatureTypeStruct.GetExitPoint;
         _movementCreature = movementCreatureCoroutine();
 
-        StartCoroutine(_movementCreature);
+        StartCoroutine(_movementCreature); //Move this to on enable to start it when tken from pool
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -41,11 +44,11 @@ public abstract class Creatures : MonoBehaviour
         if(this.transform.parent && other.CompareTag("Mouth")){
             EventSystem.current.AddingPoints();
             EventSystem.current.AddingGold(scoreValueGold);
-            Destroy(this.gameObject);
+            Destroy(this.gameObject); //Returning the object to the Pool of Creatures
         }
     }
 
-    void OnDestroy() {
+    void OnDestroy() {//Change to ONDisable to stop all coroutines when returning it to the pool
         if(_movementCreature != null){
             StopCoroutine(_movementCreature);
         }
@@ -57,6 +60,10 @@ public abstract class Creatures : MonoBehaviour
     
     protected void CreatureCaught(Collider2D caughtObject)
     {
+        for (int i = 0; i < Random.Range(4,7); i++)
+        {
+            Instantiate(juicePrefab, this.transform.position, Quaternion.identity);
+        }
         this.transform.parent = caughtObject.transform;
         //Some logic to do when the creature is caught
         // - change the sprite

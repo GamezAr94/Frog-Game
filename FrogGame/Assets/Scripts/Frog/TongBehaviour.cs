@@ -24,6 +24,11 @@ public class TongBehaviour : MonoBehaviour
     bool tongMustGoBack = false;
     
     [SerializeField]
+    [Range(10,50)]
+    [Tooltip("Speed of the tong, the greater the faster")]
+    int speedTong;
+    
+    [SerializeField]
     [Tooltip("Bool to indicate whenever the tong is in its mouth")]
     bool _tongInMouth = true;
     public bool TongInMouth { get => _tongInMouth; private set => _tongInMouth = value; }
@@ -74,7 +79,7 @@ public class TongBehaviour : MonoBehaviour
             if(!tongsIsPaused){
                 speedTongAttack = movementCurveTongAttack.Evaluate(time);
                 time += Time.deltaTime;
-                transform.position = Vector3.MoveTowards(transform.position, target, speedTongAttack);
+                transform.position = Vector3.MoveTowards(transform.position, target, speedTong*speedTongAttack * Time.deltaTime);
                 
                 _tongInMouth = false;
             }
@@ -96,7 +101,7 @@ public class TongBehaviour : MonoBehaviour
                 speedTongAttack = movementCurveTongBack.Evaluate(time);
                 time += Time.deltaTime;
 
-                transform.position = Vector3.MoveTowards(transform.position, tongPivotObject.position, speedTongAttack * 1.5f);
+                transform.position = Vector3.MoveTowards(transform.position, tongPivotObject.position, speedTong*speedTongAttack * Time.deltaTime);
             }
             yield return null;
         }

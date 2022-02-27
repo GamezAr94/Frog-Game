@@ -38,7 +38,7 @@ public class FatFly : Creatures
         while(Vector3.Distance(this.transform.position, endFlyPosition) >= 0.2f){
             
             if(!stop && Time.timeScale != 0){
-                    this.transform.position = Vector3.MoveTowards(this.transform.position, endFlyPosition, movementSpeed * 0.5f);
+                    this.transform.position = Vector3.MoveTowards(this.transform.position, endFlyPosition, movementSpeed * Time.deltaTime);
             }
 
             yield return null;
