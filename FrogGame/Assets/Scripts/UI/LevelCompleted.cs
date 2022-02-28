@@ -2,70 +2,94 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class LevelCompleted : MonoBehaviour
 {
+    [Header("Script References")]
     [SerializeField]
-    ScoreGradeScript scoreStats;
+    ScoreGradeScript scoreStats;//Script to retrieve the number of stars collected at the end of the game
     
     [SerializeField]
-    GoldScript goldStats;
+    GoldScript goldStats;//Script to retrieve the total number of gold collected at the end of the game
 
+    [Header("UI References")]
     [SerializeField]
-    TextMeshProUGUI goldScoreText;
-
-    [SerializeField]
-    Button NextLevelButton;
-
+    TextMeshProUGUI goldScoreText;//Text mesh to display the gold score
     [SerializeField]
     TextMeshProUGUI creaturesScoreText;
-    
     [SerializeField]
-    Image[] stars;
+    TextMeshProUGUI numberOfLevel;
+
+    [FormerlySerializedAs("NextLevelButton")] [SerializeField]
+    Button nextLevelButton;
 
     [SerializeField]
-    TextMeshProUGUI numberOfLevel; 
+    GameObject[] stars;
 
-    [Header("UI Elements")]
+    [SerializeField]
+    GameObject uiLevelCompleted;
     
     [SerializeField]
-    GameObject UILevelCompleted;
+    GameObject uiPause;
     
     [SerializeField]
-    GameObject UIPause;
+    GameObject uiStats;
     
-    [SerializeField]
-    GameObject UIStats;
+    [SerializeField] private GameObject content;
+    
+    [SerializeField] private GameObject background;
+    
+    [Header("Animations")]
+    
+    [SerializeField] LeanTweenType easeType;
+    
+    [SerializeField][Range(0f,1f)] float containerDuration, starsDuration, containerDelay, starsDelay;
 
     private void Awake() {
-        UILevelCompleted.SetActive(false);
-        UIPause.SetActive(true);
-        UIStats.SetActive(true);
+        uiLevelCompleted.SetActive(false);
+        uiPause.SetActive(true);
+        uiStats.SetActive(true);
     }
     // Start is called before the first frame update
     void Start()
     {
-        NextLevelButton.interactable = false;
-        numberOfLevel.text = "Level " + SceneManager.GetActiveScene().buildIndex;
-        for(int i = 0; i < scoreStats.getTotalStars(); i++){
-            stars[i].color = new Color(255,255,255,0f);
+        for (int i = 0; i < stars.Length; i++)//Hiding the stars at the beginning of the game
+        {
+            stars[i].transform.localScale = new Vector3(0, 0, 0);
         }
+        content.transform.localScale = new Vector3(0,0,0);
+        
+        nextLevelButton.interactable = false;
+        numberOfLevel.text = "Level " + SceneManager.GetActiveScene().buildIndex;
         EventSystem.current.onCompletingLevel += ShowingEndingUIScreen;
     }
 
+    //Function to activate the Winning UI screen and its component, refresh the stats info, and activate/desactivate the NEXT level button
     void ShowingEndingUIScreen(){
-        //Convert this to a coroutine so when the level is completed the UI wont appear right away and it will let the ui to refresh the stats
-        UILevelCompleted.SetActive(true);
-        UIPause.SetActive(false);
-        UIStats.SetActive(false);
+        
+        uiLevelCompleted.SetActive(true);
+        uiPause.SetActive(false);
+        uiStats.SetActive(false);
+        
         goldScoreText.text = goldStats.getTotalGoldCought().ToString();
-        creaturesScoreText.text = scoreStats.getTotalCreaturesCought();
+        creaturesScoreText.text = scoreStats.GetTotalCreaturesCaught();
+        
         int starsCollected = scoreStats.TotalStars;
-        NextLevelButton.interactable = starsCollected > 1;
-        for(int i = 0; i < starsCollected; i++){
-            stars[i].color = new Color(255,255,255,1);
-        }
-        //UILevelCompleted.SetActive(true);
+        nextLevelButton.interactable = starsCollected > 1;
+        
         Time.timeScale = 0.1f;
+        
+        ShowingWinningUI();
     } 
+    
+    //Function to animate the Winning Screen UI and its content
+    void ShowingWinningUI()
+    {
+        LeanTween.scale(content, new Vector3(1,1,1), containerDuration).setDelay(containerDelay).setEase(easeType).setIgnoreTimeScale(true);
+        for (int i = 0; i < scoreStats.TotalStars; i++)
+        {
+            LeanTween.scale(stars[i], new Vector3(1,1,1), starsDuration).setDelay(starsDelay+((float)i/2)).setEase(easeType).setIgnoreTimeScale(true);
+        }
+    }
 }

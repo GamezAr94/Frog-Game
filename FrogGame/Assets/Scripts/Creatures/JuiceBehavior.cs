@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
 using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
@@ -16,19 +17,6 @@ public class JuiceBehavior : MonoBehaviour
     [Tooltip("Speed of the juice, the greater the faster")]
     [Range(0,50)]
     [SerializeField] private int movementSpeed;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnEnable()
     {
         float scale = Random.Range(.3f, 1);
@@ -53,7 +41,6 @@ public class JuiceBehavior : MonoBehaviour
         while(this.transform.position != endingPosition){
             curveMovement = instanceSpeedCurve.Evaluate(time);
             time += Time.deltaTime;
-
             transform.position = Vector3.MoveTowards(this.transform.position, endingPosition,  movementSpeed * curveMovement * Time.deltaTime);
             yield return null;
         }
@@ -69,6 +56,6 @@ public class JuiceBehavior : MonoBehaviour
         }
 
         this.gameObject.SetActive(false);
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
     }
 }

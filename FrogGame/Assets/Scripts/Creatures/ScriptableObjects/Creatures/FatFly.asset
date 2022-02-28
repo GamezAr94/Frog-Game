@@ -19,4 +19,4 @@ MonoBehaviour:
   - 1.24
   - 0.7
   _rangeOfMovementsOnScene: 07000000
-  _desiredMovementDuration: 0.11
+  desiredMovementDuration: 12.1

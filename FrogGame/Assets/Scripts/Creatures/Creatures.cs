@@ -62,7 +62,12 @@ public abstract class Creatures : MonoBehaviour
     {
         for (int i = 0; i < Random.Range(4,7); i++)
         {
-            Instantiate(juicePrefab, this.transform.position, Quaternion.identity);
+            GameObject juice = ObjectPool.SharedInstances.GetPooledJuices();
+            if (juice != null)
+            {
+                juice.transform.position = this.gameObject.transform.position;
+                juice.SetActive(true);
+            }
         }
         this.transform.parent = caughtObject.transform;
         //Some logic to do when the creature is caught
