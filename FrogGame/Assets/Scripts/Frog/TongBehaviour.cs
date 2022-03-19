@@ -73,6 +73,8 @@ public class TongBehaviour : MonoBehaviour
 
         float time = 0;
         float speedTongAttack = 0;
+        
+        frogAnim.frogAnimation.SetBool("isAttacking", true);
 
         while (Vector3.Distance(this.transform.position, target) >= 0.2f && !tongMustGoBack && ScreenLimits())
         {
@@ -111,6 +113,8 @@ public class TongBehaviour : MonoBehaviour
         tongMustGoBack = false;
         _tongInMouth = true;
 
+        frogAnim.frogAnimation.SetBool("isAttacking", false);
+        
         StopCoroutine(spawnTong);
     }
 
