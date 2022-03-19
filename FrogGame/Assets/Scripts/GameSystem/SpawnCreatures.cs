@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public struct CreatureSpawnDetails
@@ -30,9 +32,14 @@ public class SpawnCreatures : MonoBehaviour
         creatureSpawnBoundaries.DrawBorderToDebug(creatureSpawnBoundaries.SpawningBorder, Color.red);
         SetListOfCreatures();
         _spawnTimeManager = SpawnObjectsTimer();
-        EventSystem.current.onStartingSpawnCreatures += StartingTheGame;
+        EventSystem.current.onStartMovingTheGame += StartingTheGame;
     }
-    
+
+    private void OnDestroy()
+    {
+        StopCoroutine(_spawnTimeManager);
+        EventSystem.current.onStartMovingTheGame -= StartingTheGame;
+    }
 
     void StartingTheGame(){
         StartCoroutine(_spawnTimeManager);

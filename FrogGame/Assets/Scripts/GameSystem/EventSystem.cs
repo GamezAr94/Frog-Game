@@ -4,6 +4,7 @@ using System;
 public class EventSystem : MonoBehaviour
 {
     public static EventSystem current;
+    private bool isAllowedToMove;
 
     void Awake(){
         current = this;
@@ -14,7 +15,7 @@ public class EventSystem : MonoBehaviour
     
     private void Update()
     {
-        if(Time.timeScale != 0){
+        if(isAllowedToMove){
             swipeTouch(); // this event controls all the behaviour of the frog, the user input, the spawning thong and the frog's movement.
         }
     }
@@ -26,8 +27,7 @@ public class EventSystem : MonoBehaviour
     public event Action<int> onAddingGold;
     public event Action<int> onSettingCombo;
     public event Action onSettingStamina;
-    public event Action onStartingSpawnCreatures;
-    public event Action<bool> onParallaxEffect;
+    public event Action onStartMovingTheGame; //event that controls the behaviour when the countdown reaches zero and the games begins (car animation, parallax, spawn creatures)
     public event Action onStartingGame;
     public event Action<bool> onEndingGame;
     public event Action onCompletingLevel;
@@ -75,14 +75,10 @@ public class EventSystem : MonoBehaviour
         }
     }
 
-    public void StartingSpawnCreatures(){
-        if(onStartingSpawnCreatures != null){
-            onStartingSpawnCreatures();
-        }
-    }
-    public void ParallaxEffect(bool isStarting){
-        if(onParallaxEffect != null){
-            onParallaxEffect(isStarting);
+    public void StartMovingTheGame(){
+        if(onStartMovingTheGame != null){
+            onStartMovingTheGame();
+            isAllowedToMove = true;
         }
     }
     public void StartingGame(){

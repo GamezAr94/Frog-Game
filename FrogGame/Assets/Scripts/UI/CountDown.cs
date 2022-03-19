@@ -48,8 +48,8 @@ public class CountDown : MonoBehaviour
         }
         counterText.SetActive(false);
 
-        EventSystem.current.ParallaxEffect(true);
-        EventSystem.current.StartingSpawnCreatures();
+        //EventSystem.current.ParallaxEffect(true);
+        EventSystem.current.StartMovingTheGame();
         
         StopCoroutine(counterToStartGame);
         yield return null;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,20 +16,17 @@ public class BG_Scroll : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventSystem.current.onParallaxEffect += parallaxEffectController;
+        EventSystem.current.onStartMovingTheGame += ParallaxEffectController;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ParallaxEffectController(){ 
+        StartCoroutine(ParallaxEffect());
+    }
+
+    private void OnDestroy()
     {
-    }
-
-    public void parallaxEffectController(bool isStarting){
-        if(isStarting){
-            StartCoroutine(ParallaxEffect());
-        }else{
-            StopCoroutine(ParallaxEffect());
-        }
+        StopCoroutine(ParallaxEffect());
+        EventSystem.current.onStartMovingTheGame -= ParallaxEffectController;
     }
 
     IEnumerator ParallaxEffect(){

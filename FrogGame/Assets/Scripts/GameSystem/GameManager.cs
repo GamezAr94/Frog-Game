@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         EventSystem.current.onEndingGame += theGameIsEnding;
-        EventSystem.current.onSettingCombo += Combo; // Uncoment to accept combos
+        EventSystem.current.onSettingCombo += Combo; // Uncomment to accept combos
     }
 
     //Not sure if keep the combo feature, if I decided to take it out i have to delete the maxCombo, the event and the reference in the tongbehaviour

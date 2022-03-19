@@ -5,21 +5,18 @@ using UnityEngine;
 
 public class CartAnim : MonoBehaviour
 {
-    private Animator carAnimation;
+    Animator carAnimation;
+    [SerializeField] private GameObject dustParticles;
+    
     private void Awake()
     {
         carAnimation = this.GetComponent<Animator>();
+        EventSystem.current.onStartMovingTheGame += StartingAnimation;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    void StartingAnimation()
     {
         carAnimation.SetBool("isMoving", true);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        dustParticles.SetActive(true);
     }
 }
