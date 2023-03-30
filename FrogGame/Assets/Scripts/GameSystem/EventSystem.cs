@@ -4,7 +4,7 @@ using System;
 public class EventSystem : MonoBehaviour
 {
     public static EventSystem current;
-    private bool isAllowedToMove;
+    public bool isAllowedToMove;
 
     void Awake(){
         current = this;

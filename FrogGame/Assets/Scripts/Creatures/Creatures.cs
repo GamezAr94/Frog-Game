@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 public abstract class Creatures : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem hitParticle;
     [SerializeField][Tooltip("Field to retrieve the information of the creature to instance")]
     Creature _creatureTypeStruct;
     
@@ -40,6 +41,7 @@ public abstract class Creatures : MonoBehaviour
         if(other.CompareTag("TongTip")){
             StopCoroutine(_movementCreature);
             CreatureCaught(other);
+            hitParticle.Play();
         }
         if(this.transform.parent && other.CompareTag("Mouth")){
             EventSystem.current.AddingPoints();
